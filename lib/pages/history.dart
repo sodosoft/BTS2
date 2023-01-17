@@ -7,6 +7,7 @@ import 'package:bangtong/model/orderboard.dart'; //flutter의 package를 가져�
 import 'package:http/http.dart' as http;
 
 import '../../api/api.dart';
+import '../function/displaystring.dart';
 
 class third extends StatefulWidget {
   const third({Key? key}) : super(key: key);
@@ -73,7 +74,7 @@ class _MyAppState extends State<third> {
                   itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
-                        title: Text(diaplayArea(snapshot.data[index].startArea) + " >> " + diaplayArea(snapshot.data[index].endArea)),
+                        title: Text(DisplayString.displayArea(snapshot.data[index].startArea) + " >> " + DisplayString.displayArea(snapshot.data[index].endArea)),
                         subtitle: Text(snapshot.data[index].startDateTime +
                             '\n' + snapshot.data[index].cost),
                         isThreeLine: true,
@@ -99,12 +100,6 @@ class _MyAppState extends State<third> {
       ),
     );
   }
-}
-
-diaplayArea(startArea) {
-  String displayRetrun = startArea.toString().substring(0,6);
-
-  return displayRetrun;
 }
 
 class DetailPage extends StatelessWidget {

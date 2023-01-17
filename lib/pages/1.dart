@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:bangtong/login/login.dart';
 
 import '../../model/orderboard.dart';
+import '../function/displaystring.dart';
 import 'addScreen.dart'; //flutter의 package를 가져오는 코드 반드시 필요
 
 class first extends StatefulWidget {
@@ -75,7 +76,7 @@ class _MyAppState extends State<first> {
                   itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
-                        title: Text(snapshot.data[index].startArea + " >> " + snapshot.data[index].endArea),
+                        title: Text(DisplayString.displayArea(snapshot.data[index].startArea) + " >> " + DisplayString.displayArea(snapshot.data[index].endArea)),
                         subtitle: Text(snapshot.data[index].startDateTime +
                             '\n' + snapshot.data[index].cost),
                         isThreeLine: true,
