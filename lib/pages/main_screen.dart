@@ -1,22 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:bangtong/pages/1.dart';
 import 'package:bangtong/pages/board.dart';
 import 'package:bangtong/pages/history.dart';
 import 'package:bangtong/pages/4.dart';
-import 'package:bangtong/pages/addScreen.dart';
-import 'package:bangtong/pages/costlist.dart';
 import 'package:bangtong/pages/w3.dart';
 
 import '../../login/login.dart';
-import '../../model/board.dart';
-import '../../model/user.dart';
-import '../user_pref.dart';
-import 'package:get/get.dart';
 
 
 class MainScreen extends StatefulWidget {

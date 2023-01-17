@@ -11,10 +11,6 @@ import 'package:http/http.dart' as http;
 import 'package:bangtong/pages/main_screen_driver.dart';
 
 import '../api/api.dart';
-import '../model/user.dart';
-import '../model/board.dart';
-
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -25,9 +21,6 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
-
-
-
 
 class _LoginPageState extends State<LoginPage> {
   var formKey = GlobalKey<FormState>();
