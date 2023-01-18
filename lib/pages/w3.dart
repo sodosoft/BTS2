@@ -146,7 +146,7 @@ Page resource error:
           );
         },
       )
-      ..loadRequest(Uri.parse('https://sodosoft.net/assets/img/cost.png'));
+      ..loadRequest(Uri.parse('https://sodosoft.net/assets/cost.html'));
 
     // #docregion platform_features
     if (controller.platform is AndroidWebViewController) {
