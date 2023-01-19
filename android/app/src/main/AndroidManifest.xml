@@ -2,7 +2,7 @@
     package="com.example.bangtong">
    <application
         android:label="bangtong"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/bts">
         <activity
             android:name=".MainActivity"
             android:exported="true"
