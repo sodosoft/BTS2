@@ -67,7 +67,9 @@ class _MyAppState extends State<third> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //title: const Text("Generate List"),
+        automaticallyImplyLeading: false,
+        title: const Text("배차 내역 리스트"),
+        foregroundColor: Colors.green,
         backgroundColor: Colors.white,
         shadowColor: Colors.white,
         actions: [
@@ -80,57 +82,57 @@ class _MyAppState extends State<third> {
         ],
       ),
       body: Container(
-        child: Column(
-          children: [
-            FutureBuilder(
-              future: _getPost(),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  _itemCnt = snapshot.data.length;
-                  _subTotal = CostAdd(snapshot.data);
+        // child: Column(
+        //   children: [
+        child: FutureBuilder(
+          future: _getPost(),
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              _itemCnt = snapshot.data.length;
+              _subTotal = CostAdd(snapshot.data);
 
-                  return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            title: Text(DisplayString.displayArea(
-                                    snapshot.data[index].startArea) +
-                                " >> " +
-                                DisplayString.displayArea(
-                                    snapshot.data[index].endArea)),
-                            subtitle: Text(snapshot.data[index].startDateTime +
-                                '\n' +
-                                snapshot.data[index].cost),
-                            isThreeLine: true,
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetailPage(snapshot.data[index])));
-                            },
-                          ),
-                        );
-                      });
-                } else {
-                  return Container(
-                    child: Center(
-                      child: Text("Loading..."),
-                    ),
-                  );
-                }
-              },
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text('총 ' + '$_itemCnt' + '건'),
-            SizedBox(
-              height: 5,
-            ),
-            Text('합계 금액 ' + '$_subTotal' + '원'),
-          ],
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(DisplayString.displayArea(
+                                snapshot.data[index].startArea) +
+                            " >> " +
+                            DisplayString.displayArea(
+                                snapshot.data[index].endArea)),
+                        subtitle: Text(snapshot.data[index].startDateTime +
+                            '\n' +
+                            snapshot.data[index].cost),
+                        isThreeLine: true,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailPage(snapshot.data[index])));
+                        },
+                      ),
+                    );
+                  });
+            } else {
+              return Container(
+                child: Center(
+                  child: Text("Loading..."),
+                ),
+              );
+            }
+          },
+          // ),
+          // SizedBox(
+          //   height: 15,
+          // ),
+          // Text('총 ' + '$_itemCnt' + '건'),
+          // SizedBox(
+          //   height: 5,
+          // ),
+          // Text('합계 금액 ' + '$_subTotal' + '원'),
+          //],
         ),
       ),
     );
