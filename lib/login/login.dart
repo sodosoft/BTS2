@@ -53,10 +53,10 @@ class _LoginPageState extends State<LoginPage> {
             LoginPage.allCarNo = resLogin['userCarNo'].toString();
             // 차주 전용 화면
             Navigator.push(context,
-                MaterialPageRoute(builder:(context)=>MainScreenDriver()));
+                MaterialPageRoute(builder: (context) => MainScreenDriver()));
           } else {
             Navigator.push(context,
-                MaterialPageRoute(builder:(context)=>MainScreen()));
+                MaterialPageRoute(builder: (context) => MainScreen()));
           }
 
           setState(() {
@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: TextFormField(
                               controller: idController,
                               validator: (val) =>
-                              val == "" ? "아이디를 입력하세요!" : null,
+                                  val == "" ? "아이디를 입력하세요!" : null,
                               decoration: InputDecoration(
                                   border: InputBorder.none, hintText: '아이디'),
                             ),
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: TextFormField(
                               controller: passwordController,
                               validator: (val) =>
-                              val == "" ? "비밀 번호를 입력하세요!" : null,
+                                  val == "" ? "비밀 번호를 입력하세요!" : null,
                               obscureText: true,
                               decoration: InputDecoration(
                                   border: InputBorder.none, hintText: '비밀번호'),
@@ -196,7 +196,10 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text('회원이 아니신가요?'),
                     GestureDetector(
-                      onTap: () => Get.to(() => SignupPage()),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignupPage())),
                       child: Text(
                         ' 회원 가입!',
                         style: TextStyle(

@@ -31,7 +31,6 @@ class SteelCode {
 }
 
 class _SignupPageState extends State<SignupPage> {
-
   static List<SteelCode> _steelCode = [
     SteelCode(id: "DI", name: "동국제강"),
     SteelCode(id: "HI", name: "현대제철"),
@@ -91,8 +90,8 @@ class _SignupPageState extends State<SignupPage> {
               msg: "이미 가입된 ID 입니다. 다른 ID로 가입 부탁 드립니다.",
             );
           } else {
-            //saveInfo();
-            saveInfo_test();
+            saveInfo();
+            //saveInfo_test();
           }
         } else {
           Fluttertoast.showToast(msg: "약관에 동의 하십시오");
@@ -106,15 +105,12 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   saveInfo_test() async {
-    User_test userModel = User_test(
-        userIDController.text.trim(),
-        userNameController.text.trim(),
-        passwordController.text.trim()
-    );
+    User_test userModel = User_test(userIDController.text.trim(),
+        userNameController.text.trim(), passwordController.text.trim());
 
     try {
       var res =
-      await http.post(Uri.parse(API.signup_test), body: userModel.toJson());
+          await http.post(Uri.parse(API.signup_test), body: userModel.toJson());
 
       if (res.statusCode == 200) {
         var resSignup = jsonDecode(res.body);
@@ -124,9 +120,9 @@ class _SignupPageState extends State<SignupPage> {
             userIDController.clear();
             passwordController.clear();
             userNameController.clear();
+            userTelController.clear();
 
-            Get.to(()=> LoginPage());
-
+            Navigator.pop(context);
           });
         } else {
           Fluttertoast.showToast(msg: '회원 가입 실패, 확인 후 다시 시도해주세요.');
@@ -144,26 +140,23 @@ class _SignupPageState extends State<SignupPage> {
 
     if (_selectedCategory == '화주') {
       strGrade = 'S';
-    }
-    else if (_selectedCategory == '차주') {
+    } else if (_selectedCategory == '차주') {
       strGrade = 'D';
-    }
-    else {
+    } else {
       strGrade = 'S';
     }
 
-    if (_selectedSteelCode.length > 1) {
-      strSteelCode = splitSteelCode(_selectedSteelCode);
-    }
-    else
-    {
-      strSteelCode = _selectedSteelCode[0].id.toString();
-    }
+    // if (_selectedSteelCode.length > 1) {
+    //   strSteelCode = splitSteelCode(_selectedSteelCode);
+    // } else {
+    //   strSteelCode = _selectedSteelCode[0].id.toString();
+    // }
 
     DateTime now = DateTime.now();
 
     var currentDay = new DateTime(now.year, now.month, now.day);
-    var currentTime = new DateTime(now.year, now.month, now.day, now.hour, now.minute);
+    var currentTime =
+        new DateTime(now.year, now.month, now.day, now.hour, now.minute);
 
     User userModel = User(
         userIDController.text.trim(),
@@ -174,21 +167,20 @@ class _SignupPageState extends State<SignupPage> {
         userCompanyNameController.text.trim(),
         userCompanyNoController.text.trim(),
         userCarNoController.text.trim(),
-        currentDay.toString(), //가입 시간
-        strSteelCode,
-        _selectedSteelCode.length,        //codeCount
-        0,        //cancelCount
-        'Y',        //loginFlag
-        'Y',        //payment
-        currentDay.toString(),        //paymentDay
+        '2023-02-22', //가입 시간
+        '0',
+        0, //codeCount
+        0, //cancelCount
+        'Y', //loginFlag
+        'Y', //payment
+        '2023-02-22', //paymentDay
         'SODO', // introducerController.text.trim(),
         currentTime.toString(), //loginTime(현재 접속)
-        'DE'
-    );
+        'DE');
 
     try {
       var res =
-      await http.post(Uri.parse(API.signup), body: userModel.toJson());
+          await http.post(Uri.parse(API.register), body: userModel.toJson());
 
       if (res.statusCode == 200) {
         var resSignup = jsonDecode(res.body);
@@ -203,9 +195,10 @@ class _SignupPageState extends State<SignupPage> {
             userCompanyNoController.clear();
             userCarNoController.clear();
             _selectedCategory = '화주';
+            _ischecked1 = false;
+            _ischecked2 = false;
 
-            Get.to(()=> LoginPage());
-
+            Navigator.pop(context);
           });
         } else {
           Fluttertoast.showToast(msg: '회원 가입 실패, 확인 후 다시 시도해주세요.');
@@ -238,38 +231,38 @@ class _SignupPageState extends State<SignupPage> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 10,
                       ),
                       // Test
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //       color: Colors.grey[200],
-                      //       border: Border.all(color: Colors.white),
-                      //       borderRadius: BorderRadius.circular(12),
-                      //     ),
-                      //     child:
-                      //     Padding(
-                      //       padding: const EdgeInsets.only(left: 20.0),
-                      //       child: DropdownButton(
-                      //           hint: Text('등급'),
-                      //           isExpanded: true,
-                      //           items: ['화주', '차주', '영업사원']
-                      //               .map((item) => DropdownMenuItem(
-                      //             child: Text(item),
-                      //             value: item,
-                      //           ))
-                      //               .toList(),
-                      //           value: _selectedCategory,
-                      //           onChanged: (value) {
-                      //             setState(() {
-                      //               _selectedCategory = value.toString();
-                      //             });
-                      //           }),
-                      //     ),
-                      //   ),
-                      //),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: DropdownButton(
+                                hint: Text('등급'),
+                                isExpanded: true,
+                                items: ['화주', '차주', '영업사원']
+                                    .map((item) => DropdownMenuItem(
+                                          child: Text(item),
+                                          value: item,
+                                        ))
+                                    .toList(),
+                                value: _selectedCategory,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedCategory = value.toString();
+                                  });
+                                }),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: Container(
@@ -283,16 +276,14 @@ class _SignupPageState extends State<SignupPage> {
                             child: TextFormField(
                               controller: userNameController,
                               validator: (val) =>
-                              val == "" ? "이름을 입력하세요!" : null,
+                                  val == "" ? "이름을 입력하세요!" : null,
                               decoration: InputDecoration(
                                   border: InputBorder.none, hintText: '이름'),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      SizedBox(height: 5),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: Container(
@@ -306,7 +297,7 @@ class _SignupPageState extends State<SignupPage> {
                             child: TextFormField(
                               controller: userIDController,
                               validator: (val) =>
-                              val == "" ? "아이디를 입력하세요!" : null,
+                                  val == "" ? "아이디를 입력하세요!" : null,
                               decoration: InputDecoration(
                                   border: InputBorder.none, hintText: 'ID'),
                             ),
@@ -328,7 +319,7 @@ class _SignupPageState extends State<SignupPage> {
                             child: TextFormField(
                               controller: passwordController,
                               validator: (val) =>
-                              val == "" ? "비밀번호를 입력하세요!" : null,
+                                  val == "" ? "비밀번호를 입력하세요!" : null,
                               obscureText: true,
                               decoration: InputDecoration(
                                   border: InputBorder.none, hintText: '비밀번호'),
@@ -351,7 +342,7 @@ class _SignupPageState extends State<SignupPage> {
                             child: TextFormField(
                               controller: userTelController,
                               validator: (val) =>
-                              val == "" ? "연락처를 입력하세요!" : null,
+                                  val == "" ? "연락처를 입력하세요!" : null,
                               obscureText: true,
                               decoration: InputDecoration(
                                   border: InputBorder.none, hintText: '연락처'),
@@ -364,78 +355,74 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       // test
 
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //         color: Colors.grey[200],
-                      //         border: Border.all(color: Colors.white),
-                      //         borderRadius: BorderRadius.circular(12)),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.only(left: 20.0),
-                      //       child: TextFormField(
-                      //         controller: userCompanyNameController,
-                      //         validator: (val) =>
-                      //         val == "" ? "소속 회사명을 입력하세요!" : null,
-                      //         obscureText: true,
-                      //         decoration: InputDecoration(
-                      //             border: InputBorder.none, hintText: '소속 회사명'),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 5,
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(
-                      //       horizontal: 25.0),
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //         color: Colors.grey[200],
-                      //         border: Border.all(color: Colors.white),
-                      //         borderRadius: BorderRadius.circular(12)),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.only(left: 20.0),
-                      //       child: TextFormField(
-                      //         enabled: _selectedCategory != '영업사원',
-                      //         controller: userCompanyNoController,
-                      //         validator: (val) =>
-                      //         val == "" ? "사업자 번호를 입력하세요!" : null,
-                      //         obscureText: true,
-                      //         decoration: InputDecoration(
-                      //             border: InputBorder.none,
-                      //             hintText: '사업자 번호'),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 5,
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(
-                      //       horizontal: 25.0),
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //         color: Colors.grey[200],
-                      //         border: Border.all(color: Colors.white),
-                      //         borderRadius: BorderRadius.circular(12)),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.only(left: 20.0),
-                      //       child: TextFormField(
-                      //         enabled: _selectedCategory == '차주',
-                      //         controller: userCarNoController,
-                      //         validator: (val) =>
-                      //         val == "" ? "차량 번호를 입력하세요!" : null,
-                      //         obscureText: true,
-                      //         decoration: InputDecoration(
-                      //             border: InputBorder.none,
-                      //             hintText: '차량 번호'),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: TextFormField(
+                              controller: userCompanyNameController,
+                              validator: (val) =>
+                                  val == "" ? "소속 회사명을 입력하세요!" : null,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none, hintText: '소속 회사명'),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: TextFormField(
+                              enabled: _selectedCategory != '영업사원',
+                              controller: userCompanyNoController,
+                              validator: (val) =>
+                                  val == "" ? "사업자 번호를 입력하세요!" : null,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none, hintText: '사업자 번호'),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: TextFormField(
+                              enabled: _selectedCategory == '차주',
+                              controller: userCarNoController,
+                              validator: (val) =>
+                                  val == "" ? "차량 번호를 입력하세요!" : null,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none, hintText: '차량 번호'),
+                            ),
+                          ),
+                        ),
+                      ),
                       // SizedBox(
                       //   height: 5,
                       // ),
@@ -509,7 +496,7 @@ class _SignupPageState extends State<SignupPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                              const WebView1()));
+                                                  const WebView1()));
                                     }
                                   });
                                 },
@@ -539,7 +526,7 @@ class _SignupPageState extends State<SignupPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                              const WebView2()));
+                                                  const WebView2()));
                                     }
                                   });
                                 },
@@ -553,7 +540,13 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (formKey.currentState!.validate()) {
+                          if( _selectedCategory == '차주') {
+                            if (formKey.currentState!.validate()) {
+                              checkUserEmail();
+                            }
+                          }
+                          else
+                          {
                             checkUserEmail();
                           }
                         },
@@ -586,7 +579,9 @@ class _SignupPageState extends State<SignupPage> {
                         children: [
                           Text('이미 가입하셨나요?'),
                           GestureDetector(
-                            onTap: () => Get.back(),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
                             child: Text(
                               ' 로그인 페이지로 돌아가기!',
                               style: TextStyle(
@@ -610,8 +605,7 @@ class _SignupPageState extends State<SignupPage> {
   String splitSteelCode(List<SteelCode> selectedSteelCode) {
     String strReturn = '';
 
-    for(int i = 0; i < selectedSteelCode.length; i++)
-    {
+    for (int i = 0; i < selectedSteelCode.length; i++) {
       strReturn += selectedSteelCode[i].id + ' ';
     }
 
