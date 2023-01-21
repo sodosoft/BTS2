@@ -19,6 +19,7 @@ class third extends StatefulWidget {
 class _MyAppState extends State<third> {
   int _itemCnt = 0;
   int _subTotal = 0;
+  String itmCnt = '';
 
   Future<List<OrderData_driver>?> _getPost() async {
     try {
@@ -59,6 +60,8 @@ class _MyAppState extends State<third> {
   @override
   void initState() {
     super.initState();
+
+    _getPost();
   }
 
   final myController = TextEditingController();
@@ -66,74 +69,95 @@ class _MyAppState extends State<third> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text("배차 내역 리스트"),
-        foregroundColor: Colors.green,
-        backgroundColor: Colors.white,
-        shadowColor: Colors.white,
-        actions: [
-          IconButton(
-              tooltip: "검색",
-              onPressed: () {
-                //검색 조건 창 띄움
-              },
-              icon: Icon(Icons.search))
-        ],
-      ),
-      body: Container(
-        // child: Column(
-        //   children: [
-        child: FutureBuilder(
-          future: _getPost(),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              _itemCnt = snapshot.data.length;
-              _subTotal = CostAdd(snapshot.data);
-
-              return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(DisplayString.displayArea(
-                                snapshot.data[index].startArea) +
-                            " >> " +
-                            DisplayString.displayArea(
-                                snapshot.data[index].endArea)),
-                        subtitle: Text(snapshot.data[index].startDateTime +
-                            '\n' +
-                            snapshot.data[index].cost),
-                        isThreeLine: true,
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetailPage(snapshot.data[index])));
-                        },
-                      ),
-                    );
-                  });
-            } else {
-              return Container(
-                child: Center(
-                  child: Text("Loading..."),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   title: const Text('건'),
+      //   foregroundColor: Colors.green,
+      //   backgroundColor: Colors.white,
+      //   shadowColor: Colors.white,
+      //   actions: [
+      //     IconButton(
+      //         tooltip: "검색",
+      //         onPressed: () {
+      //           //검색 조건 창 띄움
+      //         },
+      //         icon: Icon(Icons.search))
+      //   ],
+      // ),
+      body: Column(
+        children: [
+          Container(
+            height: 60,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {},
+                  child: const Text('검색조건1'),
                 ),
-              );
-            }
-          },
-          // ),
-          // SizedBox(
-          //   height: 15,
-          // ),
-          // Text('총 ' + '$_itemCnt' + '건'),
-          // SizedBox(
-          //   height: 5,
-          // ),
-          // Text('합계 금액 ' + '$_subTotal' + '원'),
-          //],
-        ),
+                SizedBox(width: 10),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {},
+                  child: const Text('검색조건2'),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: FutureBuilder(
+              future: _getPost(),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  _subTotal = CostAdd(snapshot.data);
+                  itmCnt = snapshot.data.length.toString();
+
+                  return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: ListTile(
+                            title: Text(DisplayString.displayArea(
+                                    snapshot.data[index].startArea) +
+                                " >> " +
+                                DisplayString.displayArea(
+                                    snapshot.data[index].endArea)),
+                            subtitle: Text(snapshot.data[index].startDateTime +
+                                '\n' +
+                                snapshot.data[index].cost),
+                            isThreeLine: true,
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailPage(snapshot.data[index])));
+                            },
+                          ),
+                        );
+                      });
+                } else {
+                  return Container(
+                    child: Center(
+                      child: Text("Loading..."),
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+          Container(
+            // 총 건수 & 총 합
+            color: Colors.green,
+            height: 50,
+          ),
+        ],
       ),
     );
   }
