@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bangtong/pages/addOrder.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bangtong/api/api.dart';
@@ -104,7 +105,8 @@ class _MyAppState extends State<first> {
         tooltip: "배차 등록",
         onPressed: () async {
           final reuslt = await Navigator.push(
-              context, MaterialPageRoute(builder: ((context) => AddScreen())));
+              // context, MaterialPageRoute(builder: ((context) => AddScreen())));
+              context, MaterialPageRoute(builder: ((context) => AddOrder())));
         },
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add),

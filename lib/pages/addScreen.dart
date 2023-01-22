@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:kpostal/kpostal.dart';
 
-
 class AddScreen extends StatefulWidget {
   const AddScreen({Key? key}) : super(key: key);
 
@@ -27,9 +26,9 @@ class _AddAppState extends State<AddScreen> {
   late TextEditingController _titleTextEditingController;
   late TextEditingController _priceTextEditingController;
   late TextEditingController _contentTextEditingController;
-  late TextEditingController  _startTextEditingController;
-  late TextEditingController  _endTextEditingController;
-  late TextEditingController  _gradeTextEditingController;
+  late TextEditingController _startTextEditingController;
+  late TextEditingController _endTextEditingController;
+  late TextEditingController _gradeTextEditingController;
 
   String _selectedCategory_start = '동국제강(인천)';
   String _selectedCategory_grade = '스텐';
@@ -51,7 +50,7 @@ class _AddAppState extends State<AddScreen> {
 
     _startTextEditingController = TextEditingController();
     _endTextEditingController = TextEditingController();
-    _gradeTextEditingController  = TextEditingController();
+    _gradeTextEditingController = TextEditingController();
     _titleTextEditingController = TextEditingController();
     _priceTextEditingController = TextEditingController();
     _contentTextEditingController = TextEditingController();
@@ -195,7 +194,7 @@ class _AddAppState extends State<AddScreen> {
       bool result = false;
       if (result) {
         Fluttertoast.showToast(
-            msg: "새로운 중고물품을 등록하였습니다.",
+            msg: "새로운 배차를 등록하였습니다.",
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.redAccent,
             fontSize: 20,
@@ -207,7 +206,7 @@ class _AddAppState extends State<AddScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              content: Text("물품 등록 도중 오류가 발생하였습니다."),
+              content: Text("배차 등록 도중 오류가 발생하였습니다."),
               duration: Duration(
                 milliseconds: 1000,
               )),
@@ -278,7 +277,7 @@ class _AddAppState extends State<AddScreen> {
                     ),
                   ),
                   decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(3))),
+                      BoxDecoration(borderRadius: BorderRadius.circular(3))),
               dashPattern: [5, 3],
               borderType: BorderType.RRect,
               radius: Radius.circular(3));
@@ -297,22 +296,18 @@ class _AddAppState extends State<AddScreen> {
                 Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children:[
+                    children: [
                       // 상차지 주소 입력 필드
-                      TextButton(
-                          onPressed:() {},
-                          child: Text("상차지")
-                      ),
+                      TextButton(onPressed: () {}, child: Text("상차지")),
                       // 상차지 상세 주소 입력 필드
                       TextField(
                         controller: _startTextEditingController,
                         decoration: InputDecoration(
                             hintText: ' 주소 나머지 부분을 입력하세요.',
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(vertical: 5)),
+                            contentPadding: EdgeInsets.symmetric(vertical: 1)),
                       )
-                    ]
-                ),
+                    ]),
                 SizedBox(
                   height: 5,
                 ),
@@ -332,21 +327,18 @@ class _AddAppState extends State<AddScreen> {
                       '직접입력(다음)'
                     ]
                         .map((item) => DropdownMenuItem(
-                      child: Text(item),
-                      value: item,
-                    ))
+                              child: Text(item),
+                              value: item,
+                            ))
                         .toList(),
                     value: _selectedCategory_start,
                     onChanged: (value) {
                       setState(() {
                         _selectedCategory_start = value.toString();
 
-                        if(_selectedCategory_start == "동국제강(인천)")
-                        {
+                        if (_selectedCategory_start == "동국제강(인천)") {
                           _endTextEditingController.text = "1";
-                        }
-                        else if(_selectedCategory_start == "현대제철(인천)")
-                        {
+                        } else if (_selectedCategory_start == "현대제철(인천)") {
                           _endTextEditingController.text = "2";
                         }
                       });
@@ -377,15 +369,11 @@ class _AddAppState extends State<AddScreen> {
                 DropdownButton(
                     hint: Text('지불 방식'),
                     isExpanded: true,
-                    items: [
-                      '후불',
-                      '별도 협의',
-                      '선불'
-                    ]
+                    items: ['후불', '별도 협의', '선불']
                         .map((item) => DropdownMenuItem(
-                      child: Text(item),
-                      value: item,
-                    ))
+                              child: Text(item),
+                              value: item,
+                            ))
                         .toList(),
                     value: _selectedCategory_pay,
                     onChanged: (value) {
@@ -400,18 +388,11 @@ class _AddAppState extends State<AddScreen> {
                 DropdownButton(
                     hint: Text('비철 등급'),
                     isExpanded: true,
-                    items: [
-                      '스텐',
-                      '알루미늄',
-                      '동(구리)',
-                      '피선',
-                      '작업철',
-                      '기타'
-                    ]
+                    items: ['스텐', '알루미늄', '동(구리)', '피선', '작업철', '기타']
                         .map((item) => DropdownMenuItem(
-                      child: Text(item),
-                      value: item,
-                    ))
+                              child: Text(item),
+                              value: item,
+                            ))
                         .toList(),
                     value: _selectedCategory_grade,
                     onChanged: (value) {
@@ -427,9 +408,9 @@ class _AddAppState extends State<AddScreen> {
                   height: 200,
                   decoration: BoxDecoration(
                       border: Border.all(
-                        width: 1,
-                        color: Colors.grey,
-                      )),
+                    width: 1,
+                    color: Colors.grey,
+                  )),
                   constraints: BoxConstraints(maxHeight: 50),
                   child: Scrollbar(
                     child: TextField(
@@ -443,8 +424,7 @@ class _AddAppState extends State<AddScreen> {
                           filled: true,
                           fillColor: Colors.transparent,
                           hintMaxLines: 3,
-                          hintText:
-                          '기타 전달 사항',
+                          hintText: '기타 전달 사항',
                           hintStyle: TextStyle(
                               fontSize: 17, overflow: TextOverflow.clip)),
                     ),
@@ -469,7 +449,7 @@ class _AddAppState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : false,
+      resizeToAvoidBottomInset: false,
       appBar: _appbarWidget(),
       body: _bodyWidget(),
     );
