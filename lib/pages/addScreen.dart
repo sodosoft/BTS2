@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:bangtong/model/articles.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 // import 'package:app/provider/service_provider.dart';
@@ -12,7 +14,7 @@ import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:kpostal/kpostal.dart';
+import 'package:remedi_kopo/remedi_kopo.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({Key? key}) : super(key: key);
@@ -28,6 +30,11 @@ class _AddAppState extends State<AddScreen> {
   late TextEditingController _contentTextEditingController;
   late TextEditingController _startTextEditingController;
   late TextEditingController _endTextEditingController;
+  late TextEditingController _startDetailTextEditingController;
+  late TextEditingController _endDetailTextEditingController;
+
+
+
   late TextEditingController _gradeTextEditingController;
 
   String _selectedCategory_start = '동국제강(인천)';
@@ -43,6 +50,8 @@ class _AddAppState extends State<AddScreen> {
   String kakaoLatitude = '-';
   String kakaoLongitude = '-';
 
+  String strText = '';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -54,6 +63,9 @@ class _AddAppState extends State<AddScreen> {
     _titleTextEditingController = TextEditingController();
     _priceTextEditingController = TextEditingController();
     _contentTextEditingController = TextEditingController();
+
+    _startDetailTextEditingController = TextEditingController();
+    _endDetailTextEditingController = TextEditingController();
   }
 
   @override
@@ -293,63 +305,81 @@ class _AddAppState extends State<AddScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // 상차지 주소 입력 필드
-                      TextButton(onPressed: () {}, child: Text("상차지")),
-                      // 상차지 상세 주소 입력 필드
-                      TextField(
-                        controller: _startTextEditingController,
-                        decoration: InputDecoration(
-                            hintText: ' 주소 나머지 부분을 입력하세요.',
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(vertical: 1)),
-                      )
-                    ]),
-                SizedBox(
-                  height: 5,
-                ),
-                // 카테고리 선택 드롭다운
-                DropdownButton(
-                    hint: Text('하차지'),
-                    isExpanded: true,
-                    items: [
-                      '동국제강(인천)',
-                      '현대제철(인천)',
-                      '세아베스틸',
-                      '환영철강',
-                      '한국특수형강',
-                      '대한제강',
-                      '포스코',
-                      'YK스틸',
-                      '직접입력(다음)'
-                    ]
-                        .map((item) => DropdownMenuItem(
-                              child: Text(item),
-                              value: item,
-                            ))
-                        .toList(),
-                    value: _selectedCategory_start,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedCategory_start = value.toString();
-
-                        if (_selectedCategory_start == "동국제강(인천)") {
-                          _endTextEditingController.text = "1";
-                        } else if (_selectedCategory_start == "현대제철(인천)") {
-                          _endTextEditingController.text = "2";
-                        }
-                      });
-                    }),
-                //하차지 입력 필드
-                TextField(
-                  controller: _endTextEditingController,
-                  decoration: InputDecoration(
-                      hintText: '주소 입력',
-                      labelText: '하차지',
-                      contentPadding: EdgeInsets.symmetric(vertical: 10)),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                      child: Container(
+                        width: double.infinity,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Colors.green,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-1, 0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 5),
+                                child: AddressText(),
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(-1, 0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(4,4,4,4),
+                                child: TextField(
+                                    controller: _startDetailTextEditingController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: '상세 주소를 입력하세요.',
+                                    )
+                                )
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.green,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 5),
+                            child: AddressText2(),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                              child: TextField(
+                                  controller: _endDetailTextEditingController,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: '상세 주소를 입력하세요.',
+                                  )
+                              )
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 5,
@@ -454,4 +484,63 @@ class _AddAppState extends State<AddScreen> {
       body: _bodyWidget(),
     );
   }
+
+  Widget AddressText() {
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        _addressAPI(_startTextEditingController); // 카카오 주소 API
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('상차지', style: TextStyle(fontSize: 12, color: Colors.blueGrey)),
+          TextFormField(
+            enabled: false,
+            decoration: InputDecoration(
+              isDense: false,
+            ),
+            controller: _startTextEditingController,
+            style: TextStyle(fontSize: 14),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget AddressText2() {
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        _addressAPI(_endTextEditingController); // 카카오 주소 API
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('하차지', style: TextStyle(fontSize: 12, color: Colors.blueGrey)),
+          TextFormField(
+            enabled: false,
+            decoration: InputDecoration(
+              isDense: false,
+            ),
+            controller: _endTextEditingController,
+            style: TextStyle(fontSize: 14),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _addressAPI(TextEditingController result) async {
+    KopoModel model = await Navigator.push(context,
+      CupertinoPageRoute(
+        builder: (context) => RemediKopo(),
+      ),
+    );
+    result.text =
+    '${model.address!} ${model.buildingName!}';
+    // '${model.zonecode!} ${model.address!} ${model.buildingName!}';
+  }
 }
+
+

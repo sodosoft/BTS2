@@ -105,8 +105,7 @@ class _MyAppState extends State<first> {
         tooltip: "배차 등록",
         onPressed: () async {
           final reuslt = await Navigator.push(
-              // context, MaterialPageRoute(builder: ((context) => AddScreen())));
-              context, MaterialPageRoute(builder: ((context) => AddOrder())));
+              context, MaterialPageRoute(builder: ((context) => AddScreen())));
         },
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add),

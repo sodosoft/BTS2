@@ -19,7 +19,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 // #enddocregion platform_imports
 
-void main() => runApp(const MaterialApp(home: WebView1()));
+void main() => runApp(const MaterialApp(home: WebView3()));
 
 const String kNavigationExamplePage = '''
 <!DOCTYPE html><html>
@@ -76,14 +76,14 @@ const String kTransparentBackgroundPage = '''
   </html>
 ''';
 
-class WebView1 extends StatefulWidget {
-  const WebView1({super.key});
+class WebView3 extends StatefulWidget {
+  const WebView3({super.key});
 
   @override
-  State<WebView1> createState() => _WebViewState();
+  State<WebView3> createState() => _WebViewState();
 }
 
-class _WebViewState extends State<WebView1> {
+class _WebViewState extends State<WebView3> {
   late final WebViewController _controller;
 
   @override
@@ -95,17 +95,17 @@ class _WebViewState extends State<WebView1> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text('서비스 이용 약관'),
-        // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
-        actions: <Widget>[
-          // NavigationControls(webViewController: _controller),
-          // SampleMenu(webViewController: _controller),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: const Text('개인 정보 처리 방침'),
+      //   // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
+      //   actions: <Widget>[
+      //     // NavigationControls(webViewController: _controller),
+      //     // SampleMenu(webViewController: _controller),
+      //   ],
+      // ),
       body: SafeArea(
         child: WebView(
-          initialUrl: 'https://www.sodosoft.net/assets/customeragreement.html',
+          initialUrl: 'https://www.sodosoft.net/assets/cost.html',
           javascriptMode: JavascriptMode.unrestricted,
           gestureNavigationEnabled: true,
         ),

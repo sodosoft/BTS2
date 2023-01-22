@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../model/user_test.dart';
+import '../pages/policy.dart';
 import '../pages/w1.dart';
-import '../pages/w2.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:intl/intl.dart';
 

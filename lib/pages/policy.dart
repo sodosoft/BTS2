@@ -19,7 +19,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 // #enddocregion platform_imports
 
-void main() => runApp(const MaterialApp(home: WebView1()));
+void main() => runApp(const MaterialApp(home: WebView2()));
 
 const String kNavigationExamplePage = '''
 <!DOCTYPE html><html>
@@ -76,14 +76,14 @@ const String kTransparentBackgroundPage = '''
   </html>
 ''';
 
-class WebView1 extends StatefulWidget {
-  const WebView1({super.key});
+class WebView2 extends StatefulWidget {
+  const WebView2({super.key});
 
   @override
-  State<WebView1> createState() => _WebViewState();
+  State<WebView2> createState() => _WebViewState();
 }
 
-class _WebViewState extends State<WebView1> {
+class _WebViewState extends State<WebView2> {
   late final WebViewController _controller;
 
   @override
@@ -96,7 +96,7 @@ class _WebViewState extends State<WebView1> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('서비스 이용 약관'),
+        title: const Text('개인 정보 처리 방침'),
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[
           // NavigationControls(webViewController: _controller),
@@ -105,7 +105,7 @@ class _WebViewState extends State<WebView1> {
       ),
       body: SafeArea(
         child: WebView(
-          initialUrl: 'https://www.sodosoft.net/assets/customeragreement.html',
+          initialUrl: 'https://www.sodosoft.net/assets/policy.html',
           javascriptMode: JavascriptMode.unrestricted,
           gestureNavigationEnabled: true,
         ),

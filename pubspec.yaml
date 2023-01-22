@@ -45,10 +45,10 @@ dependencies:
   provider: ^6.0.5
   image_picker: ^0.8.6
   dotted_border: ^2.0.0+3
-  kpostal: ^0.5.1
+  remedi_kopo: ^0.0.1
   url_launcher: ^6.1.7
   flutter_limited_checkbox: ^0.0.1
-  webview_flutter: ^4.0.1
+  webview_flutter: ^2.0.10
   build_runner: ^2.0.4
   json_annotation: ^4.0.1
   json_serializable: ^6.1.5

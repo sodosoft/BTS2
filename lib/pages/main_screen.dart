@@ -1,9 +1,9 @@
+import 'package:bangtong/pages/webcost.dart';
 import 'package:flutter/material.dart';
 import 'package:bangtong/pages/1.dart';
 import 'package:bangtong/pages/board.dart';
 import 'package:bangtong/pages/history.dart';
 import 'package:bangtong/pages/4.dart';
-import 'package:bangtong/pages/w3.dart';
 
 import '../../login/login.dart';
 
@@ -21,7 +21,7 @@ class _MainScreen extends State<MainScreen>{
     // MainScreen(),
     first(),  // 배차 등록 현황
     board(),  // 게시판
-    WebViewCost(),
+    WebView3(),
     third(),  // 배차 내역
     four()  // 상담 문의
 
