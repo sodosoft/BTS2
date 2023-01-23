@@ -73,6 +73,7 @@ class _SignupPageState extends State<SignupPage> {
 
   bool _ischecked1 = false;
   bool _ischecked2 = false;
+  int _groupValue = 0;
 
   checkUserEmail() async {
     try {
@@ -138,11 +139,19 @@ class _SignupPageState extends State<SignupPage> {
     String strGrade = '';
     String strSteelCode = '';
 
-    if (_selectedCategory == '화주') {
+    // if (_selectedCategory == '화주') {
+    //   strGrade = 'S';
+    // } else if (_selectedCategory == '차주') {
+    //   strGrade = 'D';
+    // } else {
+    //   strGrade = 'S';
+    // }
+
+    if (_groupValue == 0) {
       strGrade = 'S';
-    } else if (_selectedCategory == '차주') {
+    } else if (_groupValue == 1) {
       strGrade = 'D';
-    } else {
+    } else if (_groupValue == 2) {
       strGrade = 'S';
     }
 
@@ -243,22 +252,70 @@ class _SignupPageState extends State<SignupPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 20.0),
-                            child: DropdownButton(
-                                hint: Text('등급'),
-                                isExpanded: true,
-                                items: ['화주', '차주', '영업사원']
-                                    .map((item) => DropdownMenuItem(
-                                          child: Text(item),
-                                          value: item,
-                                        ))
-                                    .toList(),
-                                value: _selectedCategory,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedCategory = value.toString();
-                                  });
-                                }),
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child:
+                              Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                              Expanded(
+                              flex: 1,
+                              child: RadioListTile(
+                                contentPadding: EdgeInsets.all(0),
+                                dense: true,
+                              value: 0,
+                              groupValue: _groupValue,
+                              title: Text("화주", overflow: TextOverflow.ellipsis),
+                              onChanged: (newValue) =>
+                                setState(() => _groupValue = newValue!),
+                                activeColor: Colors.lightBlue[900],
+                                selected: true,
+                                ),
+                              ),
+                              Expanded(
+                              flex: 1,
+                              child: RadioListTile(
+                                contentPadding: EdgeInsets.all(0),
+                                dense: true,
+                              value: 1,
+                              groupValue: _groupValue,
+                              title: Text("차주"),
+                              onChanged: (newValue) =>
+                                setState(() => _groupValue = newValue!),
+                                activeColor: Colors.lightBlue[900],
+                                selected: false,
+                                ),
+                              ),
+                              Expanded(
+                              flex: 1,
+                              child: RadioListTile(
+                              contentPadding: EdgeInsets.all(0),
+                              dense: true,
+                              value: 2,
+                              groupValue: _groupValue,
+                              title: Text("영업사원"),
+                              onChanged: (newValue) =>
+                                setState(() => _groupValue = newValue!),
+                                activeColor: Colors.lightBlue[900],
+                                selected: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                            // child: DropdownButton(
+                            //     hint: Text('등급'),
+                            //     isExpanded: true,
+                            //     items: ['화주', '차주', '영업사원']
+                            //         .map((item) => DropdownMenuItem(
+                            //               child: Text(item),
+                            //               value: item,
+                            //             ))
+                            //         .toList(),
+                            //     value: _selectedCategory,
+                            //     onChanged: (value) {
+                            //       setState(() {
+                            //         _selectedCategory = value.toString();
+                            //       });
+                            //     }),
                           ),
                         ),
                       ),
@@ -388,7 +445,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 20.0),
                             child: TextFormField(
-                              enabled: _selectedCategory != '영업사원',
+                              enabled: _groupValue != 2,
                               controller: userCompanyNoController,
                               validator: (val) =>
                                   val == "" ? "사업자 번호를 입력하세요!" : null,
@@ -412,7 +469,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 20.0),
                             child: TextFormField(
-                              enabled: _selectedCategory == '차주',
+                              enabled: _groupValue == 1,
                               controller: userCarNoController,
                               validator: (val) =>
                                   val == "" ? "차량 번호를 입력하세요!" : null,
@@ -612,3 +669,5 @@ class _SignupPageState extends State<SignupPage> {
     return strReturn;
   }
 }
+
+
