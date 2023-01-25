@@ -301,21 +301,6 @@ class _SignupPageState extends State<SignupPage> {
                               ),
                             ],
                           ),
-                            // child: DropdownButton(
-                            //     hint: Text('등급'),
-                            //     isExpanded: true,
-                            //     items: ['화주', '차주', '영업사원']
-                            //         .map((item) => DropdownMenuItem(
-                            //               child: Text(item),
-                            //               value: item,
-                            //             ))
-                            //         .toList(),
-                            //     value: _selectedCategory,
-                            //     onChanged: (value) {
-                            //       setState(() {
-                            //         _selectedCategory = value.toString();
-                            //       });
-                            //     }),
                           ),
                         ),
                       ),

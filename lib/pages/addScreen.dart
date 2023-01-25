@@ -51,6 +51,7 @@ class _AddAppState extends State<AddScreen> {
   String kakaoLongitude = '-';
 
   String strText = '';
+  int _costValue = 0;
 
   @override
   void initState() {
@@ -299,9 +300,8 @@ class _AddAppState extends State<AddScreen> {
   Widget _bodyWidget() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-      child: Stack(
-        children: [
-          Column(
+      child: SingleChildScrollView(
+        child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -381,86 +381,168 @@ class _AddAppState extends State<AddScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 5,
-                ),
-                TextField(
-                  controller: _priceTextEditingController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      labelText: '차주운임',
-                      hintText: '￦ 가격',
-                      contentPadding: EdgeInsets.symmetric(vertical: 10)),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                // 지불 방식 선택 드롭다운
-                DropdownButton(
-                    hint: Text('지불 방식'),
-                    isExpanded: true,
-                    items: ['후불', '별도 협의', '선불']
-                        .map((item) => DropdownMenuItem(
-                              child: Text(item),
-                              value: item,
-                            ))
-                        .toList(),
-                    value: _selectedCategory_pay,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedCategory_pay = value.toString();
-                      });
-                    }),
-                SizedBox(
-                  height: 5,
-                ),
-                // 비철 등급 선택 드롭다운
-                DropdownButton(
-                    hint: Text('비철 등급'),
-                    isExpanded: true,
-                    items: ['스텐', '알루미늄', '동(구리)', '피선', '작업철', '기타']
-                        .map((item) => DropdownMenuItem(
-                              child: Text(item),
-                              value: item,
-                            ))
-                        .toList(),
-                    value: _selectedCategory_grade,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedCategory_grade = value.toString();
-                      });
-                    }),
-                SizedBox(
-                  height: 5,
-                ),
-                // 내용 입력 필드
-                Container(
-                  height: 200,
-                  decoration: BoxDecoration(
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
                       border: Border.all(
-                    width: 1,
-                    color: Colors.grey,
-                  )),
-                  constraints: BoxConstraints(maxHeight: 50),
-                  child: Scrollbar(
-                    child: TextField(
-                      controller: _contentTextEditingController,
-                      style: TextStyle(fontSize: 17),
-                      keyboardType: TextInputType.multiline,
-                      maxLength: null,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          filled: true,
-                          fillColor: Colors.transparent,
-                          hintMaxLines: 3,
-                          hintText: '기타 전달 사항',
-                          hintStyle: TextStyle(
-                              fontSize: 17, overflow: TextOverflow.clip)),
+                        color: Colors.green,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                            child:  TextField(
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  hintText: '￦ 차주운임',
+                                  border: OutlineInputBorder(),
+                                  labelText: '차주운임',
+                                )
+                            )
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                )
-              ]),
+                ),
+                // Padding(
+                //   padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                //   child: Container(
+                //     width: double.infinity,
+                //     decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       border: Border.all(
+                //         color: Colors.green,
+                //       ),
+                //     ),
+                //     child: Row(
+                //       mainAxisSize: MainAxisSize.max,
+                //       children: [
+                //         Align(
+                //           alignment: AlignmentDirectional(-1, 0),
+                //           child: Padding(
+                //             padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                //             child: Text(
+                //               '지불방식',
+                //               style: TextStyle(
+                //                   fontSize: 16,
+                //                   fontWeight: FontWeight.normal,
+                //                   color: Colors.black),
+                //             ),
+                //           ),
+                //         ),
+                //         Align(
+                //           alignment: AlignmentDirectional(-1, 0),
+                //           child: Padding(
+                //             padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 5),
+                //             child: Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //               children: [
+                //                 Expanded(
+                //                   flex: 1,
+                //                   child: RadioListTile(
+                //                     contentPadding: EdgeInsets.all(0),
+                //                     dense: true,
+                //                     value: 0,
+                //                     groupValue: _costValue,
+                //                     title: Text("후불", overflow: TextOverflow.ellipsis),
+                //                     onChanged: (newValue) =>
+                //                         setState(() => _costValue = newValue!),
+                //                     activeColor: Colors.lightBlue[900],
+                //                     selected: true,
+                //                   ),
+                //                 ),
+                //                 Expanded(
+                //                   flex: 1,
+                //                   child: RadioListTile(
+                //                     contentPadding: EdgeInsets.all(0),
+                //                     dense: true,
+                //                     value: 1,
+                //                     groupValue: _costValue,
+                //                     title: Text("별도 협의"),
+                //                     onChanged: (newValue) =>
+                //                         setState(() => _costValue = newValue!),
+                //                     activeColor: Colors.lightBlue[900],
+                //                     selected: false,
+                //                   ),
+                //                 ),
+                //                 Expanded(
+                //                   flex: 1,
+                //                   child: RadioListTile(
+                //                     contentPadding: EdgeInsets.all(0),
+                //                     dense: true,
+                //                     value: 2,
+                //                     groupValue: _costValue,
+                //                     title: Text("선불"),
+                //                     onChanged: (newValue) =>
+                //                         setState(() => _costValue = newValue!),
+                //                     activeColor: Colors.lightBlue[900],
+                //                     selected: false,
+                //                   ),
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                // 비철 등급 선택 드롭다운
+                // DropdownButton(
+                //     hint: Text('비철 등급'),
+                //     isExpanded: true,
+                //     items: ['스텐', '알루미늄', '동(구리)', '피선', '작업철', '기타']
+                //         .map((item) => DropdownMenuItem(
+                //               child: Text(item),
+                //               value: item,
+                //             ))
+                //         .toList(),
+                //     value: _selectedCategory_grade,
+                //     onChanged: (value) {
+                //       setState(() {
+                //         _selectedCategory_grade = value.toString();
+                //       });
+                //     }),
+                // SizedBox(
+                //   height: 5,
+                // ),
+                // // 내용 입력 필드
+                // Container(
+                //   height: 200,
+                //   decoration: BoxDecoration(
+                //       border: Border.all(
+                //     width: 1,
+                //     color: Colors.grey,
+                //   )),
+                //   constraints: BoxConstraints(maxHeight: 50),
+                //   child: Scrollbar(
+                //     child: TextField(
+                //       controller: _contentTextEditingController,
+                //       style: TextStyle(fontSize: 17),
+                //       keyboardType: TextInputType.multiline,
+                //       maxLength: null,
+                //       maxLines: null,
+                //       decoration: InputDecoration(
+                //           border: InputBorder.none,
+                //           filled: true,
+                //           fillColor: Colors.transparent,
+                //           hintMaxLines: 3,
+                //           hintText: '기타 전달 사항',
+                //           hintStyle: TextStyle(
+                //               fontSize: 17, overflow: TextOverflow.clip)),
+                //     ),
+                //   ),
+                // )
+              ]
+          ),
           // Consumer<ServiceProvider>(builder: ((context, value, child) {
           //   // 중고물품 데이터 등록중인 경우 로딩 위젯 표시
           //   if (value.isDataFetching) {
@@ -471,7 +553,7 @@ class _AddAppState extends State<AddScreen> {
           //     return Container(height: 0, width: 0);
           //   }
           // }))
-        ],
+        //],
       ),
     );
   }
