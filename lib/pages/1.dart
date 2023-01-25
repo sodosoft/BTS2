@@ -9,7 +9,8 @@ import 'package:bangtong/login/login.dart';
 
 import '../../model/orderboard.dart';
 import '../function/displaystring.dart';
-import 'addScreen.dart'; //flutter의 package를 가져오는 코드 반드시 필요
+import 'addScreen.dart';
+import 'editScreen.dart'; //flutter의 package를 가져오는 코드 반드시 필요
 
 class first extends StatefulWidget {
   const first({Key? key}) : super(key: key);
@@ -82,11 +83,11 @@ class _MyAppState extends State<first> {
                             '\n' + snapshot.data[index].cost),
                         isThreeLine: true,
                         onTap: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) =>
-                          //             DetailPage(snapshot.data[index])));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditScreen(snapshot.data[index])));
                         },
                       ),
                     );
