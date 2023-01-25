@@ -43,9 +43,6 @@ class _AddAppState extends State<AddScreen> {
 
   DateTime? tempPickedDate;
 
-  String _selectedCategory_start = '동국제강(인천)';
-  String _selectedCategory_grade = '스텐';
-  String _selectedCategory_pay = '후불';
   final ImagePicker _imagePicker = ImagePicker();
   List<XFile> _pickerImgList = [];
 
@@ -121,24 +118,24 @@ class _AddAppState extends State<AddScreen> {
           onPressed: (() => Navigator.pop(context))),
       backgroundColor: Colors.green,
       elevation: 1,
-      // title: Text(
-      //   '배차 등록',
-      //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      // ),
+      title: const Text(
+        '배차 등록',
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold),
+      ),
       actions: [
         Container(
             height: 15,
-            child: TextButton(
-                onPressed: () {
-                  _addArticle();
-                },
-                child: Text(
-                  '배차 등록',
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ))),
+            child: IconButton(
+              icon: new Icon(Icons.add),
+              tooltip: '등록',
+              onPressed: () {
+                _addArticle();
+              },
+            )
+        ),
       ],
     );
   }
