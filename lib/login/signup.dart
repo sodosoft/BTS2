@@ -252,7 +252,7 @@ class _SignupPageState extends State<SignupPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
+                            padding: const EdgeInsets.only(left: 5.0),
                             child:
                               Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,

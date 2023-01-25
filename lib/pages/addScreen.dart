@@ -32,9 +32,6 @@ class _AddAppState extends State<AddScreen> {
   late TextEditingController _endTextEditingController;
   late TextEditingController _startDetailTextEditingController;
   late TextEditingController _endDetailTextEditingController;
-
-
-
   late TextEditingController _gradeTextEditingController;
 
   String _selectedCategory_start = '동국제강(인천)';
@@ -51,7 +48,12 @@ class _AddAppState extends State<AddScreen> {
   String kakaoLongitude = '-';
 
   String strText = '';
-  int _costValue = 0;
+
+  int _methodValue = 0;
+  int _carKindValue = 0;
+  int _productValue = 0;
+  int _bichulValue = 0;
+  int _highmethodValue = 0;
 
   @override
   void initState() {
@@ -391,23 +393,379 @@ class _AddAppState extends State<AddScreen> {
                         color: Colors.green,
                       ),
                     ),
-                    child: Row(
+                    child: TextField(
+                        controller: _priceTextEditingController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: '￦ 차주운임',
+                          // border: OutlineInputBorder(),
+                          labelText: '차주운임',
+                          contentPadding: EdgeInsets.only(left: 10,top: 2.0),
+                        )
+                    )
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 5),
+                  child: Container(
+                    width: double.infinity,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.green,
+                      ),
+                    ),
+                    child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Align(
                           alignment: AlignmentDirectional(-1, 0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
-                            child:  TextField(
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  hintText: '￦ 차주운임',
-                                  border: OutlineInputBorder(),
-                                  labelText: '차주운임',
-                                )
-                            )
+                            child: Text(
+                              '지불방식',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.purple),
+                            ),
                           ),
                         ),
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child:
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.all(0),
+                                    dense: true,
+                                    value: 0,
+                                    groupValue: _methodValue,
+                                    title: Text("후불제", overflow: TextOverflow.ellipsis),
+                                    onChanged: (newValue) =>
+                                        setState(() => _methodValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: true,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.all(0),
+                                    dense: true,
+                                    value: 1,
+                                    groupValue: _methodValue,
+                                    title: Text("별도합의"),
+                                    onChanged: (newValue) =>
+                                        setState(() => _methodValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: false,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.all(0),
+                                    dense: true,
+                                    value: 2,
+                                    groupValue: _methodValue,
+                                    title: Text("선불제"),
+                                    onChanged: (newValue) =>
+                                        setState(() => _methodValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: false,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 5),
+                  child: Container(
+                    width: double.infinity,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.green,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                            child: Text(
+                              '차종',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.purple),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child:
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    dense: true,
+                                    value: 0,
+                                    groupValue: _carKindValue,
+                                    title: Text("방통차", overflow: TextOverflow.ellipsis),
+                                    onChanged: (newValue) =>
+                                        setState(() => _carKindValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: true,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    dense: true,
+                                    value: 1,
+                                    groupValue: _carKindValue,
+                                    title: Text("집게차"),
+                                    onChanged: (newValue) =>
+                                        setState(() => _carKindValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: false,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    dense: true,
+                                    value: 2,
+                                    groupValue: _carKindValue,
+                                    title: Text("반방통차"),
+                                    onChanged: (newValue) =>
+                                        setState(() => _carKindValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: false,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    dense: true,
+                                    value: 3,
+                                    groupValue: _carKindValue,
+                                    title: Text("카고"),
+                                    onChanged: (newValue) =>
+                                        setState(() => _carKindValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: false,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 5),
+                  child: Container(
+                    width: double.infinity,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.green,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                            child: Text(
+                              '품목',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.purple),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child:
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.all(0),
+                                    dense: true,
+                                    value: 0,
+                                    groupValue: _productValue,
+                                    title: Text("고철", overflow: TextOverflow.ellipsis),
+                                    onChanged: (newValue) =>
+                                        setState(() => _productValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: true,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.all(0),
+                                    dense: true,
+                                    value: 1,
+                                    groupValue: _productValue,
+                                    title: Text("비철"),
+                                    onChanged: (newValue) =>
+                                        setState(() => _productValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: false,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: TextField(
+                                      enabled: _productValue == 0,
+                                      controller: _gradeTextEditingController,
+                                      keyboardType: TextInputType.text,
+                                      decoration: InputDecoration(
+                                        hintText: '고철등급',
+                                        // border: OutlineInputBorder(),
+                                        labelText: '고철등급',
+                                        contentPadding: EdgeInsets.only(left: 5,top: 2.0,right: 2.0),
+                                      )
+                                  )
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // Align(
+                        //   alignment: AlignmentDirectional(-1, 0),
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.only(left: 5.0),
+                        //     child:
+                        //     Row(
+                        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //       children: [
+                        //         Expanded(
+                        //           flex: 1,
+                        //           child: RadioListTile(
+                        //             contentPadding: EdgeInsets.zero,
+                        //             dense: true,
+                        //             value: 0,
+                        //             groupValue: _bichulValue,
+                        //             title: Text("스텐", overflow: TextOverflow.ellipsis),
+                        //             onChanged: (newValue) =>
+                        //                 setState(() => _bichulValue = newValue!),
+                        //             activeColor: Colors.lightBlue[900],
+                        //             selected: true,
+                        //           ),
+                        //         ),
+                        //         Expanded(
+                        //           flex: 1,
+                        //           child: RadioListTile(
+                        //             contentPadding: EdgeInsets.zero,
+                        //             dense: true,
+                        //             value: 1,
+                        //             groupValue: _bichulValue,
+                        //             title: Text("알루미늄"),
+                        //             onChanged: (newValue) =>
+                        //                 setState(() => _bichulValue = newValue!),
+                        //             activeColor: Colors.lightBlue[900],
+                        //             selected: false,
+                        //           ),
+                        //         ),
+                        //         Expanded(
+                        //           flex: 1,
+                        //           child: RadioListTile(
+                        //             contentPadding: EdgeInsets.zero,
+                        //             dense: true,
+                        //             value: 2,
+                        //             groupValue: _bichulValue,
+                        //             title: Text("동(구리)"),
+                        //             onChanged: (newValue) =>
+                        //                 setState(() => _bichulValue = newValue!),
+                        //             activeColor: Colors.lightBlue[900],
+                        //             selected: false,
+                        //           ),
+                        //         ),
+                        //         Expanded(
+                        //           flex: 1,
+                        //           child: RadioListTile(
+                        //             contentPadding: EdgeInsets.zero,
+                        //             dense: true,
+                        //             value: 3,
+                        //             groupValue: _bichulValue,
+                        //             title: Text("피선"),
+                        //             onChanged: (newValue) =>
+                        //                 setState(() => _bichulValue = newValue!),
+                        //             activeColor: Colors.lightBlue[900],
+                        //             selected: false,
+                        //           ),
+                        //         ),
+                        //         Expanded(
+                        //           flex: 1,
+                        //           child: RadioListTile(
+                        //             contentPadding: EdgeInsets.zero,
+                        //             dense: true,
+                        //             value: 4,
+                        //             groupValue: _bichulValue,
+                        //             title: Text("작업철"),
+                        //             onChanged: (newValue) =>
+                        //                 setState(() => _bichulValue = newValue!),
+                        //             activeColor: Colors.lightBlue[900],
+                        //             selected: false,
+                        //           ),
+                        //         ),
+                        //         Expanded(
+                        //           flex: 1,
+                        //           child: RadioListTile(
+                        //             contentPadding: EdgeInsets.zero,
+                        //             dense: true,
+                        //             value: 5,
+                        //             groupValue: _bichulValue,
+                        //             title: Text("기타"),
+                        //             onChanged: (newValue) =>
+                        //                 setState(() => _bichulValue = newValue!),
+                        //             activeColor: Colors.lightBlue[900],
+                        //             selected: false,
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
