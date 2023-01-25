@@ -12,9 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:remedi_kopo/remedi_kopo.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({Key? key}) : super(key: key);
@@ -33,6 +35,13 @@ class _AddAppState extends State<AddScreen> {
   late TextEditingController _startDetailTextEditingController;
   late TextEditingController _endDetailTextEditingController;
   late TextEditingController _gradeTextEditingController;
+
+  late TextEditingController _DataTimeEditingController;
+  late TextEditingController _EstimatedEditingController;
+
+  late TextEditingController _StartTimeEditingController;
+
+  DateTime? tempPickedDate;
 
   String _selectedCategory_start = '동국제강(인천)';
   String _selectedCategory_grade = '스텐';
@@ -54,6 +63,13 @@ class _AddAppState extends State<AddScreen> {
   int _productValue = 0;
   int _bichulValue = 0;
   int _highmethodValue = 0;
+  int _bottomKindValue = 0;
+
+  DateTime _dateTime = DateTime.now();
+  String _selectedDate1 = '';
+  String _selectedTime1 = '';
+  String _selectedDate2 = '';
+  String _selectedTime2 = '';
 
   @override
   void initState() {
@@ -69,6 +85,11 @@ class _AddAppState extends State<AddScreen> {
 
     _startDetailTextEditingController = TextEditingController();
     _endDetailTextEditingController = TextEditingController();
+
+    _DataTimeEditingController = TextEditingController();
+    _EstimatedEditingController = TextEditingController();
+
+    _StartTimeEditingController =  TextEditingController();
   }
 
   @override
@@ -95,15 +116,15 @@ class _AddAppState extends State<AddScreen> {
       leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_outlined,
-            color: Colors.black,
+            color: Colors.white,
           ),
           onPressed: (() => Navigator.pop(context))),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.green,
       elevation: 1,
-      title: Text(
-        '배차 등록',
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
+      // title: Text(
+      //   '배차 등록',
+      //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      // ),
       actions: [
         Container(
             height: 15,
@@ -112,11 +133,11 @@ class _AddAppState extends State<AddScreen> {
                   _addArticle();
                 },
                 child: Text(
-                  '등록',
+                  '배차 등록',
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xfff08f4f)),
+                      color: Colors.white),
                 ))),
       ],
     );
@@ -406,7 +427,7 @@ class _AddAppState extends State<AddScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 5),
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 6, 12, 5),
                   child: Container(
                     width: double.infinity,
                     height: 80,
@@ -491,7 +512,7 @@ class _AddAppState extends State<AddScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 5),
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 6, 12, 5),
                   child: Container(
                     width: double.infinity,
                     height: 80,
@@ -590,7 +611,7 @@ class _AddAppState extends State<AddScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 5),
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 6, 12, 5),
                   child: Container(
                     width: double.infinity,
                     height: 80,
@@ -670,6 +691,7 @@ class _AddAppState extends State<AddScreen> {
                             ),
                           ),
                         ),
+
                         // Align(
                         //   alignment: AlignmentDirectional(-1, 0),
                         //   child: Padding(
@@ -766,6 +788,178 @@ class _AddAppState extends State<AddScreen> {
                         //     ),
                         //   ),
                         // ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 6, 12, 0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.green,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                      Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                            child: Text(
+                              '상차일시',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.purple),
+                              ),
+                            ),
+                          ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 2),
+                          child: Column(
+                            children:
+                            <Widget>[
+                              ElevatedButton(
+                                child: Text('상차날짜'),
+                                onPressed: () {
+                                  Future<DateTime?> selectedDate = showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(), firstDate: DateTime(2018),lastDate: DateTime(2030),
+                                  );
+                                  selectedDate.then((DateTime){
+                                    setState(() {
+                                      _selectedDate1 = '${DateTime?.year}-${DateTime?.month}-${DateTime?.day}';
+                                    });
+                                  });
+                                },
+                              ),
+                              Text(
+                                  '$_selectedDate1'
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 2),
+                          child: Column(
+                              children:
+                              <Widget>[
+                                ElevatedButton(
+                                  child: Text('상차시간'),
+                                  onPressed: () {
+                                    Future<TimeOfDay?> selectedTime = showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay.now()
+                                    );
+                                    selectedTime.then((timeOfDay){
+                                      setState(() {
+                                        _selectedTime1 = '${timeOfDay?.hour}:${timeOfDay?.minute}';
+                                      });
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  '$_selectedTime1'
+                                ),
+                              ],
+                          ),
+                        ),
+                       ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 6, 12, 0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.green,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-1, 0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                                child: Text(
+                                  '하차일시',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.purple),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 2),
+                              child: Column(
+                                children:
+                                <Widget>[
+                                  ElevatedButton(
+                                    child: Text('하차날짜'),
+                                    onPressed: () {
+                                      Future<DateTime?> selectedDate = showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(), firstDate: DateTime(2018),lastDate: DateTime(2030),
+                                      );
+                                      selectedDate.then((DateTime){
+                                        setState(() {
+                                          _selectedDate2 = '${DateTime?.year}-${DateTime?.month}-${DateTime?.day}';
+                                        });
+                                      });
+                                    },
+                                  ),
+                                  Text(
+                                      '$_selectedDate2'
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 2),
+                              child: Column(
+                                children:
+                                <Widget>[
+                                  ElevatedButton(
+                                    child: Text('하차시간'),
+                                    onPressed: () {
+                                      Future<TimeOfDay?> selectedTime = showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now()
+                                      );
+                                      selectedTime.then((timeOfDay){
+                                        setState(() {
+                                          _selectedTime2 = '${timeOfDay?.hour}:${timeOfDay?.minute}';
+                                        });
+                                      });
+                                    },
+                                  ),
+                                  Text(
+                                      '$_selectedTime2'
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -899,8 +1093,6 @@ class _AddAppState extends State<AddScreen> {
                 //     ),
                 //   ),
                 // )
-              ]
-          ),
           // Consumer<ServiceProvider>(builder: ((context, value, child) {
           //   // 중고물품 데이터 등록중인 경우 로딩 위젯 표시
           //   if (value.isDataFetching) {
@@ -911,8 +1103,179 @@ class _AddAppState extends State<AddScreen> {
           //     return Container(height: 0, width: 0);
           //   }
           // }))
-        //],
-      ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 5),
+                  child: Container(
+                    width: double.infinity,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.green,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                            child: Text(
+                              '상차방법',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.purple),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child:
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    dense: true,
+                                    value: 0,
+                                    groupValue: _highmethodValue,
+                                    title: Text("포크레인", overflow: TextOverflow.ellipsis),
+                                    onChanged: (newValue) =>
+                                        setState(() => _highmethodValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: true,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    dense: true,
+                                    value: 1,
+                                    groupValue: _highmethodValue,
+                                    title: Text("집게차"),
+                                    onChanged: (newValue) =>
+                                        setState(() => _highmethodValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: false,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    dense: true,
+                                    value: 2,
+                                    groupValue: _highmethodValue,
+                                    title: Text("지게차"),
+                                    onChanged: (newValue) =>
+                                        setState(() => _highmethodValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: false,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    dense: true,
+                                    value: 3,
+                                    groupValue: _highmethodValue,
+                                    title: Text("호이스트"),
+                                    onChanged: (newValue) =>
+                                        setState(() => _highmethodValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: false,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 5),
+                  child: Container(
+                    width: double.infinity,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.green,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                            child: Text(
+                              '바닥',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.purple),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child:
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    dense: true,
+                                    value: 0,
+                                    groupValue: _bottomKindValue,
+                                    title: Text("가능", overflow: TextOverflow.ellipsis),
+                                    onChanged: (newValue) =>
+                                        setState(() => _bottomKindValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: true,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: RadioListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    dense: true,
+                                    value: 1,
+                                    groupValue: _bottomKindValue,
+                                    title: Text("불가능"),
+                                    onChanged: (newValue) =>
+                                        setState(() => _bottomKindValue = newValue!),
+                                    activeColor: Colors.lightBlue[900],
+                                    selected: false,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+          ],
+        ),
+      ) ,
     );
   }
 
@@ -922,6 +1285,38 @@ class _AddAppState extends State<AddScreen> {
       resizeToAvoidBottomInset: false,
       appBar: _appbarWidget(),
       body: _bodyWidget(),
+    );
+  }
+
+  Widget DateText(int flag) {
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        _selectDataCalendar_Expecteddate_visit(context);
+      },
+      child: AbsorbPointer(
+        child: Container(
+        width: MediaQuery.of(context).size.width,
+        padding:
+          const EdgeInsets.only(right: 10, left: 10, top: 10),
+          child: TextFormField(
+          style: TextStyle(fontSize: 16),
+          decoration: InputDecoration(
+          contentPadding: new EdgeInsets.symmetric(
+          vertical: 10.0, horizontal: 10.0),
+          isDense: true,
+          hintText: "상차 날짜",
+          enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+            ),
+          ),
+          controller: _DataTimeEditingController,
+          ),
+        ),
+      ),
     );
   }
 
@@ -980,6 +1375,125 @@ class _AddAppState extends State<AddScreen> {
     result.text =
     '${model.address!} ${model.buildingName!}';
     // '${model.zonecode!} ${model.address!} ${model.buildingName!}';
+  }
+
+  void _selectDataCalendar_Expecteddate_visit(BuildContext context) {
+    showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return SafeArea(
+              child: Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 1.1,
+                  height: 550,
+                  child: SfDateRangePicker(
+                    monthViewSettings: DateRangePickerMonthViewSettings(
+                      dayFormat: 'EEE',
+                    ),
+                    monthFormat: 'MMM',
+                    showNavigationArrow: true,
+                    headerStyle: DateRangePickerHeaderStyle(
+                      textAlign: TextAlign.center,
+                      textStyle: TextStyle(fontSize: 25, color: Colors.blueAccent),
+                    ),
+                    headerHeight: 80,
+                    view: DateRangePickerView.month,
+                    allowViewNavigation: false,
+                    backgroundColor: ThemeData.light().scaffoldBackgroundColor,
+                    initialSelectedDate: DateTime.now(),
+                    minDate: DateTime.now(),
+                    // 아래코드는 tempPickedDate를 전역으로 받아 시작일을 선택한 날자로 시작할 수 있음
+                    //minDate: tempPickedDate,
+                    maxDate: DateTime.now().add(new Duration(days: 365)),
+                    // 아래 코드는 선택시작일로부터 2주까지밖에 날자 선택이 안됌
+                    //maxDate: tempPickedDate!.add(new Duration(days: 14)),
+                    selectionMode: DateRangePickerSelectionMode.single,
+                    confirmText: '완료',
+                    cancelText: '취소',
+                    onSubmit: (args) => {
+                      setState(() {
+                        _EstimatedEditingController.clear();
+                        //tempPickedDate = args as DateTime?;
+                        _DataTimeEditingController.text = args.toString();
+                        convertDateTimeDisplay(
+                            _DataTimeEditingController.text, '상차시간');
+                        Navigator.of(context).pop();
+                      }),
+                    },
+                    onCancel: () => Navigator.of(context).pop(),
+                    showActionButtons: true,
+                  ),
+                ),
+              ));
+        });
+  }
+
+  String convertDateTimeDisplay(String date, String text) {
+    final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+    final DateFormat serverFormater = DateFormat('yyyy-MM-dd');
+    final DateTime displayDate = displayFormater.parse(date);
+    if (text == '상차날짜') {
+      _EstimatedEditingController.clear();
+      return _DataTimeEditingController.text =
+          serverFormater.format(displayDate);
+    } else
+      return _EstimatedEditingController.text =
+          serverFormater.format(displayDate);
+  }
+
+  Widget hourMinute12H(){
+    return new TimePickerSpinner(
+      is24HourMode: false,
+      onTimeChange: (time) {
+        setState(() {
+          _dateTime = time;
+        });
+      },
+    );
+  }
+  Widget hourMinuteSecond(){
+    return new TimePickerSpinner(
+      isShowSeconds: true,
+      onTimeChange: (time) {
+        setState(() {
+          _dateTime = time;
+        });
+      },
+    );
+  }
+  Widget hourMinute15Interval(){
+    return new TimePickerSpinner(
+      spacing: 40,
+      minutesInterval: 15,
+      onTimeChange: (time) {
+        setState(() {
+          _dateTime = time;
+          _StartTimeEditingController.text += ' ' + _dateTime.toString();
+        });
+      },
+    );
+  }
+  Widget hourMinute12HCustomStyle(){
+    return new TimePickerSpinner(
+      is24HourMode: false,
+      normalTextStyle: TextStyle(
+          fontSize: 24,
+          color: Colors.deepOrange
+      ),
+      highlightedTextStyle: TextStyle(
+          fontSize: 24,
+          color: Colors.yellow
+      ),
+      spacing: 50,
+      itemHeight: 80,
+      isForce2Digits: true,
+      minutesInterval: 15,
+      onTimeChange: (time) {
+        setState(() {
+          _dateTime = time;
+        });
+      },
+    );
   }
 }
 
