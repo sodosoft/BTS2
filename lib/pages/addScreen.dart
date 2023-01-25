@@ -515,7 +515,7 @@ class _AddAppState extends State<AddScreen> {
                   padding: EdgeInsetsDirectional.fromSTEB(12, 6, 12, 5),
                   child: Container(
                     width: double.infinity,
-                    height: 80,
+                    height: 100,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
@@ -553,7 +553,7 @@ class _AddAppState extends State<AddScreen> {
                                     dense: true,
                                     value: 0,
                                     groupValue: _carKindValue,
-                                    title: Text("방통차", overflow: TextOverflow.ellipsis),
+                                    title: Text("방통차"),
                                     onChanged: (newValue) =>
                                         setState(() => _carKindValue = newValue!),
                                     activeColor: Colors.lightBlue[900],
@@ -1107,7 +1107,7 @@ class _AddAppState extends State<AddScreen> {
                   padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 5),
                   child: Container(
                     width: double.infinity,
-                    height: 80,
+                    height: 100,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
@@ -1145,7 +1145,7 @@ class _AddAppState extends State<AddScreen> {
                                     dense: true,
                                     value: 0,
                                     groupValue: _highmethodValue,
-                                    title: Text("포크레인", overflow: TextOverflow.ellipsis),
+                                    title: Text('포크레인'),
                                     onChanged: (newValue) =>
                                         setState(() => _highmethodValue = newValue!),
                                     activeColor: Colors.lightBlue[900],
@@ -1159,7 +1159,7 @@ class _AddAppState extends State<AddScreen> {
                                     dense: true,
                                     value: 1,
                                     groupValue: _highmethodValue,
-                                    title: Text("집게차"),
+                                    title: Text('집게차'),
                                     onChanged: (newValue) =>
                                         setState(() => _highmethodValue = newValue!),
                                     activeColor: Colors.lightBlue[900],
@@ -1173,7 +1173,7 @@ class _AddAppState extends State<AddScreen> {
                                     dense: true,
                                     value: 2,
                                     groupValue: _highmethodValue,
-                                    title: Text("지게차"),
+                                    title: Text('지게차'),
                                     onChanged: (newValue) =>
                                         setState(() => _highmethodValue = newValue!),
                                     activeColor: Colors.lightBlue[900],
@@ -1187,7 +1187,7 @@ class _AddAppState extends State<AddScreen> {
                                     dense: true,
                                     value: 3,
                                     groupValue: _highmethodValue,
-                                    title: Text("호이스트"),
+                                    title: Text('호이스트'),
                                     onChanged: (newValue) =>
                                         setState(() => _highmethodValue = newValue!),
                                     activeColor: Colors.lightBlue[900],
