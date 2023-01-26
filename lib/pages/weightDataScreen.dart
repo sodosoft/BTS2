@@ -85,7 +85,7 @@ class _MyAppState extends State<weightDataScreen> {
             SizedBox(height: 10.0),
             showImage(),
             SizedBox(
-              height: 25.0,
+              height: 20.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
