@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bangtong/pages/weightDataScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bangtong/login/login.dart';
@@ -10,50 +11,39 @@ import 'package:intl/intl.dart';
 import '../../api/api.dart';
 import '../function/displaystring.dart';
 
-class third extends StatefulWidget {
-  const third({Key? key}) : super(key: key);
+class third_D extends StatefulWidget {
+  const third_D({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<third> {
+class _MyAppState extends State<third_D> {
   int _itemCnt = 0;
   int _subTotal = 0;
   String itmCnt = '';
 
-  Future<List<OrderData>?> _getPost() async {
+  Future<List<OrderData_driver>?> _getPost() async {
     try {
-      var respone = await http.post(Uri.parse(API.order_HISTORY), body: {
-        'orderID': LoginPage.allID,
+      var respone = await http.post(Uri.parse(API.order_D_HISTORY), body: {
+        'userCarNo': LoginPage.allCarNo,
       });
 
       if (respone.statusCode == 200) {
         final result = utf8.decode(respone.bodyBytes);
         List<dynamic> json = jsonDecode(result);
-        List<OrderData> boardList = [];
+        List<OrderData_driver> boardList = [];
 
         for (var item in json.reversed) {
-          OrderData boardData = OrderData(
+          OrderData_driver boardData = OrderData_driver(
               item['orderID'],
-              item['orderIndex'],
               item['startArea'],
               item['endArea'],
               item['cost'],
-              item['payMethod'],
-              item['carKind'],
-              item['product'],
-              item['grade'],
               item['startDateTime'],
               item['endDateTime'],
-              item['end1'],
-              item['bottom'],
-              item['startMethod'],
               item['steelCode'],
-              item['orderYN'],
-              item['confirmYN'],
               item['orderTel'],
-              item['companyName'],
               item['userCarNo']);
           boardList.add(boardData);
         }
@@ -188,7 +178,7 @@ int CostAdd(data) {
 }
 
 class DetailPage extends StatelessWidget {
-  final OrderData postData;
+  final OrderData_driver postData;
 
   DetailPage(this.postData); // 생성자를 통해서 입력변수 받기
 
@@ -204,18 +194,21 @@ class DetailPage extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
         child:
-            Text('상차지: ' + postData.startArea.toString()  + '\n' +
-                 '하차지: ' + postData.endArea.toString()  + '\n' +
+            Text('상차지: ' + postData.startArea + '\n' +
+                 '하차지: ' + postData.endArea + '\n' +
                  '상차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(postData.startDateTime)) + '\n' +
                  '하차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(postData.endDateTime)) + '\n' +
-                 '운반비: ￦' + postData.cost + "원"  + '\n' +
-                 '지불방식: ' + postData.payMethod.toString()  + '\n' +
-                 '차종: ' + postData.carKind.toString()  + '\n' +
-                 '품목: ' + postData.product.toString()  + '\n' +
-                 '등급: ' + postData.grade.toString()  + '\n' +
-                 '상차방법: ' + postData.startMethod.toString()  + '\n' +
-                 '차량번호: ' + postData.userCarNo.toString()
+                 '운반비: ￦' + postData.cost + "원"
             ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: "계근정보 보내기",
+        onPressed: () async {
+           final reuslt = await Navigator.push(
+               context, MaterialPageRoute(builder: ((context) => weightDataScreen(postData.orderTel))));
+        },
+        backgroundColor: Colors.blueAccent,
+        child: const Icon(Icons.camera_alt_outlined),
       ),
       //body: Text(postData.content),
     );

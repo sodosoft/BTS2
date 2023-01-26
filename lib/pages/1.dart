@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bangtong/pages/addOrder.dart';
+import 'package:bangtong/pages/weightDataScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bangtong/api/api.dart';
@@ -112,8 +113,11 @@ class _MyAppState extends State<first> {
                       return Card(
                         child: ListTile(
                           title: Text(DisplayString.displayArea(snapshot.data[index].startArea) + " >> " + DisplayString.displayArea(snapshot.data[index].endArea)),
-                          subtitle: Text(snapshot.data[index].startDateTime +
-                              '\n' + snapshot.data[index].cost),
+                          subtitle: Text('상차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].startDateTime)) +
+                              '\n' +
+                              '하차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].endDateTime)) +
+                              '\n' +
+                              '운반비: ￦' + snapshot.data[index].cost + "원"),
                           isThreeLine: true,
                           onTap: () {
                             Navigator.push(

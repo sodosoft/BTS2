@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class DisplayString{
   String resultDisplay;
 
@@ -32,6 +34,15 @@ class DisplayString{
     resultDate = listDate[0].substring(0,5).replaceAll('-', '월')  +
                  listDate[0].substring(5,3).replaceAll('-', '일');
     result = resultDate;
+
+    return result;
+  }
+
+  static displayCost(resultDisplay)
+  {
+    String result = '';
+    var f = NumberFormat('###,###,###,###');
+    result = f.format(int.parse(resultDisplay)).toString();
 
     return result;
   }
