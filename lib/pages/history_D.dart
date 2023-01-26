@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bangtong/pages/weightDataScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bangtong/login/login.dart';
 import 'package:bangtong/model/orderboard.dart'; //flutter의 package를 가져오는 코드 반드시 필요
@@ -19,9 +20,9 @@ class third_D extends StatefulWidget {
 }
 
 class _MyAppState extends State<third_D> {
-  int _itemCnt = 0;
-  int _subTotal = 0;
+  String subTotal = '';
   String itmCnt = '';
+  var itemCounterController = TextEditingController();
 
   Future<List<OrderData_driver>?> _getPost() async {
     try {
@@ -48,6 +49,11 @@ class _MyAppState extends State<third_D> {
           boardList.add(boardData);
         }
 
+        itmCnt = boardList.length.toString();
+        subTotal = CostAdd(boardList);
+        itemCounterController.text = '   총 $itmCnt 건  합계 $subTotal원';
+
+
         return boardList;
       } else {
         Fluttertoast.showToast(msg: '데이터 로딩 실패!');
@@ -62,8 +68,7 @@ class _MyAppState extends State<third_D> {
   @override
   void initState() {
     super.initState();
-
-    _getPost();
+    //_getPost();
   }
 
   final myController = TextEditingController();
@@ -117,9 +122,6 @@ class _MyAppState extends State<third_D> {
               future: _getPost(),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-                  _subTotal = CostAdd(snapshot.data);
-                  itmCnt = snapshot.data.length.toString();
-
                   return ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
@@ -160,6 +162,14 @@ class _MyAppState extends State<third_D> {
             // 총 건수 & 총 합
             color: Colors.green,
             height: 50,
+            child: Column(
+              children: [
+                TextField(
+                  style: TextStyle(color: Colors.white),
+                  controller: itemCounterController
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -167,14 +177,20 @@ class _MyAppState extends State<third_D> {
   }
 }
 
-int CostAdd(data) {
+String CostAdd(data) {
   int _add = 0;
+  String result = '';
+  int trimstr = 0;
 
-  for (int i = 0; i > data.length; i++) {
-    _add += int.parse(data[i].cost);
+  for (int i = 0; i < data.length; i++) {
+    trimstr = int.parse(data[i].cost.replaceAll(RegExp('[^a-zA-Z0-9가-힣\\s]'), "").trim());
+    _add += trimstr;
   }
 
-  return _add;
+  var f = NumberFormat.currency(locale: 'ko_KR', symbol: '₩');
+  result = f.format(_add).toString();
+
+  return result;
 }
 
 class DetailPage extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bangtong/pages/driver_first.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,6 +17,7 @@ import '../../login/login.dart';
 import '../../model/board.dart';
 import '../../model/user.dart';
 import '../user_pref.dart';
+import 'history_D.dart';
 
 class MainScreenDriver extends StatefulWidget {
   MainScreenDriver({Key? key}) : super(key: key);
@@ -28,13 +30,13 @@ class _MainScreen extends State<MainScreenDriver> {
 
   final List<Widget> _widgetOptions = <Widget>[
     // MainScreen(),
-    //first(),  // 배차 등록 현황
+    Driver_first(),  // 배차 등록 현황
     board(), // 게시판
     //boardData(),
     //costList(),
     //WebViewCost(),
-    third(), // 배차 내역
-    four(),
+    third_D(), // 배차 내역
+    four(), // 상담문의
     setting() // 상담 문의
   ];
 
@@ -47,7 +49,6 @@ class _MainScreen extends State<MainScreenDriver> {
   }
 
   PreferredSizeWidget _appbarWidget() {
-
     return AppBar(
       backgroundColor: Colors.green,
       automaticallyImplyLeading: false,
@@ -95,10 +96,6 @@ class _MainScreen extends State<MainScreenDriver> {
             label: '공지사항',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.auto_graph),
-            label: '단가표',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.list_alt),
             label: '배차 내역',
           ),
@@ -106,6 +103,11 @@ class _MainScreen extends State<MainScreenDriver> {
             // icon: Icon(Icons.support_agent),
             icon: Icon(Icons.chat),
             label: '상담 문의',
+          ),
+          BottomNavigationBarItem(
+            // icon: Icon(Icons.support_agent),
+            icon: Icon(Icons.settings),
+            label: '설정',
           ),
         ],
         currentIndex: _selectedIndex, // 지정 인덱스로 이동

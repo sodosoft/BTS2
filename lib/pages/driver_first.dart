@@ -14,14 +14,15 @@ import '../function/displaystring.dart';
 import 'addScreen.dart';
 import 'editScreen.dart'; //flutter의 package를 가져오는 코드 반드시 필요
 
-class first extends StatefulWidget {
-  const first({Key? key}) : super(key: key);
+class Driver_first extends StatefulWidget {
+  const Driver_first({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<first> {
+class _MyAppState extends State<Driver_first> {
+
   Future<List<OrderData>?> _getPost() async {
     try {
       var respone = await http.post(Uri.parse(API.orderBoard), body: {

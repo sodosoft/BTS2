@@ -61,8 +61,8 @@ dependencies:
   font_awesome_flutter: 10.1.0
   dropdown_button2: ^1.9.2
   permission_handler: ^9.2.0
-  flutter_sms: ^2.3.2
-  share_extend: ^2.0.0
+  flutter_sms: ^2.3.3
+  share_plus: ^6.3.0
 
 dev_dependencies:
   flutter_test:

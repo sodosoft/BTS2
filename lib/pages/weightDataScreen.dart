@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_sms/flutter_sms.dart';
+import 'package:share_plus/share_plus.dart';
 
 class weightDataScreen extends StatefulWidget {
   final String orderTel;
@@ -19,6 +20,10 @@ class _MyAppState extends State<weightDataScreen> {
   File? _image;
   final picker = ImagePicker();
   String orderTel = '';
+  String? _message;
+  List<String> people = [];
+
+  String _path = '';
 
   @override
   void initState() {
@@ -33,6 +38,7 @@ class _MyAppState extends State<weightDataScreen> {
     final image = await picker.pickImage(source: imageSource);
 
     setState(() {
+      _path = image!.path;
       _image = File(image!.path); // 가져온 이미지를 _image에 저장
     });
   }
@@ -107,8 +113,10 @@ class _MyAppState extends State<weightDataScreen> {
               height: 15.0,
             ),
             GestureDetector(
-              onTap: () {
-                  SendImage(orderTel,_image);
+              onTap: () async {
+                Clipboard.setData(ClipboardData(text: orderTel));
+                await Share.shareFiles([_path],text: '계근 사진');
+                //_send();
               },
               child: Container(
                 child: Padding(
@@ -134,10 +142,28 @@ class _MyAppState extends State<weightDataScreen> {
           ],
         ));
   }
+
+  Future<void> _sendSMS(List<String> recipients) async {
+    try {
+      String _result = await sendSMS(
+        message: "SMS TEST",
+        recipients: recipients,
+        sendDirect: true,
+      );
+      setState(() => _message = _result);
+    } catch (error) {
+      setState(() => _message = error.toString());
+    }
+  }
+
+  void _send() {
+    if (people.isEmpty) {
+      setState(() => _message = '적어도 1명의 연락처 또는 메세지가 필요합니다.');
+    } else {
+      _sendSMS(people);
+    }
+  }
 }
 
-void SendImage(String orderTel, File? image) {
-
-}
 
 
