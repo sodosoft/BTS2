@@ -17,6 +17,9 @@ class LoginPage extends StatefulWidget {
   static late String allCarNo;
   static late String allID;
   static late String allName;
+  static late String allTel;
+  static late int cancelCount;
+  static late String paymentDay;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -43,26 +46,41 @@ class _LoginPageState extends State<LoginPage> {
 
           String userName = resLogin['userName'].toString();
           String userID = resLogin['userID'].toString();
+          String userTel = resLogin['userTel'].toString();
+          String paymentYN = resLogin['payment'].toString();
+          String paymentDay = resLogin['paymentDay'].toString();
+          int cancelCount = resLogin['cancelCount'];
+
           LoginPage.allID = userID;
           LoginPage.allName = userName;
-
-          Arguments arguments = Arguments(userName, userID);
+          LoginPage.allTel = userTel;
+          LoginPage.paymentDay = paymentDay;
+          LoginPage.cancelCount = cancelCount;
 
           String userGrade = resLogin['userGrade'].toString();
-          if (userGrade == 'D') {
-            LoginPage.allCarNo = resLogin['userCarNo'].toString();
-            // 차주 전용 화면
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MainScreenDriver()));
-          } else {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MainScreen()));
-          }
 
-          setState(() {
-            idController.clear();
-            passwordController.clear();
-          });
+          if(paymentYN == 'Y')
+          {
+            if (userGrade == 'D') {
+              LoginPage.allCarNo = resLogin['userCarNo'].toString();
+              // 차주 전용 화면
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MainScreenDriver()));
+            } else {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MainScreen()));
+            }
+
+            setState(() {
+              idController.clear();
+              passwordController.clear();
+            });
+          }
+          else          //미결제
+          {
+            Fluttertoast.showToast(msg: '결제 부탁 드립니다!');
+            //데모 화면
+          }
         } else {
           Fluttertoast.showToast(msg: '아이디와 비밀 번호를 변경해주세요!');
         }
@@ -215,11 +233,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-}
-
-class Arguments {
-  final String argsName;
-  final String argsID;
-
-  Arguments(this.argsName, this.argsID);
 }

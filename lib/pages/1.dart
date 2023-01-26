@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bangtong/api/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:bangtong/login/login.dart';
+import 'package:intl/intl.dart';
 
 import '../../model/orderboard.dart';
 import '../function/displaystring.dart';
@@ -56,9 +57,27 @@ class _MyAppState extends State<first> {
     }
   }
 
+  String strDday = '';
+  String strNextDday = '';
+
   @override
   void initState() {
     super.initState();
+
+    if(LoginPage.paymentDay == null)
+    {}
+    else
+    {
+      var dtToday = DateTime.now();
+      DateTime dtPayDay = DateTime.parse(LoginPage.paymentDay);
+      DateTime dtNextPayDay = dtPayDay.add(Duration(days:30));
+      strNextDday = DateFormat("yyyy년 MM월 dd일").format(dtNextPayDay).toString();
+
+      String date = DateFormat("yyyyMMdd").format(dtNextPayDay).toString();
+      int difference = int.parse(
+          dtToday.difference(DateTime.parse(date)).inDays.toString());
+      strDday = difference.toString();
+    }
   }
 
   @override
@@ -67,40 +86,56 @@ class _MyAppState extends State<first> {
       // appBar: AppBar(
       //   title: const Text("Generate List"),
       // ),
-      body: Container(
+      body: Column(
+        children: [
+        Container(
+        height: 30,
+        color: Colors.white,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('다음 결제일: $strNextDday'),
+            SizedBox(width: 5),
+            Text('D-$strDday'),
+          ],
+        ),
+      ),
+      Expanded(
         child: FutureBuilder(
           future: _getPost(),
           builder: (context, AsyncSnapshot snapshot) {
-
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(DisplayString.displayArea(snapshot.data[index].startArea) + " >> " + DisplayString.displayArea(snapshot.data[index].endArea)),
-                        subtitle: Text(snapshot.data[index].startDateTime +
-                            '\n' + snapshot.data[index].cost),
-                        isThreeLine: true,
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditScreen(snapshot.data[index])));
-                        },
-                      ),
-                    );
-                  });
-            } else {
-              return Container(
-                child: Center(
-                  child: Text("Loading..."),
-                ),
-              );
-            }
-          },
-        ),
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(DisplayString.displayArea(snapshot.data[index].startArea) + " >> " + DisplayString.displayArea(snapshot.data[index].endArea)),
+                          subtitle: Text(snapshot.data[index].startDateTime +
+                              '\n' + snapshot.data[index].cost),
+                          isThreeLine: true,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditScreen(snapshot.data[index])));
+                          },
+                        ),
+                      );
+                    });
+              } else {
+                return Container(
+                  child: Center(
+                    child: Text("Loading..."),
+                  ),
+                );
+              }
+            },
+          ),
+         ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: "배차 등록",

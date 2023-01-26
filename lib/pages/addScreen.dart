@@ -446,7 +446,7 @@ class _AddAppState extends State<AddScreen> {
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.purple),
+                                  color: Colors.green),
                             ),
                           ),
                         ),
@@ -531,7 +531,7 @@ class _AddAppState extends State<AddScreen> {
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.purple),
+                                  color: Colors.green),
                             ),
                           ),
                         ),
@@ -630,7 +630,7 @@ class _AddAppState extends State<AddScreen> {
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.purple),
+                                  color: Colors.green),
                             ),
                           ),
                         ),
@@ -815,7 +815,7 @@ class _AddAppState extends State<AddScreen> {
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.purple),
+                                  color: Colors.green),
                               ),
                             ),
                           ),
@@ -825,6 +825,10 @@ class _AddAppState extends State<AddScreen> {
                             children:
                             <Widget>[
                               ElevatedButton(
+                                style:ElevatedButton.styleFrom(
+                                  primary: Colors.green,
+                                  onPrimary: Colors.white,
+                                ),
                                 child: Text('상차날짜'),
                                 onPressed: () {
                                   Future<DateTime?> selectedDate = showDatePicker(
@@ -850,6 +854,10 @@ class _AddAppState extends State<AddScreen> {
                               children:
                               <Widget>[
                                 ElevatedButton(
+                                  style:ElevatedButton.styleFrom(
+                                    primary: Colors.green,
+                                    onPrimary: Colors.white,
+                                  ),
                                   child: Text('상차시간'),
                                   onPressed: () {
                                     Future<TimeOfDay?> selectedTime = showTimePicker(
@@ -901,7 +909,7 @@ class _AddAppState extends State<AddScreen> {
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.purple),
+                                      color: Colors.green),
                                 ),
                               ),
                             ),
@@ -911,6 +919,10 @@ class _AddAppState extends State<AddScreen> {
                                 children:
                                 <Widget>[
                                   ElevatedButton(
+                                    style:ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                      onPrimary: Colors.white,
+                                    ),
                                     child: Text('하차날짜'),
                                     onPressed: () {
                                       Future<DateTime?> selectedDate = showDatePicker(
@@ -936,6 +948,10 @@ class _AddAppState extends State<AddScreen> {
                                 children:
                                 <Widget>[
                                   ElevatedButton(
+                                    style:ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                      onPrimary: Colors.white,
+                                    ),
                                     child: Text('하차시간'),
                                     onPressed: () {
                                       Future<TimeOfDay?> selectedTime = showTimePicker(
@@ -1123,7 +1139,7 @@ class _AddAppState extends State<AddScreen> {
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.purple),
+                                  color: Colors.green),
                             ),
                           ),
                         ),
@@ -1222,7 +1238,7 @@ class _AddAppState extends State<AddScreen> {
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.purple),
+                                  color: Colors.green),
                             ),
                           ),
                         ),
