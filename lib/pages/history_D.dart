@@ -53,7 +53,6 @@ class _MyAppState extends State<third_D> {
         subTotal = CostAdd(boardList);
         itemCounterController.text = '   총 $itmCnt 건  합계 $subTotal원';
 
-
         return boardList;
       } else {
         Fluttertoast.showToast(msg: '데이터 로딩 실패!');
@@ -121,11 +120,12 @@ class _MyAppState extends State<third_D> {
               ],
             ),
           ),
-          Expanded(child: RefreshIndicator(
+          Expanded(
+            child: RefreshIndicator(
               onRefresh: refresh,
               child: FutureBuilder(
-              future: _getPost(),
-              builder: (context, AsyncSnapshot snapshot) {
+                future: _getPost(),
+                builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
                         itemCount: snapshot.data.length,
@@ -137,11 +137,19 @@ class _MyAppState extends State<third_D> {
                                   " >> " +
                                   DisplayString.displayArea(
                                       snapshot.data[index].endArea)),
-                              subtitle: Text('상차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].startDateTime)) +
+                              subtitle: Text('상차일시: ' +
+                                  DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
+                                      DateTime.parse(
+                                          snapshot.data[index].startDateTime)) +
                                   '\n' +
-                                  '하차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].endDateTime)) +
+                                  '하차일시: ' +
+                                  DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
+                                      DateTime.parse(
+                                          snapshot.data[index].endDateTime)) +
                                   '\n' +
-                                  '운반비: ￦' + snapshot.data[index].cost + "원"),
+                                  '운반비: ￦' +
+                                  snapshot.data[index].cost +
+                                  "원"),
                               isThreeLine: true,
                               onTap: () {
                                 Navigator.push(
@@ -171,9 +179,8 @@ class _MyAppState extends State<third_D> {
             child: Column(
               children: [
                 TextField(
-                  style: TextStyle(color: Colors.white),
-                  controller: itemCounterController
-                ),
+                    style: TextStyle(color: Colors.white),
+                    controller: itemCounterController),
               ],
             ),
           ),
@@ -189,7 +196,8 @@ String CostAdd(data) {
   int trimstr = 0;
 
   for (int i = 0; i < data.length; i++) {
-    trimstr = int.parse(data[i].cost.replaceAll(RegExp('[^a-zA-Z0-9가-힣\\s]'), "").trim());
+    trimstr = int.parse(
+        data[i].cost.replaceAll(RegExp('[^a-zA-Z0-9가-힣\\s]'), "").trim());
     _add += trimstr;
   }
 
@@ -215,22 +223,34 @@ class DetailPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-        child:
-            Text('상차지: ' + postData.startArea + '\n' +
-                 '하차지: ' + postData.endArea + '\n' +
-                 '상차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(postData.startDateTime)) + '\n' +
-                 '하차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(postData.endDateTime)) + '\n' +
-                 '운반비: ￦' + postData.cost + "원"
-            ),
+        child: Text('상차지: ' +
+            postData.startArea +
+            '\n' +
+            '하차지: ' +
+            postData.endArea +
+            '\n' +
+            '상차일시: ' +
+            DateFormat("yyyy년 MM월 dd일 HH시 mm분")
+                .format(DateTime.parse(postData.startDateTime)) +
+            '\n' +
+            '하차일시: ' +
+            DateFormat("yyyy년 MM월 dd일 HH시 mm분")
+                .format(DateTime.parse(postData.endDateTime)) +
+            '\n' +
+            '운반비: ￦' +
+            postData.cost +
+            "원"),
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: "계근정보 보내기",
         onPressed: () async {
-           final reuslt = await Navigator.push(
-               context, MaterialPageRoute(builder: ((context) => weightDataScreen(postData.orderTel))));
+          final reuslt = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: ((context) => weightDataScreen(postData.orderTel))));
         },
         backgroundColor: Colors.blueAccent,
-        child: const Icon(Icons.camera_alt_outlined),
+        child: const Icon(Icons.wallpaper),
       ),
       //body: Text(postData.content),
     );

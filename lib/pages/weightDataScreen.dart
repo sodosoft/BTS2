@@ -10,7 +10,7 @@ import 'package:share_plus/share_plus.dart';
 
 class weightDataScreen extends StatefulWidget {
   final String orderTel;
-  weightDataScreen(this.orderTel,{Key? key}) : super(key: key);
+  weightDataScreen(this.orderTel, {Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -74,9 +74,7 @@ class _MyAppState extends State<weightDataScreen> {
           title: const Text(
             '계근 사진 보내기',
             style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold),
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
         body: Column(
@@ -85,7 +83,7 @@ class _MyAppState extends State<weightDataScreen> {
             SizedBox(height: 10.0),
             showImage(),
             SizedBox(
-              height: 20.0,
+              height: 30.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -93,7 +91,7 @@ class _MyAppState extends State<weightDataScreen> {
                 // 카메라 촬영 버튼
                 FloatingActionButton(
                   child: Icon(Icons.add_a_photo),
-                  tooltip: 'pick Iamge',
+                  tooltip: '카메라 찍기',
                   onPressed: () {
                     getImage(ImageSource.camera);
                   },
@@ -102,43 +100,52 @@ class _MyAppState extends State<weightDataScreen> {
                 // 갤러리에서 이미지를 가져오는 버튼
                 FloatingActionButton(
                   child: Icon(Icons.wallpaper),
-                  tooltip: 'pick Iamge',
+                  tooltip: '이미지 가져오기',
                   onPressed: () {
                     getImage(ImageSource.gallery);
                   },
                 ),
+                FloatingActionButton(
+                  backgroundColor: Colors.greenAccent,
+                  child: Icon(Icons.share),
+                  tooltip: '이미지 공유하기',
+                  onPressed: () async {
+                    Clipboard.setData(ClipboardData(text: orderTel));
+                    await Share.shareFiles([_path], text: '계근 사진');
+                  },
+                ),
               ],
             ),
-            SizedBox(
-              height: 15.0,
-            ),
-            GestureDetector(
-              onTap: () async {
-                Clipboard.setData(ClipboardData(text: orderTel));
-                await Share.shareFiles([_path],text: '계근 사진');
-                //_send();
-              },
-              child: Container(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Center(
-                      child: Text(
-                        '공유하기',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: 20.0,
+            // ),
+            // GestureDetector(
+            //   onTap: () async {
+            //     Clipboard.setData(ClipboardData(text: orderTel));
+            //     await Share.shareFiles([_path],text: '계근 사진');
+            //     //_send();
+            //   },
+            //   child: Container(
+            //     child: Padding(
+            //       padding: EdgeInsets.symmetric(horizontal: 25.0),
+            //       child: Container(
+            //         padding: EdgeInsets.all(20),
+            //         decoration: BoxDecoration(
+            //             color: Colors.green,
+            //             borderRadius: BorderRadius.circular(12)),
+            //         child: Center(
+            //           child: Text(
+            //             '공유하기',
+            //             style: TextStyle(
+            //                 color: Colors.white,
+            //                 fontSize: 16,
+            //                 fontWeight: FontWeight.bold),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ));
   }
@@ -164,6 +171,3 @@ class _MyAppState extends State<weightDataScreen> {
     }
   }
 }
-
-
-
