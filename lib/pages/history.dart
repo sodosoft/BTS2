@@ -78,6 +78,10 @@ class _MyAppState extends State<third> {
 
   final myController = TextEditingController();
 
+  Future refresh() async {
+    _getPost();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,48 +126,51 @@ class _MyAppState extends State<third> {
               ],
             ),
           ),
-          Expanded(
-            child: FutureBuilder(
+          Expanded( 
+              child: RefreshIndicator(
+              onRefresh: refresh,
+              child: FutureBuilder(
               future: _getPost(),
               builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  _subTotal = CostAdd(snapshot.data);
-                  itmCnt = snapshot.data.length.toString();
+                  if (snapshot.hasData) {
+                    _subTotal = CostAdd(snapshot.data);
+                    itmCnt = snapshot.data.length.toString();
 
-                  return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            title: Text(DisplayString.displayArea(
-                                    snapshot.data[index].startArea) +
-                                " >> " +
-                                DisplayString.displayArea(
-                                    snapshot.data[index].endArea)),
-                            subtitle: Text('상차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].startDateTime)) +
-                                '\n' +
-                                '하차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].endDateTime)) +
-                                '\n' +
-                                '운반비: ￦' + snapshot.data[index].cost + "원"),
-                            isThreeLine: true,
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetailPage(snapshot.data[index])));
-                            },
-                          ),
-                        );
-                      });
-                } else {
-                  return Container(
-                    child: Center(
-                      child: Text("Loading..."),
-                    ),
-                  );
-                }
-              },
+                    return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              title: Text(DisplayString.displayArea(
+                                      snapshot.data[index].startArea) +
+                                  " >> " +
+                                  DisplayString.displayArea(
+                                      snapshot.data[index].endArea)),
+                              subtitle: Text('상차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].startDateTime)) +
+                                  '\n' +
+                                  '하차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].endDateTime)) +
+                                  '\n' +
+                                  '운반비: ￦' + snapshot.data[index].cost + "원"),
+                              isThreeLine: true,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailPage(snapshot.data[index])));
+                              },
+                            ),
+                          );
+                        });
+                  } else {
+                    return Container(
+                      child: Center(
+                        child: Text("Loading..."),
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           ),
           Container(

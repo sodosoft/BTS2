@@ -28,27 +28,38 @@ class _MyAppState extends State<first> {
         'orderID': LoginPage.allID,
       });
 
-      if(respone.statusCode== 200)
-      {
+      if (respone.statusCode == 200) {
         final result = utf8.decode(respone.bodyBytes);
         List<dynamic> json = jsonDecode(result);
         List<OrderData> boardList = [];
 
-        for(var item in json.reversed)
-        {
-          OrderData boardData = OrderData(item['orderID'], item['orderIndex'], item['startArea'], item['endArea'],
-              item['cost'], item['payMethod'], item['carKind'], item['product'],
-              item['grade'], item['startDateTime'], item['endDateTime'], item['end1'],
-              item['bottom'], item['startMethod'], item['steelCode'], item['orderYN'],
-              item['confirmYN'], item['orderTel'], item['companyName'], item['userCarNo']
-          );
+        for (var item in json.reversed) {
+          OrderData boardData = OrderData(
+              item['orderID'],
+              item['orderIndex'],
+              item['startArea'],
+              item['endArea'],
+              item['cost'],
+              item['payMethod'],
+              item['carKind'],
+              item['product'],
+              item['grade'],
+              item['startDateTime'],
+              item['endDateTime'],
+              item['end1'],
+              item['bottom'],
+              item['startMethod'],
+              item['steelCode'],
+              item['orderYN'],
+              item['confirmYN'],
+              item['orderTel'],
+              item['companyName'],
+              item['userCarNo']);
           boardList.add(boardData);
         }
 
         return boardList;
-      }
-      else
-      {
+      } else {
         Fluttertoast.showToast(msg: '데이터 로딩 실패!');
         return null;
       }
@@ -58,6 +69,10 @@ class _MyAppState extends State<first> {
     }
   }
 
+  Future refresh() async {
+    _getPost();
+  }
+
   String strDday = '';
   String strNextDday = '';
 
@@ -65,18 +80,16 @@ class _MyAppState extends State<first> {
   void initState() {
     super.initState();
 
-    if(LoginPage.paymentDay == null)
-    {}
-    else
-    {
+    if (LoginPage.paymentDay == null) {
+    } else {
       var dtToday = DateTime.now();
       DateTime dtPayDay = DateTime.parse(LoginPage.paymentDay);
-      DateTime dtNextPayDay = dtPayDay.add(Duration(days:30));
+      DateTime dtNextPayDay = dtPayDay.add(Duration(days: 30));
       strNextDday = DateFormat("yyyy년 MM월 dd일").format(dtNextPayDay).toString();
 
       String date = DateFormat("yyyyMMdd").format(dtNextPayDay).toString();
-      int difference = int.parse(
-          dtToday.difference(DateTime.parse(date)).inDays.toString());
+      int difference =
+          int.parse(dtToday.difference(DateTime.parse(date)).inDays.toString());
       strDday = difference.toString();
     }
   }
@@ -89,56 +102,71 @@ class _MyAppState extends State<first> {
       // ),
       body: Column(
         children: [
-        Container(
-        height: 30,
-        color: Colors.white,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('다음 결제일: $strNextDday'),
-            SizedBox(width: 5),
-            Text('D$strDday'),
-          ],
-        ),
-      ),
-      Expanded(
-        child: FutureBuilder(
-          future: _getPost(),
-          builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          title: Text(DisplayString.displayArea(snapshot.data[index].startArea) + " >> " + DisplayString.displayArea(snapshot.data[index].endArea)),
-                          subtitle: Text('상차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].startDateTime)) +
-                              '\n' +
-                              '하차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].endDateTime)) +
-                              '\n' +
-                              '운반비: ￦' + snapshot.data[index].cost + "원"),
-                          isThreeLine: true,
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        EditScreen(snapshot.data[index])));
-                          },
-                        ),
-                      );
-                    });
-              } else {
-                return Container(
-                  child: Center(
-                    child: Text("Loading..."),
-                  ),
-                );
-              }
-            },
+          Container(
+            height: 30,
+            color: Colors.white,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('다음 결제일: $strNextDday'),
+                SizedBox(width: 5),
+                Text('D$strDday'),
+              ],
+            ),
           ),
-         ),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: refresh,
+              child: FutureBuilder(
+                future: _getPost(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              title: Text(DisplayString.displayArea(
+                                      snapshot.data[index].startArea) +
+                                  " >> " +
+                                  DisplayString.displayArea(
+                                      snapshot.data[index].endArea)),
+                              subtitle: Text('상차일시: ' +
+                                  DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
+                                      DateTime.parse(
+                                          snapshot.data[index].startDateTime)) +
+                                  '\n' +
+                                  '하차일시: ' +
+                                  DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
+                                      DateTime.parse(
+                                          snapshot.data[index].endDateTime)) +
+                                  '\n' +
+                                  '운반비: ￦' +
+                                  snapshot.data[index].cost +
+                                  "원"),
+                              isThreeLine: true,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditScreen(snapshot.data[index])));
+                              },
+                            ),
+                          );
+                        });
+                  } else {
+                    return Container(
+                      child: Center(
+                        child: Text("Loading..."),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
