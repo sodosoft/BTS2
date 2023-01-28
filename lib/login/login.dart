@@ -257,7 +257,7 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('중복 접속중이신가요?'),
+                    Text('중복 접속 중이신가요?'),
                     GestureDetector(
                       onTap: () => Navigator.push(
                           context,
