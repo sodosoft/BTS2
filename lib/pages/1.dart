@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bangtong/pages/addOrder.dart';
+import 'package:bangtong/pages/setting.dart';
 import 'package:bangtong/pages/weightDataScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -172,8 +173,10 @@ class _MyAppState extends State<first> {
       floatingActionButton: FloatingActionButton(
         tooltip: "배차 등록",
         onPressed: () async {
+          // final reuslt = await Navigator.push(
+          //     context, MaterialPageRoute(builder: ((context) => AddScreen())));
           final reuslt = await Navigator.push(
-              context, MaterialPageRoute(builder: ((context) => AddScreen())));
+              context, MaterialPageRoute(builder: ((context) => Setting())));
         },
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add),

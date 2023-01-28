@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bangtong/function/loginUpdate.dart';
 import 'package:bangtong/pages/loginflag.dart';
+import 'package:bangtong/pages/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
@@ -266,7 +267,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     )
                   ],
-                )
+                ),
               ],
             ),
           ),

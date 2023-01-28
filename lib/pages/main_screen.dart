@@ -75,9 +75,7 @@ class _MainScreen extends State<MainScreen> {
           tooltip: "개인정보",
           onPressed: () {
             Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Setting()),
-            );
+                context, MaterialPageRoute(builder: ((context) => Setting())));
           },
           icon:  Icon(Icons.person),
         ),
