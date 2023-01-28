@@ -22,12 +22,10 @@ class Setting extends StatefulWidget {
 }
 
 class _SignupPageState extends State<Setting> {
-
   var formKey = GlobalKey<FormState>();
 
   var IDController = TextEditingController();
   var passwordController = TextEditingController();
-  var userNameController = TextEditingController();
   var userTelController = TextEditingController();
   var userCompanyNameController = TextEditingController();
   var userCompanyNoController = TextEditingController();
@@ -35,10 +33,8 @@ class _SignupPageState extends State<Setting> {
 
   @override
   void initState() {
-
-    IDController.text = LoginPage.allID;
-    passwordController.text = LoginPage.allName;
-    userNameController.text = LoginPage.allName;
+    IDController.text = LoginPage.allID + ' & ' + LoginPage.allName;
+    passwordController.text = LoginPage.allPW;
     userTelController.text = LoginPage.allTel;
     userCompanyNameController.text = LoginPage.allComName;
     userCompanyNoController.text = LoginPage.allComNo;
@@ -59,109 +55,132 @@ class _SignupPageState extends State<Setting> {
       title: const Text(
         '회원 정보 변경',
         style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold),
+            color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
       ),
     );
   }
-
-
 
   Widget _bodyWidget() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
       child: SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      border: Border.all(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    child: Align(
-                        alignment: AlignmentDirectional(-1, 0),
-                        child: Padding(
-                          padding:
-                          EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
-                          child: TextFormField(
-                            enabled: false,
-                            controller: IDController,
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                            decoration: const InputDecoration(
-                              labelText:'아이디',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  border: Border.all(
+                    color: Colors.grey,
                   ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Colors.green,
+                ),
+                child: Align(
+                  alignment: AlignmentDirectional(-1, 0),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
+                    child: TextFormField(
+                      enabled: false,
+                      controller: IDController,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                      decoration: const InputDecoration(
+                        labelText: '아이디 & 이름',
                       ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Align(
-                          alignment: AlignmentDirectional(-1, 0),
-                          child: Padding(
-                            padding:
-                            EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
-                            child: TextField(
-                              controller: passwordController,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(0, 0),
-                          child: Padding(
-                            padding:
-                            EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                            child:ElevatedButton(
-                              style:ElevatedButton.styleFrom(
-                                primary: Colors.green,
-                                onPrimary: Colors.white,
-                              ),
-                              child: Text('변경'),
-                              onPressed: () {
-                                if(UpdateData.passwordChange(LoginPage.allID, passwordController.text))
-                                {
-                                  Fluttertoast.showToast(msg: '변경 성공');
-                                }
-                                else{
-                                  Fluttertoast.showToast(msg: '변경 실패');
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ),
-            ],
-          ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Colors.grey,
+                  ),
+                ),
+                child: Align(
+                  alignment: AlignmentDirectional(-1, 0),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
+                    child: TextFormField(
+                      enabled: false,
+                      controller: passwordController,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green),
+                      decoration: const InputDecoration(
+                        labelText: '패스워드',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // Padding(
+            //   padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+            //   child: Container(
+            //     width: double.infinity,
+            //     decoration: BoxDecoration(
+            //       color: Colors.white,
+            //       border: Border.all(
+            //         color: Colors.green,
+            //       ),
+            //     ),
+            //     child: Row(
+            //       mainAxisSize: MainAxisSize.max,
+            //       children: <Widget>[
+            //         Align(
+            //           alignment: AlignmentDirectional(-1, 0),
+            //           child: Padding(
+            //             padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
+            //             child: TextField(
+            //               controller: passwordController,
+            //               style: TextStyle(
+            //                   fontSize: 14,
+            //                   fontWeight: FontWeight.bold,
+            //                   color: Colors.green),
+            //             ),
+            //           ),
+            //         ),
+            //         // Align(
+            //         //   alignment: AlignmentDirectional(0, 0),
+            //         //   child: Padding(
+            //         //     padding:
+            //         //     EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+            //         //     child:ElevatedButton(
+            //         //       style:ElevatedButton.styleFrom(
+            //         //         primary: Colors.green,
+            //         //         onPrimary: Colors.white,
+            //         //       ),
+            //         //       child: Text('변경'),
+            //         //       onPressed: () {
+            //         //         if(UpdateData.passwordChange(LoginPage.allID, passwordController.text))
+            //         //         {
+            //         //           Fluttertoast.showToast(msg: '변경 성공');
+            //         //         }
+            //         //         else{
+            //         //           Fluttertoast.showToast(msg: '변경 실패');
+            //         //         }
+            //         //       },
+            //         //     ),
+            //         //   ),
+            //         // ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }
@@ -175,5 +194,3 @@ class _SignupPageState extends State<Setting> {
     );
   }
 }
-
-

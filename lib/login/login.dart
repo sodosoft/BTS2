@@ -19,6 +19,7 @@ class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
   static late String allCarNo;
   static late String allID;
+  static late String allPW;
   static late String allName;
   static late String allTel;
   static late String allComName;
@@ -57,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
          else
          {
            String userName = resLogin['userName'].toString();
+           String userPW = resLogin['userPassword'].toString();
            String userID = resLogin['userID'].toString();
            String userTel = resLogin['userTel'].toString();
            String paymentYN = resLogin['payment'].toString();
@@ -68,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
            Fluttertoast.showToast(msg: '로그인 성공!');
 
            LoginPage.allID = userID;
+           LoginPage.allPW = userPW;
            LoginPage.allName = userName;
            LoginPage.allTel = userTel;
            LoginPage.paymentDay = paymentDay;

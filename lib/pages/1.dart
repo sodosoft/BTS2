@@ -173,10 +173,8 @@ class _MyAppState extends State<first> {
       floatingActionButton: FloatingActionButton(
         tooltip: "배차 등록",
         onPressed: () async {
-          // final reuslt = await Navigator.push(
-          //     context, MaterialPageRoute(builder: ((context) => AddScreen())));
           final reuslt = await Navigator.push(
-              context, MaterialPageRoute(builder: ((context) => Setting())));
+              context, MaterialPageRoute(builder: ((context) => AddScreen())));
         },
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add),
