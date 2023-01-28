@@ -6,6 +6,7 @@ import 'package:bangtong/pages/history.dart';
 import 'package:bangtong/pages/4.dart';
 
 import '../../login/login.dart';
+import '../function/loginUpdate.dart';
 
 
 class MainScreen extends StatefulWidget {
@@ -148,6 +149,7 @@ class _MainScreen extends State<MainScreen>{
               new TextButton(
                 child: new Text("확인"),
                 onPressed: () {
+                  LoginUpdate.LoginflagChange(LoginPage.allID, 'N');
                   Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,

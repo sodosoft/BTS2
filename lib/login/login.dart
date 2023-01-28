@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:bangtong/function/loginUpdate.dart';
+import 'package:bangtong/pages/loginflag.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
@@ -40,47 +42,58 @@ class _LoginPageState extends State<LoginPage> {
       if (res.statusCode == 200) {
         var resLogin = jsonDecode(res.body);
         if (resLogin['success'] == true) {
-          Fluttertoast.showToast(msg: '로그인 성공');
+
           // User userInfo = User.fromJson(resLogin['userName']);
           // await RememberUser.saveRememberUserInfo(userInfo);
-
-          String userName = resLogin['userName'].toString();
-          String userID = resLogin['userID'].toString();
-          String userTel = resLogin['userTel'].toString();
-          String paymentYN = resLogin['payment'].toString();
-          String paymentDay = resLogin['paymentDay'].toString();
-          int cancelCount = resLogin['cancelCount'];
-
-          LoginPage.allID = userID;
-          LoginPage.allName = userName;
-          LoginPage.allTel = userTel;
-          LoginPage.paymentDay = paymentDay;
-          LoginPage.cancelCount = cancelCount;
-
-          String userGrade = resLogin['userGrade'].toString();
-
-          if(paymentYN == 'Y')
+          if(resLogin['loginFlag'].toString() == 'Y')
           {
-            if (userGrade == 'D') {
-              LoginPage.allCarNo = resLogin['userCarNo'].toString();
-              // 차주 전용 화면
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MainScreenDriver()));
-            } else {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MainScreen()));
-            }
+            Fluttertoast.showToast(msg: '중복 접속입니다. 중복 해제 부탁 드립니다!');
+          }
+         else
+         {
+           String userName = resLogin['userName'].toString();
+           String userID = resLogin['userID'].toString();
+           String userTel = resLogin['userTel'].toString();
+           String paymentYN = resLogin['payment'].toString();
+           String paymentDay = resLogin['paymentDay'].toString();
+           int cancelCount = resLogin['cancelCount'];
 
-            setState(() {
-              idController.clear();
-              passwordController.clear();
-            });
-          }
-          else          //미결제
-          {
-            Fluttertoast.showToast(msg: '결제 부탁 드립니다!');
-            //데모 화면
-          }
+           LoginUpdate.LoginflagChange(userID, 'Y');
+
+           Fluttertoast.showToast(msg: '로그인 성공!');
+
+           LoginPage.allID = userID;
+           LoginPage.allName = userName;
+           LoginPage.allTel = userTel;
+           LoginPage.paymentDay = paymentDay;
+           LoginPage.cancelCount = cancelCount;
+
+           String userGrade = resLogin['userGrade'].toString();
+
+           if(paymentYN == 'Y')
+           {
+             if (userGrade == 'D') {
+               LoginPage.allCarNo = resLogin['userCarNo'].toString();
+               // 차주 전용 화면
+               Navigator.push(context,
+                   MaterialPageRoute(builder: (context) => MainScreenDriver()));
+             } else {
+               Navigator.push(context,
+                   MaterialPageRoute(builder: (context) => MainScreen()));
+             }
+
+             setState(() {
+               idController.clear();
+               passwordController.clear();
+             });
+           }
+           else          //미결제
+           {
+             Fluttertoast.showToast(msg: '결제 부탁 드립니다!');
+             //데모 화면
+           }
+         }
+
         } else {
           Fluttertoast.showToast(msg: '아이디와 비밀 번호를 변경해주세요!');
         }
@@ -222,6 +235,26 @@ class _LoginPageState extends State<LoginPage> {
                         ' 회원 가입!',
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('중복 접속중이신가요?'),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => loginFlag())),
+                      child: Text(
+                        ' 중복해제!',
+                        style: TextStyle(
+                            color: Colors.red, fontWeight: FontWeight.bold),
                       ),
                     )
                   ],

@@ -16,6 +16,7 @@ import 'package:bangtong/pages/setting.dart';
 import '../../login/login.dart';
 import '../../model/board.dart';
 import '../../model/user.dart';
+import '../function/loginUpdate.dart';
 import '../user_pref.dart';
 import 'history_D.dart';
 
@@ -165,6 +166,7 @@ class _MainScreen extends State<MainScreenDriver> {
               new TextButton(
                 child: new Text("확인"),
                 onPressed: () {
+                  LoginUpdate.LoginflagChange(LoginPage.allID, 'N');
                   Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,
