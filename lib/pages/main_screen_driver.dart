@@ -33,9 +33,6 @@ class _MainScreen extends State<MainScreenDriver> {
     // MainScreen(),
     Driver_first(),  // 배차 등록 현황
     board(), // 게시판
-    //boardData(),
-    //costList(),
-    //WebViewCost(),
     third_D(), // 배차 내역
     four(), // 상담문의
   ];
@@ -84,51 +81,47 @@ class _MainScreen extends State<MainScreenDriver> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+      return WillPopScope(
+          onWillPop: () {
+        return offDialog();
+      },
+      child: Scaffold(
       appBar: _appbarWidget(),
       body: SafeArea(child: _widgetOptions.elementAt(_selectedIndex)),
       // bottom navigation 선언
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '홈',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: '공지사항',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
-            label: '배차 내역',
-          ),
-          BottomNavigationBarItem(
-            // icon: Icon(Icons.support_agent),
-            icon: Icon(Icons.chat),
-            label: '상담 문의',
-          ),
-        ],
-        currentIndex: _selectedIndex, // 지정 인덱스로 이동
-        selectedItemColor: Colors.lightGreen,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.white,
-        onTap: _onItemTapped, // 선언했던 onItemTapped
-        type: BottomNavigationBarType.shifting,
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: '홈',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.info),
+              label: '공지사항',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list_alt),
+              label: '배차 내역',
+            ),
+            BottomNavigationBarItem(
+              // icon: Icon(Icons.support_agent),
+              icon: Icon(Icons.chat),
+              label: '상담 문의',
+            ),
+          ],
+          currentIndex: _selectedIndex, // 지정 인덱스로 이동
+          selectedItemColor: Colors.lightGreen,
+          unselectedItemColor: Colors.grey,
+          backgroundColor: Colors.white,
+          onTap: _onItemTapped, // 선언했던 onItemTapped
+          type: BottomNavigationBarType.shifting,
+        ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   tooltip: "배차 등록",
-      //   onPressed: () async {
-      //     final reuslt = await Navigator.push(
-      //         context, MaterialPageRoute(builder: ((context) => AddScreen())));
-      //   },
-      //   backgroundColor: Color(0xfff08f4f),
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 
-  void offDialog() {
-    showDialog(
+  Future<bool> offDialog() async {
+    return await showDialog(
         context: context,
         //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
         barrierDismissible: false,
