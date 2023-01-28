@@ -47,8 +47,7 @@ class _SignupPageState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    body: Center(
-      child: Column(
+    body: Column(
         children: <Widget>[
             SizedBox(
               height: 20,
@@ -116,7 +115,6 @@ class _SignupPageState extends State<Setting> {
             ),
           ],
         ),
-      ),
     );
   }
 }
