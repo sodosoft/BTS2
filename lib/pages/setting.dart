@@ -107,51 +107,57 @@ class _SignupPageState extends State<Setting> {
                     color: Colors.grey,
                   ),
                 ),
-                child: Align(
-                  alignment: AlignmentDirectional(-1, 0),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
-                    child: TextFormField(
-                      enabled: false,
-                      controller: passwordController,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green),
-                      decoration: const InputDecoration(
-                        labelText: '패스워드',
+                child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                    Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                    Align(
+                    alignment: AlignmentDirectional(-1, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
+                      child: TextFormField(
+                        enabled: false,
+                        controller: passwordController,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green),
+                        decoration: const InputDecoration(
+                          labelText: '패스워드',
+                        ),
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 2),
+                    child: Column(
+                        children:
+                        <Widget>[
+                        ElevatedButton(
+                            style:ElevatedButton.styleFrom(
+                              primary: Colors.green,
+                              onPrimary: Colors.white,
+                            ),
+                            child: Text('변경'),
+                            onPressed: () {
+                              if(UpdateData.passwordChange(LoginPage.allID, passwordController.text))
+                              {
+                                Fluttertoast.showToast(msg: '변경 성공');
+                              }
+                              else{
+                                Fluttertoast.showToast(msg: '변경 실패');
+                              }
+                            },
+                          ),
+                         ],
+                        ),
+                      ),
+                  ],
                 ),
-              ),
+              ],
             ),
-            // Padding(
-            //   padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-            //   child: Container(
-            //     width: double.infinity,
-            //     decoration: BoxDecoration(
-            //       color: Colors.white,
-            //       border: Border.all(
-            //         color: Colors.green,
-            //       ),
-            //     ),
-            //     child: Row(
-            //       mainAxisSize: MainAxisSize.max,
-            //       children: <Widget>[
-            //         Align(
-            //           alignment: AlignmentDirectional(-1, 0),
-            //           child: Padding(
-            //             padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
-            //             child: TextField(
-            //               controller: passwordController,
-            //               style: TextStyle(
-            //                   fontSize: 14,
-            //                   fontWeight: FontWeight.bold,
-            //                   color: Colors.green),
-            //             ),
-            //           ),
-            //         ),
             //         // Align(
             //         //   alignment: AlignmentDirectional(0, 0),
             //         //   child: Padding(
@@ -176,9 +182,9 @@ class _SignupPageState extends State<Setting> {
             //         //   ),
             //         // ),
             //       ],
-            //     ),
-            //   ),
-            // ),
+
+              ),
+            ),
           ],
         ),
       ),
