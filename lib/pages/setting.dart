@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:bangtong/function/UpdateData.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../function/loginUpdate.dart';
 import '../model/user_test.dart';
 import '../pages/policy.dart';
 import '../pages/w1.dart';
@@ -50,7 +52,9 @@ class _SignupPageState extends State<Setting> {
             Icons.arrow_back_ios_new_outlined,
             color: Colors.white,
           ),
-          onPressed: (() => Navigator.pop(context))),
+          onPressed: (){
+            offDialog();
+          }),
       backgroundColor: Colors.green,
       elevation: 1,
       title: const Text(
@@ -354,10 +358,19 @@ class _SignupPageState extends State<Setting> {
                       onPressed: () {
                         if(LoginPage.allGrade == 'D') {
                           if (UpdateData.carNoChange(
-                              LoginPage.allID, userCarNoController.text)) {
-                            Fluttertoast.showToast(msg: '변경 성공');
+                              LoginPage.allID, userCarNoController.text))
+                          {
+                            Timer.periodic(Duration(minutes: 3), (timer) {
+                              setState(() {
+                                Fluttertoast.showToast(msg: '변경 성공');
+                              });
+                            });
                           } else {
-                            Fluttertoast.showToast(msg: '변경 실패');
+                            Timer.periodic(Duration(minutes: 3), (timer) {
+                              setState(() {
+                                Fluttertoast.showToast(msg: '변경 실패');
+                              });
+                            });
                           }
                         }
                       },
@@ -380,5 +393,54 @@ class _SignupPageState extends State<Setting> {
       appBar: _appbarWidget(),
       body: _bodyWidget(),
     );
+  }
+
+  Future<bool> offDialog() async {
+    return await showDialog(
+        context: context,
+        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            //Dialog Main Title
+            title: Column(
+              children: <Widget>[
+                new Text("로그아웃"),
+              ],
+            ),
+            //
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  " 변경된 데이터는 로그아웃 후\n 반영됩니다.\n 로그아웃 하시겠습니까?",
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              new TextButton(
+                child: new Text("취소"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              new TextButton(
+                child: new Text("확인"),
+                onPressed: () {
+                  LoginUpdate.LoginflagChange(LoginPage.allID, 'N');
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+              ),
+            ],
+          );
+        });
   }
 }
