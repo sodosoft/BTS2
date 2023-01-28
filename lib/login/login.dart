@@ -20,6 +20,10 @@ class LoginPage extends StatefulWidget {
   static late String allID;
   static late String allName;
   static late String allTel;
+  static late String allComName;
+  static late String allComNo;
+  static late String allGrade;
+
   static late int cancelCount;
   static late String paymentDay;
 
@@ -70,6 +74,10 @@ class _LoginPageState extends State<LoginPage> {
 
            String userGrade = resLogin['userGrade'].toString();
 
+           LoginPage.allGrade = userGrade;
+           LoginPage.allComName = resLogin['userCompany'].toString();
+           LoginPage.allComNo = resLogin['userComNo'].toString();
+
            if(paymentYN == 'Y')
            {
              if (userGrade == 'D') {
@@ -95,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
          }
 
         } else {
-          Fluttertoast.showToast(msg: '아이디와 비밀 번호를 변경해주세요!');
+          Fluttertoast.showToast(msg: '아이디와 비밀 번호를 확인해주세요!');
         }
       }
     } catch (e) {

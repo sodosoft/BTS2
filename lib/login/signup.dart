@@ -20,36 +20,14 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignupPageState();
 }
 
-class SteelCode {
-  final String id;
-  final String name;
 
-  SteelCode({
-    required this.id,
-    required this.name,
-  });
-}
 
 class _SignupPageState extends State<SignupPage> {
-  static List<SteelCode> _steelCode = [
-    SteelCode(id: "DI", name: "동국제강"),
-    SteelCode(id: "HI", name: "현대제철"),
-    SteelCode(id: "SA", name: "세아베스틸"),
-    SteelCode(id: "HY", name: "환영철강"),
-    SteelCode(id: "HK", name: "한국특수형강"),
-    SteelCode(id: "DE", name: "대한제강"),
-    SteelCode(id: "PO", name: "포스코"),
-    SteelCode(id: "YK", name: "YK스틸")
-  ];
-  final _items = _steelCode
-      .map((steelcode) => MultiSelectItem<SteelCode>(steelcode, steelcode.name))
-      .toList();
-  List<SteelCode> _selectedSteelcode = [];
+
   final _multiSelectKey = GlobalKey<FormFieldState>();
 
   @override
   void initState() {
-    _selectedSteelcode = _steelCode;
     super.initState();
   }
 
@@ -69,7 +47,6 @@ class _SignupPageState extends State<SignupPage> {
   var introducerController = TextEditingController();
 
   String _selectedCategory = '화주';
-  List<SteelCode> _selectedSteelCode = [];
 
   bool _ischecked1 = false;
   bool _ischecked2 = false;
@@ -642,16 +619,6 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
     );
-  }
-
-  String splitSteelCode(List<SteelCode> selectedSteelCode) {
-    String strReturn = '';
-
-    for (int i = 0; i < selectedSteelCode.length; i++) {
-      strReturn += selectedSteelCode[i].id + ' ';
-    }
-
-    return strReturn;
   }
 }
 

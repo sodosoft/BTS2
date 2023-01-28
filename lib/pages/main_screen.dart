@@ -1,3 +1,4 @@
+import 'package:bangtong/pages/setting.dart';
 import 'package:bangtong/pages/webcost.dart';
 import 'package:flutter/material.dart';
 import 'package:bangtong/pages/1.dart';
@@ -67,17 +68,22 @@ class _MainScreen extends State<MainScreen> {
       elevation: 1,
       title: FittedBox(
         fit: BoxFit.fitWidth,
-        child: Text(LoginPage.allName + " 님,안녕하세요!        $_timer"),
+        child: Text(LoginPage.allName + " 님,안녕하세요!"),
       ),
       actions: [
-        // IconButton(
-        //   tooltip: "검색",
-        //   onPressed: () {},
-        //   icon:  Icon(Icons.search),
-        // ),
-        // SizedBox(
-        //   width: 1,
-        // ),
+        IconButton(
+          tooltip: "개인정보",
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Setting()),
+            );
+          },
+          icon:  Icon(Icons.person),
+        ),
+        SizedBox(
+          width: 1,
+        ),
         IconButton(
           tooltip: "로그아웃",
           onPressed: () {

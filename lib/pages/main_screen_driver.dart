@@ -38,7 +38,7 @@ class _MainScreen extends State<MainScreenDriver> {
     //WebViewCost(),
     third_D(), // 배차 내역
     four(), // 상담문의
-    setting() // 상담 문의
+    Setting() // 상담 문의
   ];
 
   int _selectedIndex = 0; // 선택된 페이지의 인덱스 넘버 초기화
