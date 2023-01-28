@@ -107,82 +107,68 @@ class _SignupPageState extends State<Setting> {
                     color: Colors.grey,
                   ),
                 ),
-                child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                    Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
                     Align(
-                    alignment: AlignmentDirectional(-1, 0),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
-                      child: TextFormField(
-                        enabled: false,
-                        controller: passwordController,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green),
-                        decoration: const InputDecoration(
-                          labelText: '패스워드',
+                      alignment: AlignmentDirectional(-1, 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
+                        child: TextFormField(
+                          enabled: false,
+                          controller: passwordController,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green),
+                          decoration: const InputDecoration(
+                            labelText: '패스워드',
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 2),
-                    child: Column(
-                        children:
-                        <Widget>[
-                        ElevatedButton(
-                            style:ElevatedButton.styleFrom(
-                              primary: Colors.green,
-                              onPrimary: Colors.white,
-                            ),
-                            child: Text('변경'),
-                            onPressed: () {
-                              if(UpdateData.passwordChange(LoginPage.allID, passwordController.text))
-                              {
-                                Fluttertoast.showToast(msg: '변경 성공');
-                              }
-                              else{
-                                Fluttertoast.showToast(msg: '변경 실패');
-                              }
-                            },
-                          ),
-                         ],
-                        ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                        onPrimary: Colors.white,
                       ),
+                      child: Text('변경'),
+                      onPressed: () {
+                        if (UpdateData.passwordChange(
+                            LoginPage.allID, passwordController.text)) {
+                          Fluttertoast.showToast(msg: '변경 성공');
+                        } else {
+                          Fluttertoast.showToast(msg: '변경 실패');
+                        }
+                      },
+                    ),
+                    // Padding(
+                    //   padding: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 2),
+                    //   child: Column(
+                    //       children:
+                    //       <Widget>[
+                    //       ElevatedButton(
+                    //           style:ElevatedButton.styleFrom(
+                    //             primary: Colors.green,
+                    //             onPrimary: Colors.white,
+                    //           ),
+                    //           child: Text('변경'),
+                    //           onPressed: () {
+                    //             if(UpdateData.passwordChange(LoginPage.allID, passwordController.text))
+                    //             {
+                    //               Fluttertoast.showToast(msg: '변경 성공');
+                    //             }
+                    //             else{
+                    //               Fluttertoast.showToast(msg: '변경 실패');
+                    //             }
+                    //           },
+                    //         ),
+                    //        ],
+                    //       ),
+                    //     ),
                   ],
                 ),
-              ],
-            ),
-            //         // Align(
-            //         //   alignment: AlignmentDirectional(0, 0),
-            //         //   child: Padding(
-            //         //     padding:
-            //         //     EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-            //         //     child:ElevatedButton(
-            //         //       style:ElevatedButton.styleFrom(
-            //         //         primary: Colors.green,
-            //         //         onPrimary: Colors.white,
-            //         //       ),
-            //         //       child: Text('변경'),
-            //         //       onPressed: () {
-            //         //         if(UpdateData.passwordChange(LoginPage.allID, passwordController.text))
-            //         //         {
-            //         //           Fluttertoast.showToast(msg: '변경 성공');
-            //         //         }
-            //         //         else{
-            //         //           Fluttertoast.showToast(msg: '변경 실패');
-            //         //         }
-            //         //       },
-            //         //     ),
-            //         //   ),
-            //         // ),
-            //       ],
-
               ),
             ),
           ],
