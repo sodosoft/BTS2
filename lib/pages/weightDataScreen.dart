@@ -78,9 +78,9 @@ class _MyAppState extends State<weightDataScreen> {
           ),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 10.0),
+            SizedBox(height: 30.0),
             showImage(),
             SizedBox(
               height: 30.0,
