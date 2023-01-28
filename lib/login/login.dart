@@ -81,11 +81,11 @@ class _LoginPageState extends State<LoginPage> {
            LoginPage.allGrade = userGrade;
            LoginPage.allComName = resLogin['userCompany'].toString();
            LoginPage.allComNo = resLogin['userComNo'].toString();
+           LoginPage.allCarNo = resLogin['userCarNo'].toString();
 
            if(paymentYN == 'Y')
            {
-             if (userGrade == 'D') {
-               LoginPage.allCarNo = resLogin['userCarNo'].toString();
+             if (userGrade == 'D' ) {
                // 차주 전용 화면
                Navigator.push(context,
                    MaterialPageRoute(builder: (context) => MainScreenDriver()));

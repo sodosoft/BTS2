@@ -45,6 +45,17 @@ class _SignupPageState extends State<Setting> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    IDController.dispose();
+    passwordController.dispose();
+    userTelController.dispose();
+    userCompanyNameController.dispose();
+    userCompanyNoController.dispose();
+    userCarNoController.dispose();
+    super.dispose();
+  }
+
   PreferredSizeWidget _appbarWidget() {
     return AppBar(
       leading: IconButton(
