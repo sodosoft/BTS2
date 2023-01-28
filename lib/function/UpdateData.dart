@@ -9,13 +9,100 @@ class UpdateData{
 
   UpdateData(this.loginID);
 
-  static passwordChange(userID, password)
-  async {
+  static passwordChange(userID, password) async {
     bool result = false;
 
     var res = await http.post(Uri.parse(API.UpdatePassWord), body: {
       'userID': userID,
       'userPassword': password,
+    });
+
+    if (res.statusCode == 200) {
+      var resLogin = jsonDecode(res.body);
+      if (resLogin['success'] == true)
+      {
+        result = true;
+      }
+      else
+      {
+        result = false;
+      }
+    }
+    return result;
+  }
+
+  static TelChange(userID, telNo) async {
+    bool result = false;
+
+    var res = await http.post(Uri.parse(API.UpdateTel), body: {
+      'userID': userID,
+      'userTel': telNo,
+    });
+
+    if (res.statusCode == 200) {
+      var resLogin = jsonDecode(res.body);
+      if (resLogin['success'] == true)
+      {
+        result = true;
+      }
+      else
+      {
+        result = false;
+      }
+    }
+    return result;
+  }
+
+  static companyChange(userID, company) async {
+    bool result = false;
+
+    var res = await http.post(Uri.parse(API.UpdateCom), body: {
+      'userID': userID,
+      'userCompany': company,
+    });
+
+    if (res.statusCode == 200) {
+      var resLogin = jsonDecode(res.body);
+      if (resLogin['success'] == true)
+      {
+        result = true;
+      }
+      else
+      {
+        result = false;
+      }
+    }
+    return result;
+  }
+
+  static comNoChange(userID, comNo) async {
+    bool result = false;
+
+    var res = await http.post(Uri.parse(API.UpdateComNo), body: {
+      'userID': userID,
+      'userComNo': comNo,
+    });
+
+    if (res.statusCode == 200) {
+      var resLogin = jsonDecode(res.body);
+      if (resLogin['success'] == true)
+      {
+        result = true;
+      }
+      else
+      {
+        result = false;
+      }
+    }
+    return result;
+  }
+
+  static carNoChange(userID, carNo) async {
+    bool result = false;
+
+    var res = await http.post(Uri.parse(API.UpdateCarNO), body: {
+      'userID': userID,
+      'userCarNo': carNo,
     });
 
     if (res.statusCode == 200) {

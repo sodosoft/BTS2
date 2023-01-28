@@ -72,7 +72,7 @@ class _MainScreen extends State<MainScreen> {
       ),
       actions: [
         IconButton(
-          tooltip: "개인정보",
+          tooltip: "회원 정보",
           onPressed: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: ((context) => Setting())));

@@ -38,7 +38,6 @@ class _MainScreen extends State<MainScreenDriver> {
     //WebViewCost(),
     third_D(), // 배차 내역
     four(), // 상담문의
-    Setting() // 상담 문의
   ];
 
   int _selectedIndex = 0; // 선택된 페이지의 인덱스 넘버 초기화
@@ -60,14 +59,17 @@ class _MainScreen extends State<MainScreenDriver> {
         child: Text(LoginPage.allName + "님,안녕하세요!"),
       ),
       actions: [
-        // IconButton(
-        //   tooltip: "검색",
-        //   onPressed: () {},
-        //   icon:  Icon(Icons.search),
-        // ),
-        // SizedBox(
-        //   width: 1,
-        // ),
+        IconButton(
+          tooltip: "회원 정보",
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: ((context) => Setting())));
+          },
+          icon:  Icon(Icons.person),
+        ),
+        SizedBox(
+          width: 1,
+        ),
         IconButton(
           tooltip: "로그아웃",
           onPressed: () {
@@ -104,11 +106,6 @@ class _MainScreen extends State<MainScreenDriver> {
             // icon: Icon(Icons.support_agent),
             icon: Icon(Icons.chat),
             label: '상담 문의',
-          ),
-          BottomNavigationBarItem(
-            // icon: Icon(Icons.support_agent),
-            icon: Icon(Icons.settings),
-            label: '설정',
           ),
         ],
         currentIndex: _selectedIndex, // 지정 인덱스로 이동

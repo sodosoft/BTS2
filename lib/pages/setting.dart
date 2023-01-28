@@ -38,6 +38,7 @@ class _SignupPageState extends State<Setting> {
     userTelController.text = LoginPage.allTel;
     userCompanyNameController.text = LoginPage.allComName;
     userCompanyNoController.text = LoginPage.allComNo;
+    userCarNoController.text = LoginPage.allCarNo;
 
     super.initState();
   }
@@ -68,113 +69,308 @@ class _SignupPageState extends State<Setting> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  border: Border.all(
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                child: Container(
+                  width: 200,
+                  decoration: BoxDecoration(
                     color: Colors.grey,
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-                child: Align(
-                  alignment: AlignmentDirectional(-1, 0),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
-                    child: TextFormField(
-                      enabled: false,
-                      controller: IDController,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: '아이디 & 이름',
+                  child: Align(
+                    alignment: AlignmentDirectional(-1, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
+                      child: TextFormField(
+                        enabled: false,
+                        controller: IDController,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                        decoration: const InputDecoration(
+                          labelText: '아이디 & 이름',
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Colors.grey,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                    child: Container(
+                      width: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.green,
+                        ),
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                          child: TextFormField(
+                            controller: passwordController,
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                            decoration: const InputDecoration(
+                              labelText: '비밀번호',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Align(
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                    child: Container(
+                      width: 100,
+                      child:
+                        ElevatedButton(
+                            onPressed: () {
+                              if (UpdateData.passwordChange(
+                                  LoginPage.allID, passwordController.text))
+                              {
+                                Fluttertoast.showToast(msg: '변경 성공');
+                              } else {
+                                Fluttertoast.showToast(msg: '변경 실패');
+                              }
+                            },
+                            child: Text('변경'),
+                        ) ,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                    child: Container(
+                      width: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.green,
+                        ),
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                          child: TextFormField(
+                            controller: userTelController,
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                            decoration: const InputDecoration(
+                              labelText: '전화번호',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                    child: Container(
+                      width: 100,
+                      child:
+                      ElevatedButton(
+                        onPressed: () {
+                          if (UpdateData.TelChange(
+                              LoginPage.allID, userTelController.text))
+                          {
+                            Fluttertoast.showToast(msg: '변경 성공');
+                          } else {
+                            Fluttertoast.showToast(msg: '변경 실패');
+                          }
+                        },
+                        child: Text('변경'),
+                      ) ,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                    child: Container(
+                      width: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.green,
+                        ),
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                          child: TextFormField(
+                            controller: userCompanyNameController,
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                            decoration: const InputDecoration(
+                              labelText: '회사명',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                    child: Container(
+                      width: 100,
+                      child:
+                      ElevatedButton(
+                        onPressed: () {
+                          if (UpdateData.companyChange(
+                              LoginPage.allID, userCompanyNameController.text))
+                          {
+                            Fluttertoast.showToast(msg: '변경 성공');
+                          } else {
+                            Fluttertoast.showToast(msg: '변경 실패');
+                          }
+                        },
+                        child: Text('변경'),
+                      ) ,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                    child: Container(
+                      width: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.green,
+                        ),
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
+                          child: TextFormField(
+                            enabled: LoginPage.allGrade != 'S' ,
+                            controller: userCompanyNoController,
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                            decoration: const InputDecoration(
+                              labelText: '사업자 번호',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                    child: Container(
+                      width: 100,
+                      child:
+                      ElevatedButton(
+                        onPressed: () {
+                          if(LoginPage.allGrade != 'S') {
+                            if (UpdateData.comNoChange(
+                                LoginPage.allID,
+                                userCompanyNoController.text)) {
+                              Fluttertoast.showToast(msg: '변경 성공');
+                            } else {
+                              Fluttertoast.showToast(msg: '변경 실패');
+                            }
+                          }
+                          else
+                          {
+
+                          }
+                        },
+                        child: Text('변경'),
+                      ) ,
+                    ),
+                  ),
+                ],
+              ),
+             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                  child: Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.green,
+                      ),
+                    ),
+                    child: Align(
                       alignment: AlignmentDirectional(-1, 0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 5, 0, 2),
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
                         child: TextFormField(
-                          enabled: false,
-                          controller: passwordController,
+                          enabled: LoginPage.allGrade == 'D',
+                          controller: userCarNoController,
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Colors.green),
                           decoration: const InputDecoration(
-                            labelText: '패스워드',
+                            labelText: '차량번호',
                           ),
                         ),
                       ),
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                  child: Container(
+                    width: 100,
+                    child:
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
-                        onPrimary: Colors.white,
-                      ),
-                      child: Text('변경'),
                       onPressed: () {
-                        if (UpdateData.passwordChange(
-                            LoginPage.allID, passwordController.text)) {
-                          Fluttertoast.showToast(msg: '변경 성공');
-                        } else {
-                          Fluttertoast.showToast(msg: '변경 실패');
+                        if(LoginPage.allGrade == 'D') {
+                          if (UpdateData.carNoChange(
+                              LoginPage.allID, userCarNoController.text)) {
+                            Fluttertoast.showToast(msg: '변경 성공');
+                          } else {
+                            Fluttertoast.showToast(msg: '변경 실패');
+                          }
                         }
                       },
-                    ),
-                    // Padding(
-                    //   padding: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 2),
-                    //   child: Column(
-                    //       children:
-                    //       <Widget>[
-                    //       ElevatedButton(
-                    //           style:ElevatedButton.styleFrom(
-                    //             primary: Colors.green,
-                    //             onPrimary: Colors.white,
-                    //           ),
-                    //           child: Text('변경'),
-                    //           onPressed: () {
-                    //             if(UpdateData.passwordChange(LoginPage.allID, passwordController.text))
-                    //             {
-                    //               Fluttertoast.showToast(msg: '변경 성공');
-                    //             }
-                    //             else{
-                    //               Fluttertoast.showToast(msg: '변경 실패');
-                    //             }
-                    //           },
-                    //         ),
-                    //        ],
-                    //       ),
-                    //     ),
-                  ],
+                      child: Text('변경'),
+                    ) ,
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
   }
 
   @override
