@@ -7,7 +7,7 @@ import 'package:bangtong/pages/4.dart';
 
 import '../../login/login.dart';
 import '../function/loginUpdate.dart';
-
+import 'dart:async';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -17,6 +17,31 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreen extends State<MainScreen>{
+
+  Timer? _timer;
+
+  var _time = 0;
+  var _isRunning = false;
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    _start();
+    super.initState();
+  }
+
+  void _start() {
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      setState(() {
+        offDialog();
+      });
+    });
+  }
 
   final List<Widget> _widgetOptions = <Widget>[
     // MainScreen(),

@@ -82,6 +82,7 @@ class _MyAppState extends State<loginFlag> {
               onTap: () {
                 if (formKey.currentState!.validate()) {
                   LoginUpdate.LoginflagChange(idController.text, 'N');
+                  Navigator.pop(context);
                 }
               },
               child: Container(
@@ -94,7 +95,7 @@ class _MyAppState extends State<loginFlag> {
                         borderRadius: BorderRadius.circular(12)),
                     child: Center(
                       child: Text(
-                        '로그인',
+                        '중복해제',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -112,26 +113,3 @@ class _MyAppState extends State<loginFlag> {
   }
 }
 
-void _sendEmail() async {
-  String body = ' ';
-  // await _getEmailBody();
-
-  final Email email = Email(
-    body: body,
-    subject: '[방통 배차 등록 서비스 문의]',
-    recipients: ['master@sodosoft.net'],
-    cc: [],
-    bcc: [],
-    attachmentPaths: [],
-    isHTML: false,
-  );
-
-  try {
-    await FlutterEmailSender.send(email);
-  } catch (error) {
-    String message =
-        "기본 메일 앱을 사용할 수 없기 때문에 앱에서 바로 문의를 전송하기 어려운 상황입니다.\n\n아래 이메일로 연락주시면 신속하게 답변해드리겠습니다 :)\n\nmaster@sodosoft.net";
-
-    Fluttertoast.showToast(msg: message);
-  }
-}
