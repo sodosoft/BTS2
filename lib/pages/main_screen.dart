@@ -16,8 +16,7 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreen();
 }
 
-class _MainScreen extends State<MainScreen>{
-
+class _MainScreen extends State<MainScreen> {
   Timer? _timer;
 
   var _time = 0;
@@ -36,7 +35,7 @@ class _MainScreen extends State<MainScreen>{
   }
 
   void _start() {
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(Duration(minutes: 30), (timer) {
       setState(() {
         offDialog();
       });
@@ -45,12 +44,11 @@ class _MainScreen extends State<MainScreen>{
 
   final List<Widget> _widgetOptions = <Widget>[
     // MainScreen(),
-    first(),  // 배차 등록 현황
-    board(),  // 게시판
+    first(), // 배차 등록 현황
+    board(), // 게시판
     WebView3(),
-    third(),  // 배차 내역
-    four()  // 상담 문의
-
+    third(), // 배차 내역
+    four() // 상담 문의
   ];
 
   int _selectedIndex = 0; // 선택된 페이지의 인덱스 넘버 초기화
@@ -69,7 +67,7 @@ class _MainScreen extends State<MainScreen>{
       elevation: 1,
       title: FittedBox(
         fit: BoxFit.fitWidth,
-        child:Text(LoginPage.allName + " 님,안녕하세요!"),
+        child: Text(LoginPage.allName + " 님,안녕하세요!        $_timer"),
       ),
       actions: [
         // IconButton(
@@ -86,7 +84,7 @@ class _MainScreen extends State<MainScreen>{
             offDialog();
             // Get.to(() => LoginPage());
           },
-          icon:  Icon(Icons.power_settings_new),
+          icon: Icon(Icons.power_settings_new),
         )
       ],
     );
@@ -104,7 +102,6 @@ class _MainScreen extends State<MainScreen>{
         // bottom navigation 선언
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
-
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: '홈',
