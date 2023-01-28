@@ -20,8 +20,8 @@ class API{
 
   static const UpdatePassWord = "$hostconnect/Update_PassWord.php";
   static const UpdateTel = "$hostconnect/Update_Tel.php";
-  static const UpdateCom = "$hostconnect/Update_ComNo.php";
-  static const UpdateComNo= "$hostconnect/Update_Company.php";
+  static const UpdateCom = "$hostconnect/Update_Company.php";
+  static const UpdateComNo= "$hostconnect/Update_ComNo.php";
   static const UpdateCarNO = "$hostconnect/Update_CarNo.php";
 
 }
