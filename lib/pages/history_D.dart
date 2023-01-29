@@ -35,18 +35,20 @@ class _MyAppState extends State<third_D> {
         final result = utf8.decode(respone.bodyBytes);
         List<dynamic> json = jsonDecode(result);
 
-        for (var item in json.reversed) {
-          OrderData_driver boardData = OrderData_driver(
-              item['orderID'],
-              item['startArea'],
-              item['endArea'],
-              item['cost'],
-              item['startDateTime'],
-              item['endDateTime'],
-              item['steelCode'],
-              item['orderTel'],
-              item['userCarNo']);
-          boardList.add(boardData);
+        if(boardList.isEmpty) {
+          for (var item in json.reversed) {
+            OrderData_driver boardData = OrderData_driver(
+                item['orderID'],
+                item['startArea'],
+                item['endArea'],
+                item['cost'],
+                item['startDateTime'],
+                item['endDateTime'],
+                item['steelCode'],
+                item['orderTel'],
+                item['userCarNo']);
+            boardList.add(boardData);
+          }
         }
 
         itmCnt = boardList.length.toString();
