@@ -140,26 +140,23 @@ class _EditScreen extends State<EditScreen> {
               return [
                 PopupMenuItem<int>(
                   value: 0,
-                  child: Text("완료"),
-                ),
-
-                PopupMenuItem<int>(
-                  value: 1,
                   child: Text("수정"),
                 ),
 
                 PopupMenuItem<int>(
-                  value: 2,
+                  value: 1,
                   child: Text("삭제"),
                 ),
               ];
             },
             onSelected:(value){
               if(value == 0){
-                print("배차 완료");
-              }else if(value == 1){
                 print("배차 수정");
-              }else if(value == 2){
+                // 차량 번호 업데이트
+                // 차주와 전화 후
+                //confirmYN Y
+                //차주에게 배차 내역 문자보내기
+              }else if(value == 1){
                 print("배차 삭제");
               }
             }

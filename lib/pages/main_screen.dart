@@ -1,3 +1,4 @@
+import 'package:bangtong/pages/orderING.dart';
 import 'package:bangtong/pages/setting.dart';
 import 'package:bangtong/pages/webcost.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,7 @@ class _MainScreen extends State<MainScreen> {
   final List<Widget> _widgetOptions = <Widget>[
     // MainScreen(),
     first(), // 배차 등록 현황
+    orderING(), // 배차 진행 중
     board(), // 게시판
     WebView3(),
     third(), // 배차 내역
@@ -109,6 +111,10 @@ class _MainScreen extends State<MainScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: '홈',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.info),
+              label: '배차 진행',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.info),

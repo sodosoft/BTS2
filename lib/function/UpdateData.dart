@@ -162,4 +162,27 @@ class UpdateData{
     }
     return result;
   }
+
+  static confirmYNChange(orderIndex, userCarNo, confirmYN) async {
+    bool result = false;
+
+    var res = await http.post(Uri.parse(API.UpdateConfirmYN), body: {
+      'orderIndex': orderIndex,
+      'userCarNo': userCarNo,
+      'confirmYN': confirmYN
+    });
+
+    if (res.statusCode == 200) {
+      var resLogin = jsonDecode(res.body);
+      if (resLogin['success'] == true)
+      {
+        result = true;
+      }
+      else
+      {
+        result = false;
+      }
+    }
+    return result;
+  }
 }

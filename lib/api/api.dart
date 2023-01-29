@@ -17,6 +17,7 @@ class API{
   static const order_ADD = "$hostconnect/Order.php";
   static const order_HISTORY = "$hostconnect/ORDERBOARD_COMPLETE.php";
   static const orderBoard = "$hostconnect/ORDERBOARD.php";
+  static const orderBoard_orderYN = "$hostconnect/ORDERBOARD_orderYN.php";
 
   static const UpdatePassWord = "$hostconnect/Update_PassWord.php";
   static const UpdateTel = "$hostconnect/Update_Tel.php";
@@ -34,5 +35,6 @@ class API{
 
   static const UpdateCancelCount = "$hostconnect/cancelCnt_Update.php";
   static const UpdateOrderYN = "$hostconnect/Update_OrderYN.php";
+  static const UpdateConfirmYN = "$hostconnect/Order_ConfirmYN_Update.php";
 
 }
