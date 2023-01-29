@@ -26,9 +26,11 @@ class orderING extends StatefulWidget {
 class _MyAppState extends State<orderING> {
 
   var userCarNoController = TextEditingController();
+  List<OrderData> boardList = [];
 
   Future<List<OrderData>?> _getPost() async {
     try {
+
       var respone = await http.post(Uri.parse(API.orderBoard_orderYN), body: {
         'orderID': LoginPage.allID,
       });
@@ -36,7 +38,7 @@ class _MyAppState extends State<orderING> {
       if (respone.statusCode == 200) {
         final result = utf8.decode(respone.bodyBytes);
         List<dynamic> json = jsonDecode(result);
-        List<OrderData> boardList = [];
+
 
         for (var item in json.reversed) {
           OrderData boardData = OrderData(
