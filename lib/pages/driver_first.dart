@@ -92,70 +92,42 @@ class _MyAppState extends State<Driver_first> {
       // appBar: AppBar(
       //   title: const Text("Generate List"),
       // ),
-      body: Column(
+      body:Column(
         children: [
         Container(
+        width: double.infinity,
         height: 30,
         color: Colors.white,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('다음 결제일: $strNextDday'),
-            SizedBox(width: 5),
-            Text('D$strDday'),
-          ],
-        ),
-      ),
-      Expanded(child: RefreshIndicator(
-              onRefresh: refresh,
-              child: FutureBuilder(
-            future: _getPost(),
-            builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                              title: Text(DisplayString.displayArea(snapshot.data[index].startArea) + " >> " + DisplayString.displayArea(snapshot.data[index].endArea)),
-                              subtitle: Text('상차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].startDateTime)) +
-                                  '\n' +
-                                  '하차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(snapshot.data[index].endDateTime)) +
-                                  '\n' +
-                                  '운반비: ￦' + snapshot.data[index].cost + "원"),
-                              isThreeLine: true,
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditScreen(snapshot.data[index])));
-                              },
-                            ),
-                          );
-                        });
-                  } else {
-                    return Container(
-                      child: Center(
-                        child: Text("Loading..."),
-                      ),
-                    );
-                  }
-                },
+        child:
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('다음 결제일: $strNextDday'),
+                SizedBox(width: 5),
+                Text('D$strDday'),
+                ],
               ),
-             ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: "배차 등록",
-        onPressed: () async {
-          final reuslt = await Navigator.push(
-              context, MaterialPageRoute(builder: ((context) => AddScreen())));
-        },
-        backgroundColor: Colors.blueAccent,
-        child: const Icon(Icons.add),
+            ),
+            InkWell(
+              child: Image.asset('assets/images/1.png', width: double.infinity, height: 170),
+              onTap: (){
+                //상차지 기준
+              }
+            ),
+            InkWell(
+                child: Image.asset('assets/images/3.png', width: double.infinity, height: 170),
+                onTap: (){
+                // 하차지 기준
+                }
+            ),
+            InkWell(
+                child: Image.asset('assets/images/2.png', width: double.infinity, height: 170),
+                onTap: (){
+                //제강사 기준
+                }
+            ),
+          ],
       ),
     );
   }
