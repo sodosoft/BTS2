@@ -81,6 +81,14 @@ class _MyAppState extends State<orderING> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setState(() {
+      refresh();
+    });
+  }
+
+  @override
   void initState() {
     super.initState();
   }
@@ -152,7 +160,6 @@ class _MyAppState extends State<orderING> {
   }
 
   Widget simpleDialog(String ordIndex) {
-
     return AlertDialog(
       title: Text('배차 완료'),
       content: TextFormField(
