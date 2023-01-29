@@ -1,9 +1,14 @@
+import 'dart:async';
+
+import 'package:bangtong/function/UpdateData.dart';
 import 'package:flutter/material.dart'; //flutter의 package를 가져오는 코드 반드시 필요
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:intl/intl.dart';
 
+import '../function/custom_alert_dialog.dart';
 import '../function/displaystring.dart';
+import '../login/login.dart';
 import '../model/orderboard.dart';
 
 class DetailPageDriver extends StatefulWidget {
@@ -17,17 +22,13 @@ class DetailPageDriver extends StatefulWidget {
 class _MyAppState extends State<DetailPageDriver> {
   final OrderData postData;
   _MyAppState(@required this.postData);
+  Timer? _timer;
 
-  bool _visibility = false;
-
-  void _show() {
-    setState(() {
-      _visibility = true;
-    });
-  }
-  void _hide() {
-    setState(() {
-      _visibility = false;
+  void _start() {
+    _timer = Timer.periodic(Duration(minutes: 10), (timer) {
+      setState(() {
+        offDialog(LoginPage.cancelCount.toString());
+      });
     });
   }
 
@@ -49,16 +50,15 @@ class _MyAppState extends State<DetailPageDriver> {
           children:
           [
             Text('상차지: ' + postData.startArea.toString()  + '\n' +
-                '하차지: ' + postData.endArea.toString()  + '\n' +
-                '상차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(postData.startDateTime)) + '\n' +
-                '하차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(postData.endDateTime)) + '\n' +
-                '운반비: ￦' + postData.cost + "원"  + '\n' +
-                '지불방식: ' + postData.payMethod.toString()  + '\n' +
-                '차종: ' + postData.carKind.toString()  + '\n' +
-                '품목: ' + postData.product.toString()  + '\n' +
-                '등급: ' + postData.grade.toString()  + '\n' +
-                '상차방법: ' + postData.startMethod.toString()  + '\n' +
-                '차량번호: ' + postData.userCarNo.toString()
+                 '하차지: ' + postData.endArea.toString()  + '\n' +
+                 '상차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(postData.startDateTime)) + '\n' +
+                 '하차일시: ' + DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(DateTime.parse(postData.endDateTime)) + '\n' +
+                 '운반비: ￦' + postData.cost + "원"  + '\n' +
+                 '지불방식: ' + postData.payMethod.toString()  + '\n' +
+                 '차종: ' + postData.carKind.toString()  + '\n' +
+                 '품목: ' + postData.product.toString()  + '\n' +
+                 '등급: ' + postData.grade.toString()  + '\n' +
+                 '상차방법: ' + postData.startMethod.toString()  + '\n'
             ),
             SizedBox(
               height: 20,
@@ -69,55 +69,92 @@ class _MyAppState extends State<DetailPageDriver> {
               child: ElevatedButton(
                 child: Text('오더 잡기'),
                 onPressed:
-                // 화주한테 차번호 SMS 보내기
-                // orderYN Y로 업데이트
-                // 타이머 10분
-                    () => {_visibility? _hide() : _show()},
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Visibility(
-              visible: _visibility,
-              child:
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
 
-                  child: Text('전화 걸기'),
-                  onPressed: (){
-                    // 화주한테 전화 걸기
-
-                  },
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Visibility(
-              visible: _visibility,
-              child:
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-
-                  child: Text('취소'),
-                  onPressed: (){
-                    // 취소
-                    // orderYN N으로 업데이트
-                    // 캔슬 횟수 추가(캔슬 횟수 하루에 3번 제한)
-                    // 화면 닫음
-                  },
-                ),
+                //     () {_visibility? _hide() : _show()},
+                (){
+                  if(LoginPage.cancelCount > 3)
+                  {
+                    Fluttertoast.showToast(msg: '취소 제한 횟수 3회를 초과하셨습니다.' + '\n' + '익일 자정 이후 초기화 됩니다.');
+                    return;
+                  }
+                  else
+                  {
+                    // 화주한테 차번호 SMS 보내기
+                    // orderYN Y로 업데이트
+                    UpdateData.orederYNChange(postData.orderIndex, 'Y');
+                    // 타이머 10분
+                    _start();
+                    showDialog(
+                      barrierColor: Colors.black26,
+                      context: context,
+                      builder: (context) {
+                        return CustomAlertDialog(
+                          title: '지난 시간 :  $_timer',
+                          description: '오더 번호' + postData.orderIndex + '\n' +
+                              '상차지: ' + postData.startArea.toString() + '\n' +
+                              '하차지: ' + postData.endArea.toString() + '\n' +
+                              '상차일시: ' +
+                              DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
+                                  DateTime.parse(postData.startDateTime)) +
+                              '\n' +
+                              '하차일시: ' +
+                              DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
+                                  DateTime.parse(postData.endDateTime)) + '\n' +
+                              '운반비: ￦' + postData.cost,
+                          orderIndex: postData.orderIndex,
+                        );
+                      },
+                    );
+                  }
+                }
               ),
             ),
           ],),
       ),
       //body: Text(postData.content),
     );
+  }
+
+  Future<bool> offDialog(String cancelcount) async {
+    return await showDialog(
+        context: context,
+        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            //Dialog Main Title
+            title: Column(
+              children: <Widget>[
+                new Text("시간 초과",
+                  style: TextStyle(color: Colors.red),),
+              ],
+            ),
+            //
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  '시간이 초과되어서 오더 잡기에' + '\n' +
+                  '실패하셨습니다.'
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              new TextButton(
+                child: new Text("확인"),
+                onPressed: () {
+                  // 캔슬 카운트 상승
+                  UpdateData.orederYNChange(postData.orderIndex, 'N');
+                  UpdateData.calcelCountChange(LoginPage.allID, LoginPage.cancelCount + 1);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
   }
 }

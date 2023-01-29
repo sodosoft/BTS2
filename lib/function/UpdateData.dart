@@ -118,4 +118,48 @@ class UpdateData{
     }
     return result;
   }
+
+  static calcelCountChange(userID, cancelCount) async {
+    bool result = false;
+
+    var res = await http.post(Uri.parse(API.UpdateCancelCount), body: {
+      'userID': userID,
+      'cancelCount': cancelCount
+    });
+
+    if (res.statusCode == 200) {
+      var resLogin = jsonDecode(res.body);
+      if (resLogin['success'] == true)
+      {
+        result = true;
+      }
+      else
+      {
+        result = false;
+      }
+    }
+    return result;
+  }
+
+  static orederYNChange(orderIndex, orderYN) async {
+    bool result = false;
+
+    var res = await http.post(Uri.parse(API.UpdateOrderYN), body: {
+      'orderIndex': orderIndex,
+      'orderYN': orderYN
+    });
+
+    if (res.statusCode == 200) {
+      var resLogin = jsonDecode(res.body);
+      if (resLogin['success'] == true)
+      {
+        result = true;
+      }
+      else
+      {
+        result = false;
+      }
+    }
+    return result;
+  }
 }

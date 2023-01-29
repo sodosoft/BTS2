@@ -32,4 +32,7 @@ class API{
 
   static const DriverOrder_steel_DI = "$hostconnect/DriverOrder_steel_DI.php";
 
+  static const UpdateCancelCount = "$hostconnect/cancelCnt_Update.php";
+  static const UpdateOrderYN = "$hostconnect/Update_OrderYN.php";
+
 }
