@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:bangtong/pages/addOrder.dart';
+import 'package:bangtong/pages/end.dart';
+import 'package:bangtong/pages/start.dart';
+import 'package:bangtong/pages/steel.dart';
 import 'package:bangtong/pages/weightDataScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -109,24 +112,45 @@ class _MyAppState extends State<Driver_first> {
                 ],
               ),
             ),
-            InkWell(
-              child: Image.asset('assets/images/1.png', width: double.infinity, height: 170),
+            SizedBox(
+                width: double.infinity,
+                child:
+              InkWell(
+              child: Image.asset('assets/images/1.png', height: 175),
               onTap: (){
                 //상차지 기준
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => startArea()));
               }
-            ),
+            )),
+            SizedBox(
+              width: double.infinity,
+                child:
             InkWell(
-                child: Image.asset('assets/images/3.png', width: double.infinity, height: 170),
+                child: Image.asset('assets/images/3.png', height: 175),
                 onTap: (){
                 // 하차지 기준
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => endArea()));
                 }
-            ),
+            )),
+            SizedBox(
+              width: double.infinity,
+                child:
             InkWell(
-                child: Image.asset('assets/images/2.png', width: double.infinity, height: 170),
+                child: Image.asset('assets/images/2.png', height: 175),
                 onTap: (){
                 //제강사 기준
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => steeltArea()));
                 }
-            ),
+            )),
           ],
       ),
     );

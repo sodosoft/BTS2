@@ -28,6 +28,7 @@ class _MyAppState extends State<four> {
               height: 100,
             ),
             IconButton(
+              color: Colors.blueAccent,
               icon: const Icon(Icons.chat),
               iconSize: 50.0,
               onPressed: () {
@@ -39,6 +40,7 @@ class _MyAppState extends State<four> {
               height: 100,
             ),
             IconButton(
+              color: Colors.blueAccent,
               icon: const Icon(Icons.mail),
               iconSize: 50.0,
               onPressed: () {
