@@ -127,8 +127,9 @@ class _MyAppState extends State<orderING> {
                                 showDialog(
                                     context: context,
                                     builder: (ctxDialog) =>
-                                        SingleChildScrollView(child: simpleDialog())
+                                        SingleChildScrollView(child: simpleDialog(snapshot.data[index].orderIndex))
                                 );
+                                refresh();
                               },
                             ),
                           );
@@ -149,7 +150,8 @@ class _MyAppState extends State<orderING> {
     );
   }
 
-  Widget simpleDialog() {
+  Widget simpleDialog(String ordIndex) {
+
     return AlertDialog(
       title: Text('배차 완료'),
       content: TextFormField(
@@ -162,7 +164,7 @@ class _MyAppState extends State<orderING> {
         new TextButton(
           child: new Text("확인"),
           onPressed: () {
-            UpdateData.confirmYNChange(LoginPage.allID, userCarNoController.text, 'Y');
+            UpdateData.confirmYNChange(ordIndex, userCarNoController.text, 'Y');
             Navigator.pop(context);
           },
         ),
