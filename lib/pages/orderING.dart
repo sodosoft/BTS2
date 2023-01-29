@@ -80,13 +80,14 @@ class _MyAppState extends State<orderING> {
     _getPost();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    setState(() {
-      refresh();
-    });
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   setState(() {
+  //     boardList.clear();
+  //     refresh();
+  //   });
+  // }
 
   @override
   void initState() {
@@ -138,7 +139,6 @@ class _MyAppState extends State<orderING> {
                                     builder: (ctxDialog) =>
                                         SingleChildScrollView(child: simpleDialog(snapshot.data[index].orderIndex))
                                 );
-                                refresh();
                               },
                             ),
                           );
