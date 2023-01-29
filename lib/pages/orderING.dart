@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bangtong/pages/addOrder.dart';
@@ -30,39 +31,40 @@ class _MyAppState extends State<orderING> {
 
   Future<List<OrderData>?> _getPost() async {
     try {
-
-      var respone = await http.post(Uri.parse(API.orderBoard_orderYN), body: {
-        'orderID': LoginPage.allID,
-      });
+        var respone = await http.post(Uri.parse(API.orderBoard_orderYN), body: {
+          'orderID': LoginPage.allID,
+        });
 
       if (respone.statusCode == 200) {
         final result = utf8.decode(respone.bodyBytes);
         List<dynamic> json = jsonDecode(result);
 
-
-        for (var item in json.reversed) {
-          OrderData boardData = OrderData(
-              item['orderID'],
-              item['orderIndex'],
-              item['startArea'],
-              item['endArea'],
-              item['cost'],
-              item['payMethod'],
-              item['carKind'],
-              item['product'],
-              item['grade'],
-              item['startDateTime'],
-              item['endDateTime'],
-              item['end1'],
-              item['bottom'],
-              item['startMethod'],
-              item['steelCode'],
-              item['orderYN'],
-              item['confirmYN'],
-              item['orderTel'],
-              item['companyName'],
-              item['userCarNo']);
-          boardList.add(boardData);
+        if(boardList.isEmpty)
+          {
+            for (var item in json.reversed) {
+            OrderData boardData = OrderData(
+                item['orderID'],
+                item['orderIndex'],
+                item['startArea'],
+                item['endArea'],
+                item['cost'],
+                item['payMethod'],
+                item['carKind'],
+                item['product'],
+                item['grade'],
+                item['startDateTime'],
+                item['endDateTime'],
+                item['end1'],
+                item['bottom'],
+                item['startMethod'],
+                item['steelCode'],
+                item['orderYN'],
+                item['confirmYN'],
+                item['orderTel'],
+                item['companyName'],
+                item['userCarNo']);
+            boardList.add(boardData);
+          }
         }
 
         return boardList;
@@ -77,14 +79,69 @@ class _MyAppState extends State<orderING> {
   }
 
   Future refresh() async {
-    _getPost();
+    try {
+          setState(() {
+            if(!boardList.isEmpty) {
+              boardList.clear();
+            }
+          });
+
+      var respone = await http.post(Uri.parse(API.orderBoard_orderYN), body: {
+        'orderID': LoginPage.allID,
+      });
+
+      if (respone.statusCode == 200) {
+        final result = utf8.decode(respone.bodyBytes);
+        List<dynamic> json = jsonDecode(result);
+
+        if (boardList.isEmpty){
+          for (var item in json.reversed) {
+            OrderData boardData = OrderData(
+                item['orderID'],
+                item['orderIndex'],
+                item['startArea'],
+                item['endArea'],
+                item['cost'],
+                item['payMethod'],
+                item['carKind'],
+                item['product'],
+                item['grade'],
+                item['startDateTime'],
+                item['endDateTime'],
+                item['end1'],
+                item['bottom'],
+                item['startMethod'],
+                item['steelCode'],
+                item['orderYN'],
+                item['confirmYN'],
+                item['orderTel'],
+                item['companyName'],
+                item['userCarNo']);
+            boardList.add(boardData);
+          }
+      }
+
+      final data = boardList;
+
+        setState(() {
+            this.boardList = data;
+        });
+
+        return boardList;
+      } else {
+        Fluttertoast.showToast(msg: '데이터 로딩 실패!');
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
   }
 
   // @override
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
   //   setState(() {
-  //     boardList.clear();
   //     refresh();
   //   });
   // }
@@ -92,6 +149,8 @@ class _MyAppState extends State<orderING> {
   @override
   void initState() {
     super.initState();
+
+    refresh();
   }
 
   @override
@@ -103,7 +162,8 @@ class _MyAppState extends State<orderING> {
       body: Column(
         children: [
           Expanded(
-            child: RefreshIndicator(
+            child: boardList.isEmpty ? const Center( child: CircularProgressIndicator())
+                : RefreshIndicator(
               onRefresh: refresh,
               child: FutureBuilder(
                 future: _getPost(),
@@ -174,6 +234,7 @@ class _MyAppState extends State<orderING> {
           onPressed: () {
             UpdateData.confirmYNChange(ordIndex, userCarNoController.text, 'Y');
             Navigator.pop(context);
+            refresh();
           },
         ),
 

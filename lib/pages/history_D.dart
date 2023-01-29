@@ -23,6 +23,7 @@ class _MyAppState extends State<third_D> {
   String subTotal = '';
   String itmCnt = '';
   var itemCounterController = TextEditingController();
+  List<OrderData_driver> boardList = [];
 
   Future<List<OrderData_driver>?> _getPost() async {
     try {
@@ -33,7 +34,6 @@ class _MyAppState extends State<third_D> {
       if (respone.statusCode == 200) {
         final result = utf8.decode(respone.bodyBytes);
         List<dynamic> json = jsonDecode(result);
-        List<OrderData_driver> boardList = [];
 
         for (var item in json.reversed) {
           OrderData_driver boardData = OrderData_driver(
@@ -67,13 +67,63 @@ class _MyAppState extends State<third_D> {
   @override
   void initState() {
     super.initState();
-    //_getPost();
+
+    refresh();
   }
 
   final myController = TextEditingController();
 
   Future refresh() async {
-    _getPost();
+    try {
+      setState(() {
+        if(!boardList.isEmpty) {
+          boardList.clear();
+        }
+      });
+      var respone = await http.post(Uri.parse(API.order_D_HISTORY), body: {
+        'userCarNo': LoginPage.allCarNo,
+      });
+
+      if (respone.statusCode == 200) {
+        final result = utf8.decode(respone.bodyBytes);
+        List<dynamic> json = jsonDecode(result);
+        List<OrderData_driver> boardList = [];
+
+        if(boardList.isEmpty) {
+          for (var item in json.reversed) {
+            OrderData_driver boardData = OrderData_driver(
+                item['orderID'],
+                item['startArea'],
+                item['endArea'],
+                item['cost'],
+                item['startDateTime'],
+                item['endDateTime'],
+                item['steelCode'],
+                item['orderTel'],
+                item['userCarNo']);
+            boardList.add(boardData);
+          }
+        }
+
+        itmCnt = boardList.length.toString();
+        subTotal = CostAdd(boardList);
+        itemCounterController.text = '   총 $itmCnt 건  합계 $subTotal원';
+
+        final data = boardList;
+
+        setState(() {
+          this.boardList = data;
+        });
+
+        return boardList;
+      } else {
+        Fluttertoast.showToast(msg: '데이터 로딩 실패!');
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
   }
 
   @override
@@ -121,7 +171,8 @@ class _MyAppState extends State<third_D> {
             ),
           ),
           Expanded(
-            child: RefreshIndicator(
+            child: boardList.isEmpty ? const Center( child: CircularProgressIndicator())
+                : RefreshIndicator(
               onRefresh: refresh,
               child: FutureBuilder(
                 future: _getPost(),
