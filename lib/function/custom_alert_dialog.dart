@@ -87,9 +87,9 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
               onTap: () {
                 // 취소
                 // // orderYN N으로 업데이트
-                // UpdateData.orederYNChange(widget.orderIndex, 'N');
+                UpdateData.orederYNChange(widget.orderIndex, 'N');
                 // // 캔슬 횟수 추가(캔슬 횟수 하루에 3번 제한)
-                // offDialog(LoginPage.cancelCount + 1);
+                offDialog(LoginPage.cancelCount + 1);
                 // 화면 닫음
                 Navigator.of(context).pop();
               },
