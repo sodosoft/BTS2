@@ -24,4 +24,12 @@ class API{
   static const UpdateComNo= "$hostconnect/Update_ComNo.php";
   static const UpdateCarNO = "$hostconnect/Update_CarNo.php";
 
+  static const DriverOrder_all = "$hostconnect/DriverOrder_all.php";
+
+  static const DriverOrder_start_seoul = "$hostconnect/DriverOrder_start_seoul.php";
+
+  static const DriverOrder_end_seoul = "$hostconnect/DriverOrder_end_seoul.php";
+
+  static const DriverOrder_steel_DI = "$hostconnect/DriverOrder_steel_DI.php";
+
 }
