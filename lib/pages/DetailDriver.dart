@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bangtong/function/UpdateData.dart';
 import 'package:flutter/material.dart'; //flutter의 package를 가져오는 코드 반드시 필요
+import 'package:flutter_sms/flutter_sms.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +24,8 @@ class _MyAppState extends State<DetailPageDriver> {
   final OrderData postData;
   _MyAppState(@required this.postData);
   Timer? _timer;
+  String? _message;
+  List<String> people = [];
 
   void _start() {
     _timer = Timer.periodic(Duration(minutes: 10), (timer) {
@@ -31,8 +34,6 @@ class _MyAppState extends State<DetailPageDriver> {
       });
     });
   }
-
-  //DetailPageDriver(this.postData); // 생성자를 통해서 입력변수 받기
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +69,8 @@ class _MyAppState extends State<DetailPageDriver> {
               height: 50,
               child: ElevatedButton(
                 child: Text('오더 잡기'),
-                onPressed:
-
-                //     () {_visibility? _hide() : _show()},
-                (){
+                onPressed:()
+                {
                   if(LoginPage.cancelCount > 3)
                   {
                     Fluttertoast.showToast(msg: '취소 제한 횟수 3회를 초과하셨습니다.' + '\n' + '익일 자정 이후 초기화 됩니다.');
@@ -80,6 +79,9 @@ class _MyAppState extends State<DetailPageDriver> {
                   else
                   {
                     // 화주한테 차번호 SMS 보내기
+                    _send('오더 번호: ' + postData.orderIndex + '\n\n' +
+                          '차량 번호: ' + LoginPage.allCarNo + '\n' +
+                          '바로 전화 드릴테니 배차 등록 부탁드립니다.');
                     // orderYN Y로 업데이트
                     UpdateData.orederYNChange(postData.orderIndex, 'Y');
                     // 타이머 10분
@@ -90,7 +92,7 @@ class _MyAppState extends State<DetailPageDriver> {
                       builder: (context) {
                         return CustomAlertDialog(
                           title: '지난 시간 :  $_timer',
-                          description: '오더 번호' + postData.orderIndex + '\n' +
+                          description: '오더 번호: ' + postData.orderIndex + '\n' +
                               '상차지: ' + postData.startArea.toString() + '\n' +
                               '하차지: ' + postData.endArea.toString() + '\n' +
                               '상차일시: ' +
@@ -157,4 +159,26 @@ class _MyAppState extends State<DetailPageDriver> {
           );
         });
   }
+
+  Future<void> _sendSMS(List<String> recipients, String msg) async {
+    try {
+      String _result = await sendSMS(
+        message: msg,
+        recipients: recipients,
+        sendDirect: true,
+      );
+      setState(() => _message = _result);
+    } catch (error) {
+      setState(() => _message = error.toString());
+    }
+  }
+
+  void _send(String msg) {
+    if (people.isEmpty) {
+      setState(() => _message = '적어도 1명의 연락처 또는 메세지가 필요합니다.');
+    } else {
+      _sendSMS(people, msg);
+    }
+  }
+
 }

@@ -20,8 +20,6 @@ class _MyAppState extends State<weightDataScreen> {
   File? _image;
   final picker = ImagePicker();
   String orderTel = '';
-  String? _message;
-  List<String> people = [];
 
   String _path = '';
 
@@ -148,26 +146,5 @@ class _MyAppState extends State<weightDataScreen> {
             // ),
           ],
         ));
-  }
-
-  Future<void> _sendSMS(List<String> recipients) async {
-    try {
-      String _result = await sendSMS(
-        message: "SMS TEST",
-        recipients: recipients,
-        sendDirect: true,
-      );
-      setState(() => _message = _result);
-    } catch (error) {
-      setState(() => _message = error.toString());
-    }
-  }
-
-  void _send() {
-    if (people.isEmpty) {
-      setState(() => _message = '적어도 1명의 연락처 또는 메세지가 필요합니다.');
-    } else {
-      _sendSMS(people);
-    }
   }
 }
