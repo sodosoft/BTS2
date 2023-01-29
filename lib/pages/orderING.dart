@@ -31,7 +31,6 @@ class _MyAppState extends State<orderING> {
     try {
       var respone = await http.post(Uri.parse(API.orderBoard_orderYN), body: {
         'orderID': LoginPage.allID,
-        'orderYN' : 'Y'
       });
 
       if (respone.statusCode == 200) {
