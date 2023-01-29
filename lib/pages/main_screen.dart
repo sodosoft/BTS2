@@ -113,7 +113,7 @@ class _MainScreen extends State<MainScreen> {
               label: '홈',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.info),
+              icon: Icon(Icons.handshake_outlined),
               label: '배차 진행',
             ),
             BottomNavigationBarItem(

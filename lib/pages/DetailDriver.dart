@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:bangtong/function/UpdateData.dart';
 import 'package:flutter/material.dart'; //flutter의 package를 가져오는 코드 반드시 필요
-import 'package:flutter_sms/flutter_sms.dart';
+import 'package:direct_sms/direct_sms.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../function/custom_alert_dialog.dart';
 import '../function/displaystring.dart';
@@ -24,7 +25,7 @@ class _MyAppState extends State<DetailPageDriver> {
   final OrderData postData;
   _MyAppState(@required this.postData);
   Timer? _timer;
-  String? _message;
+  var directSms = DirectSms();
   List<String> people = [];
 
   void _start() {
@@ -79,13 +80,16 @@ class _MyAppState extends State<DetailPageDriver> {
                   else
                   {
                     // 화주한테 차번호 SMS 보내기
-                    _send('오더 번호: ' + postData.orderIndex + '\n\n' +
+                    _sendSms(
+                      message: '오더 번호: ' + postData.orderIndex + '\n\n' +
                           '차량 번호: ' + LoginPage.allCarNo + '\n' +
-                          '바로 전화 드릴테니 배차 등록 부탁드립니다.');
+                          '바로 전화 드릴테니 배차 등록 부탁드립니다.',
+                      number: postData.orderTel,
+                    );
                     // orderYN Y로 업데이트
-                    UpdateData.orederYNChange(postData.orderIndex, 'Y');
-                    // 타이머 10분
-                    _start();
+                     UpdateData.orederYNChange(postData.orderIndex, 'Y');
+                    // // 타이머 10분
+                     _start();
                     showDialog(
                       barrierColor: Colors.black26,
                       context: context,
@@ -104,6 +108,7 @@ class _MyAppState extends State<DetailPageDriver> {
                                   DateTime.parse(postData.endDateTime)) + '\n' +
                               '운반비: ￦' + postData.cost,
                           orderIndex: postData.orderIndex,
+                          orderTel: postData.orderTel,
                         );
                       },
                     );
@@ -160,25 +165,10 @@ class _MyAppState extends State<DetailPageDriver> {
         });
   }
 
-  Future<void> _sendSMS(List<String> recipients, String msg) async {
-    try {
-      String _result = await sendSMS(
-        message: msg,
-        recipients: recipients,
-        sendDirect: true,
-      );
-      setState(() => _message = _result);
-    } catch (error) {
-      setState(() => _message = error.toString());
+  _sendSms({required String number, required String message}) async {
+    final permission = Permission.sms.request();
+    if (await permission.isGranted) {
+      directSms.sendSms(message: message, phone: number);
     }
   }
-
-  void _send(String msg) {
-    if (people.isEmpty) {
-      setState(() => _message = '적어도 1명의 연락처 또는 메세지가 필요합니다.');
-    } else {
-      _sendSMS(people, msg);
-    }
-  }
-
 }

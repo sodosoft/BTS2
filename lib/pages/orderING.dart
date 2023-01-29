@@ -162,7 +162,6 @@ class _MyAppState extends State<orderING> {
         new TextButton(
           child: new Text("확인"),
           onPressed: () {
-            //
             UpdateData.confirmYNChange(LoginPage.allID, userCarNoController.text, 'Y');
             Navigator.pop(context);
           },

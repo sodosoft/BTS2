@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_sms/flutter_sms.dart';
 import 'package:share_plus/share_plus.dart';
 
 class weightDataScreen extends StatefulWidget {

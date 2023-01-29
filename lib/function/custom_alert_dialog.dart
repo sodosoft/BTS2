@@ -1,5 +1,7 @@
 import 'package:bangtong/function/UpdateData.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../login/login.dart';
 
@@ -9,15 +11,21 @@ class CustomAlertDialog extends StatefulWidget {
     required this.title,
     required this.description,
     required this.orderIndex,
+    required this.orderTel,
   }) : super(key: key);
 
-  final String title, description, orderIndex;
+  final String title, description, orderIndex, orderTel;
 
   @override
   _CustomAlertDialogState createState() => _CustomAlertDialogState();
 }
 
 class _CustomAlertDialogState extends State<CustomAlertDialog> {
+
+  _callNumber(telnum) async{
+    bool? res = await FlutterPhoneDirectCaller.callNumber(telnum);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -50,6 +58,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
               highlightColor: Colors.grey[200],
               onTap: () {
                 // 화주한테 전화 걸기
+                _callNumber(widget.orderTel);
               },
               child: Center(
                 child: Text(
@@ -77,10 +86,10 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
               highlightColor: Colors.grey[200],
               onTap: () {
                 // 취소
-                // orderYN N으로 업데이트
-                UpdateData.orederYNChange(widget.orderIndex, 'N');
-                // 캔슬 횟수 추가(캔슬 횟수 하루에 3번 제한)
-                offDialog(LoginPage.cancelCount + 1);
+                // // orderYN N으로 업데이트
+                // UpdateData.orederYNChange(widget.orderIndex, 'N');
+                // // 캔슬 횟수 추가(캔슬 횟수 하루에 3번 제한)
+                // offDialog(LoginPage.cancelCount + 1);
                 // 화면 닫음
                 Navigator.of(context).pop();
               },
