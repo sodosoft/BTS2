@@ -149,14 +149,14 @@ class _MyAppState extends State<third_D> {
       body: Column(
         children: [
           Container(
-            height: 60,
+            height: 50,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
                   style: TextButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 20),
+                    textStyle: const TextStyle(fontSize: 18),
                   ),
                   onPressed: () {},
                   child: const Text('검색조건1'),
@@ -164,7 +164,7 @@ class _MyAppState extends State<third_D> {
                 SizedBox(width: 10),
                 TextButton(
                   style: TextButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 20),
+                    textStyle: const TextStyle(fontSize: 18),
                   ),
                   onPressed: () {},
                   child: const Text('검색조건2'),
@@ -225,17 +225,36 @@ class _MyAppState extends State<third_D> {
               ),
             ),
           ),
-          Container(
-            // 총 건수 & 총 합
-            color: Colors.green,
-            height: 50,
-            child: Column(
-              children: [
-                TextField(
-                    style: TextStyle(color: Colors.white),
+          // SizedBox(
+          //   width: double.infinity,
+          //   height: 48,
+          //   child:Container(
+          //   // 총 건수 & 총 합
+          //   color: Colors.transparent,
+          //   child: Column(
+          //     children: [
+          //       TextField(
+          //           style: TextStyle(color: Colors.black, fontSize: 18),
+          //           controller: itemCounterController),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          SizedBox(
+              width: double.infinity,
+              height: 48,
+              child:Container(
+              // 총 건수 & 총 합
+              color: Colors.transparent,
+              child: Column(
+                children: [
+                  TextField(
+                    enabled: false,
+                    style: TextStyle(color: Colors.black, fontSize: 18),
                     controller: itemCounterController),
-              ],
-            ),
+                  ],
+                ),
+              ),
           ),
         ],
       ),

@@ -21,6 +21,9 @@ class startArea extends StatefulWidget {
 
 class _MyAppState extends State<startArea> {
 
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<OrderData> boardList = [];
+
   Future<List<OrderData>?> _getPost() async {
     try {
       var respone = await http.post(Uri.parse(API.DriverOrder_all));
@@ -67,7 +70,63 @@ class _MyAppState extends State<startArea> {
   }
 
   Future refresh() async {
-    _getPost();
+    try {
+      setState(() {
+        if(!boardList.isEmpty) {
+          boardList.clear();
+        }
+      });
+
+        var respone = await http.post(Uri.parse(API.DriverOrder_all));
+
+        if (respone.statusCode == 200) {
+          final result = utf8.decode(respone.bodyBytes);
+          List<dynamic> json = jsonDecode(result);
+
+          if(boardList.isEmpty) {
+            for (var item in json.reversed) {
+              OrderData boardData = OrderData(
+                  item['orderID'],
+                  item['orderIndex'],
+                  item['startArea'],
+                  item['endArea'],
+                  item['cost'],
+                  item['payMethod'],
+                  item['carKind'],
+                  item['product'],
+                  item['grade'],
+                  item['startDateTime'],
+                  item['endDateTime'],
+                  item['end1'],
+                  item['bottom'],
+                  item['startMethod'],
+                  item['steelCode'],
+                  item['orderYN'],
+                  item['confirmYN'],
+                  item['orderTel'],
+                  item['companyName'],
+                  item['userCarNo']);
+              boardList.add(boardData);
+            }
+          }
+
+          final data = boardList;
+
+          setState(() {
+            this.boardList = data;
+          });
+
+          return boardList;
+        } else {
+          Fluttertoast.showToast(msg: '데이터 로딩 실패!');
+          return null;
+        }
+      }
+       catch (e)
+     {
+        print(e.toString());
+        Fluttertoast.showToast(msg: e.toString());
+     }
   }
 
   @override
@@ -107,7 +166,15 @@ class _MyAppState extends State<startArea> {
               title: Text('전체'),
               onTap: (){
                 Fluttertoast.showToast(msg: '전체 지역');
-
+                if(scaffoldKey.currentState!.isDrawerOpen){
+                  scaffoldKey.currentState!.closeDrawer();
+                  //close drawer, if drawer is open
+                  refresh();
+                }
+                else{
+                  scaffoldKey.currentState!.openDrawer();
+                  //open drawer, if drawer is closed
+                }
               },
             ),
             ListTile(
