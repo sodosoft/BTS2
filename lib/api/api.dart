@@ -1,5 +1,3 @@
-import 'package:bangtong/startArea/startArea.dart';
-
 class API{
 
   static const hostconnect = "http://am1009n.dothome.co.kr";
@@ -40,6 +38,9 @@ class API{
   static const UpdateConfirmYN = "$hostconnect/Order_ConfirmYN_Update.php";
 
   //상차지
-  static const StartArea_SEOUL  = "$hostconnect/StartArea_SEOUL.php";
-  static const StartArea_INCHEON  = "$hostconnect/StartArea_INCHEON.php";
+  static const StartArea  = "$hostconnect/DriverOrder_StartArea.php";
+  //하차지
+  static const EndArea  = "$hostconnect/DriverOrder_EndArea.php";
+  //제강사
+  static const Steel  = "$hostconnect/DriverOrder_Steel.php";
 }

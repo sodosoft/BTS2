@@ -129,6 +129,67 @@ class _MyAppState extends State<startArea> {
      }
   }
 
+  Future refresh2(String startArea) async {
+    try {
+      setState(() {
+        if(!boardList.isEmpty) {
+          boardList.clear();
+        }
+      });
+
+      var respone = await http.post(Uri.parse(API.StartArea), body: {
+        'startArea': startArea,
+      });
+
+      if (respone.statusCode == 200) {
+        final result = utf8.decode(respone.bodyBytes);
+        List<dynamic> json = jsonDecode(result);
+
+        if(boardList.isEmpty) {
+          for (var item in json.reversed) {
+            OrderData boardData = OrderData(
+                item['orderID'],
+                item['orderIndex'],
+                item['startArea'],
+                item['endArea'],
+                item['cost'],
+                item['payMethod'],
+                item['carKind'],
+                item['product'],
+                item['grade'],
+                item['startDateTime'],
+                item['endDateTime'],
+                item['end1'],
+                item['bottom'],
+                item['startMethod'],
+                item['steelCode'],
+                item['orderYN'],
+                item['confirmYN'],
+                item['orderTel'],
+                item['companyName'],
+                item['userCarNo']);
+            boardList.add(boardData);
+          }
+        }
+
+        final data = boardList;
+
+        setState(() {
+          this.boardList = data;
+        });
+
+        return boardList;
+      } else {
+        Fluttertoast.showToast(msg: '데이터 로딩 실패!');
+        return null;
+      }
+    }
+    catch (e)
+    {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -152,86 +213,142 @@ class _MyAppState extends State<startArea> {
             icon: Icon(Icons.close))
           ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            ListTile(
-              leading: Icon(
-                Icons.download_outlined,
-                color: Colors.grey[850],
+      drawer: Container(
+          // width: 50,
+          // height: double.infinity,
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                dense: true,
+                leading: Icon(
+                  Icons.download_outlined,
+                  color: Colors.grey[850],
+                ),
+                title: Text('상차지 목록'),
               ),
-              title: Text('상차지 목록'),
-            ),
-            ListTile(
-              title: Text('전체'),
-              onTap: (){
-                Fluttertoast.showToast(msg: '전체 지역');
-                if(scaffoldKey.currentState!.isDrawerOpen){
-                  scaffoldKey.currentState!.closeDrawer();
-                  //close drawer, if drawer is open
-                  refresh();
-                }
-                else{
-                  scaffoldKey.currentState!.openDrawer();
-                  //open drawer, if drawer is closed
-                }
-              },
-            ),
-            ListTile(
-              title: Text('서울'),
-              onTap: (){
-                Fluttertoast.showToast(msg: '서울 지역');
-              },
-            ),
-            ListTile(
-              title: Text('인천/경기'),
-              onTap: (){
-                Fluttertoast.showToast(msg: '인천/경기 지역');
-              },
-            ),
-            ListTile(
-              title: Text('강원'),
-              onTap: (){
-                Fluttertoast.showToast(msg: '강원 지역');
-              },
-            ),
-            ListTile(
-              title: Text('대전/충남'),
-              onTap: (){
-                Fluttertoast.showToast(msg: '대전/충남 지역');
-              },
-            ),
-            ListTile(
-              title: Text('충북'),
-              onTap: (){
-                Fluttertoast.showToast(msg: '충북 지역');
-              },
-            ),
-            ListTile(
-              title: Text('광주/전남'),
-              onTap: (){
-                Fluttertoast.showToast(msg: '광주/전남 지역');
-              },
-            ),
-            ListTile(
-              title: Text('전북'),
-              onTap: (){
-                Fluttertoast.showToast(msg: '전북 지역');
-              },
-            ),
-            ListTile(
-              title: Text('부산/경남'),
-              onTap: (){
-                Fluttertoast.showToast(msg: '부산/경남 지역');
-              },
-            ),
-            ListTile(
-              title: Text('대구/경북'),
-              onTap: (){
-                Fluttertoast.showToast(msg: '대구/경북 지역');
-              },
-            ),
-          ],
+              ListTile(
+                dense: true,
+                title: Text('전체'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '전체 지역');
+                    DrawerClose(scaffoldKey, 'all');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('서울'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '서울 지역');
+                  DrawerClose(scaffoldKey, '서울');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('인천'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '인천 지역');
+                  DrawerClose(scaffoldKey, '인천');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('경기'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '경기 지역');
+                  DrawerClose(scaffoldKey, '경기');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('강원'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '강원 지역');
+                  DrawerClose(scaffoldKey, '강원');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('대전'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '대전 지역');
+                  DrawerClose(scaffoldKey, '대전');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('충남'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '충남 지역');
+                  DrawerClose(scaffoldKey, '충남');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('충북'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '충북 지역');
+                  DrawerClose(scaffoldKey, '충북');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('광주'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '광주 지역');
+                  DrawerClose(scaffoldKey, '광주');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('전남'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '전남 지역');
+                  DrawerClose(scaffoldKey, '전남');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('전북'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '전북 지역');
+                  DrawerClose(scaffoldKey, '전북');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('부산'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '부산 지역');
+                  DrawerClose(scaffoldKey, '부산');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('경남'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '경남 지역');
+                  DrawerClose(scaffoldKey, '경남');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('대구'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '대구 지역');
+                  DrawerClose(scaffoldKey, '대구');
+                },
+              ),
+              ListTile(
+                dense: true,
+                title: Text('경북'),
+                onTap: (){
+                  Fluttertoast.showToast(msg: '경북 지역');
+                  DrawerClose(scaffoldKey, '전남');
+                },
+              ),
+            ],
+          ),
         ),
       ),
       body: Column(
@@ -292,6 +409,41 @@ class _MyAppState extends State<startArea> {
       ),
     );
   }
+
+  void DrawerClose(GlobalKey<ScaffoldState> scaffoldKey, String flag) {
+
+    try {
+      if(flag == 'all') {
+        if (scaffoldKey.currentState!.isDrawerOpen) {
+          scaffoldKey.currentState!.closeDrawer();
+          //close drawer, if drawer is open
+          refresh();
+        }
+        else {
+          scaffoldKey.currentState!.openDrawer();
+          //open drawer, if drawer is closed
+        }
+      }
+      else
+      {
+        if (scaffoldKey.currentState!.isDrawerOpen) {
+          scaffoldKey.currentState!.closeDrawer();
+          //close drawer, if drawer is open
+          refresh2(flag);
+        }
+        else {
+          scaffoldKey.currentState!.openDrawer();
+          //open drawer, if drawer is closed
+        }
+      }
+    }
+    catch (e)
+    {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
 }
+
 
 
