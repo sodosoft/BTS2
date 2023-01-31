@@ -236,8 +236,9 @@ class _MyAppState extends State<steeltArea> {
             onTap: (){
             Fluttertoast.showToast(msg: '포스코');
               Navigator.pop(context);
-              endArea = 'POSCO';
-              endArea2 = '동해안로 6213번길';
+              endArea = '포스코';
+              endArea2 = 'POSCO';
+              endArea3 = '동해안로 6213번길';
                 Future.delayed(const Duration(milliseconds: 500), () {
                   refresh();
                 });
