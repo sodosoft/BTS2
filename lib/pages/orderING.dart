@@ -29,7 +29,7 @@ class _MyAppState extends State<orderING> {
   var userCarNoController = TextEditingController();
   List<OrderData> boardList = [];
 
-  Future<List<OrderData>?> _getPost() async {
+  _getPost() async {
     try {
         var respone = await http.post(Uri.parse(API.orderBoard_orderYN), body: {
           'orderID': LoginPage.allID,
@@ -39,62 +39,7 @@ class _MyAppState extends State<orderING> {
         final result = utf8.decode(respone.bodyBytes);
         List<dynamic> json = jsonDecode(result);
 
-        if(boardList.isEmpty)
-          {
-            for (var item in json.reversed) {
-            OrderData boardData = OrderData(
-                item['orderID'],
-                item['orderIndex'],
-                item['startArea'],
-                item['endArea'],
-                item['cost'],
-                item['payMethod'],
-                item['carKind'],
-                item['product'],
-                item['grade'],
-                item['startDateTime'],
-                item['endDateTime'],
-                item['end1'],
-                item['bottom'],
-                item['startMethod'],
-                item['steelCode'],
-                item['orderYN'],
-                item['confirmYN'],
-                item['orderTel'],
-                item['companyName'],
-                item['userCarNo']);
-            boardList.add(boardData);
-          }
-        }
-
-        return boardList;
-      } else {
-        Fluttertoast.showToast(msg: '데이터 로딩 실패!');
-        return null;
-      }
-    } catch (e) {
-      print(e.toString());
-      Fluttertoast.showToast(msg: e.toString());
-    }
-  }
-
-  Future refresh() async {
-    try {
-          setState(() {
-            if(!boardList.isEmpty) {
-              boardList.clear();
-            }
-          });
-
-      var respone = await http.post(Uri.parse(API.orderBoard_orderYN), body: {
-        'orderID': LoginPage.allID,
-      });
-
-      if (respone.statusCode == 200) {
-        final result = utf8.decode(respone.bodyBytes);
-        List<dynamic> json = jsonDecode(result);
-
-        if (boardList.isEmpty){
+        if(json.length > 0) {
           for (var item in json.reversed) {
             OrderData boardData = OrderData(
                 item['orderID'],
@@ -119,12 +64,15 @@ class _MyAppState extends State<orderING> {
                 item['userCarNo']);
             boardList.add(boardData);
           }
-      }
-
-      final data = boardList;
+        }
+        else
+        {
+          Fluttertoast.showToast(msg: '조회된 데이터가 없습니다.');
+          return null;
+        }
 
         setState(() {
-            this.boardList = data;
+          json = boardList;
         });
 
         return boardList;
@@ -138,19 +86,26 @@ class _MyAppState extends State<orderING> {
     }
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   setState(() {
-  //     refresh();
-  //   });
-  // }
+  Future refresh() async {
+    try {
+      setState(() {
+        if (!boardList.isEmpty) {
+          boardList.clear();
+        }
+      });
+
+      _getPost();
+
+    } catch (e) {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-
-    refresh();
+    _getPost();
   }
 
   @override
@@ -162,56 +117,41 @@ class _MyAppState extends State<orderING> {
       body: Column(
         children: [
           Expanded(
-            child: boardList.isEmpty ? const Center( child: CircularProgressIndicator())
-                : RefreshIndicator(
-              onRefresh: refresh,
-              child: FutureBuilder(
-                future: _getPost(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                              title: Text(DisplayString.displayArea(
-                                      snapshot.data[index].startArea) +
-                                  " >> " +
-                                  DisplayString.displayArea(
-                                      snapshot.data[index].endArea)),
-                              subtitle: Text('상차일시: ' +
-                                  DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
-                                      DateTime.parse(
-                                          snapshot.data[index].startDateTime)) +
-                                  '\n' +
-                                  '하차일시: ' +
-                                  DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
-                                      DateTime.parse(
-                                          snapshot.data[index].endDateTime)) +
-                                  '\n' +
-                                  '운반비: ￦' +
-                                  snapshot.data[index].cost +
-                                  "원"),
-                              isThreeLine: true,
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (ctxDialog) =>
-                                        SingleChildScrollView(child: simpleDialog(snapshot.data[index].orderIndex))
-                                );
-                              },
-                            ),
-                          );
-                        });
-                  } else {
-                    return Container(
-                      child: Center(
-                        child: Text("Loading..."),
-                      ),
-                    );
-                  }
-                },
-              ),
+            child: RefreshIndicator(
+                onRefresh: refresh,
+                child: ListView.builder(
+                    itemCount: boardList.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(DisplayString.displayArea(
+                              boardList[index].startArea) +
+                              " >> " +
+                              DisplayString.displayArea(
+                                  boardList[index].endArea)),
+                          subtitle: Text('상차일시: ' +
+                              DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
+                                  DateTime.parse(
+                                      boardList[index].startDateTime)) +
+                              '\n' +
+                              '하차일시: ' +
+                              DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
+                                  DateTime.parse(
+                                      boardList[index].endDateTime)) +
+                              '\n' +
+                              '운반비: ￦' +
+                              boardList[index].cost +
+                              "원"),
+                          isThreeLine: true,
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (ctxDialog) =>
+                                    SingleChildScrollView(child: simpleDialog(boardList[index].orderIndex)));
+                          },
+                        ),
+                      );
+                    })
             ),
           ),
         ],
@@ -219,13 +159,20 @@ class _MyAppState extends State<orderING> {
     );
   }
 
+  // showDialog(
+  // context: context,
+  // builder: (ctxDialog) =>
+  // SingleChildScrollView(child: simpleDialog(snapshot.data[index].orderIndex))
+
   Widget simpleDialog(String ordIndex) {
     return AlertDialog(
       title: Text('배차 완료'),
-      content: TextFormField(
-        controller: userCarNoController,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+      content: Center
+        (child: TextFormField(
+          controller: userCarNoController,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+          ),
         ),
       ),
       actions: <Widget>[

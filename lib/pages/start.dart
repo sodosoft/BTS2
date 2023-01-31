@@ -40,7 +40,6 @@ class _MyAppState extends State<startArea> {
 
     var statusCode = response.statusCode;
 
-    List<OrderData> list = [];
     if (statusCode == 200) {
       String responseBody = utf8.decode(response.bodyBytes);
       List<dynamic> json = jsonDecode(responseBody);
