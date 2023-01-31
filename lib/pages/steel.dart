@@ -217,7 +217,7 @@ class _MyAppState extends State<steeltArea> {
             Fluttertoast.showToast(msg: '포스코');
               Navigator.pop(context);
               endArea = 'POSCO';
-              endArea2 = '동해안로6213번길';
+              endArea2 = '동해안로 6213번길';
               refresh();
               },
             ),
