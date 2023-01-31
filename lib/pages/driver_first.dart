@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bangtong/pages/addOrder.dart';
 import 'package:bangtong/pages/end.dart';
 import 'package:bangtong/pages/start.dart';
+import 'package:bangtong/pages/start_area.dart';
 import 'package:bangtong/pages/steel.dart';
 import 'package:bangtong/pages/weightDataScreen.dart';
 import 'package:flutter/material.dart';

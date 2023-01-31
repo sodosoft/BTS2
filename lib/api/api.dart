@@ -27,12 +27,6 @@ class API{
 
   static const DriverOrder_all = "$hostconnect/DriverOrder_all.php";
 
-  static const DriverOrder_start_seoul = "$hostconnect/DriverOrder_start_seoul.php";
-
-  static const DriverOrder_end_seoul = "$hostconnect/DriverOrder_end_seoul.php";
-
-  static const DriverOrder_steel_DI = "$hostconnect/DriverOrder_steel_DI.php";
-
   static const UpdateCancelCount = "$hostconnect/cancelCnt_Update.php";
   static const UpdateOrderYN = "$hostconnect/Update_OrderYN.php";
   static const UpdateConfirmYN = "$hostconnect/Order_ConfirmYN_Update.php";
