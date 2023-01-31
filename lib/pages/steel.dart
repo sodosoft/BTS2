@@ -49,31 +49,37 @@ class _MyAppState extends State<steeltArea> {
       String responseBody = utf8.decode(response.bodyBytes);
       List<dynamic> json = jsonDecode(responseBody);
 
-      for (var item in json.reversed) {
-        OrderData boardData = OrderData(
-            item['orderID'],
-            item['orderIndex'],
-            item['startArea'],
-            item['endArea'],
-            item['cost'],
-            item['payMethod'],
-            item['carKind'],
-            item['product'],
-            item['grade'],
-            item['startDateTime'],
-            item['endDateTime'],
-            item['end1'],
-            item['bottom'],
-            item['startMethod'],
-            item['steelCode'],
-            item['orderYN'],
-            item['confirmYN'],
-            item['orderTel'],
-            item['companyName'],
-            item['userCarNo']);
-        boardList.add(boardData);
+      if(json.length > 0) {
+        for (var item in json.reversed) {
+          OrderData boardData = OrderData(
+              item['orderID'],
+              item['orderIndex'],
+              item['startArea'],
+              item['endArea'],
+              item['cost'],
+              item['payMethod'],
+              item['carKind'],
+              item['product'],
+              item['grade'],
+              item['startDateTime'],
+              item['endDateTime'],
+              item['end1'],
+              item['bottom'],
+              item['startMethod'],
+              item['steelCode'],
+              item['orderYN'],
+              item['confirmYN'],
+              item['orderTel'],
+              item['companyName'],
+              item['userCarNo']);
+          boardList.add(boardData);
+        }
       }
-
+      else
+      {
+        Fluttertoast.showToast(msg: '조회된 데이터가 없습니다.');
+        return null;
+      }
       setState(() {
         json = boardList;
       });

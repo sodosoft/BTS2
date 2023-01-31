@@ -45,29 +45,36 @@ class _MyAppState extends State<startArea> {
       String responseBody = utf8.decode(response.bodyBytes);
       List<dynamic> json = jsonDecode(responseBody);
 
-      for (var item in json.reversed) {
-        OrderData boardData = OrderData(
-            item['orderID'],
-            item['orderIndex'],
-            item['startArea'],
-            item['endArea'],
-            item['cost'],
-            item['payMethod'],
-            item['carKind'],
-            item['product'],
-            item['grade'],
-            item['startDateTime'],
-            item['endDateTime'],
-            item['end1'],
-            item['bottom'],
-            item['startMethod'],
-            item['steelCode'],
-            item['orderYN'],
-            item['confirmYN'],
-            item['orderTel'],
-            item['companyName'],
-            item['userCarNo']);
-        boardList.add(boardData);
+      if(json.length > 0) {
+        for (var item in json.reversed) {
+          OrderData boardData = OrderData(
+              item['orderID'],
+              item['orderIndex'],
+              item['startArea'],
+              item['endArea'],
+              item['cost'],
+              item['payMethod'],
+              item['carKind'],
+              item['product'],
+              item['grade'],
+              item['startDateTime'],
+              item['endDateTime'],
+              item['end1'],
+              item['bottom'],
+              item['startMethod'],
+              item['steelCode'],
+              item['orderYN'],
+              item['confirmYN'],
+              item['orderTel'],
+              item['companyName'],
+              item['userCarNo']);
+          boardList.add(boardData);
+        }
+      }
+      else
+      {
+        Fluttertoast.showToast(msg: '조회된 데이터가 없습니다.');
+        return null;
       }
 
       setState(() {
@@ -178,6 +185,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('경기'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '경기 지역');
+                  Navigator.pop(context);
                   startArea = '경기';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -189,6 +197,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('강원'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '강원 지역');
+                  Navigator.pop(context);
                   startArea = '강원';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -200,6 +209,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('대전'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '대전 지역');
+                  Navigator.pop(context);
                   startArea = '대전';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -211,6 +221,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('충남'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '충남 지역');
+                  Navigator.pop(context);
                   startArea = '충남';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -222,6 +233,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('충북'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '충북 지역');
+                  Navigator.pop(context);
                   startArea = '충북';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -233,6 +245,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('광주'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '광주 지역');
+                  Navigator.pop(context);
                   startArea = '광주';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -244,6 +257,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('전남'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '전남 지역');
+                  Navigator.pop(context);
                   startArea = '전남';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -255,6 +269,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('전북'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '전북 지역');
+                  Navigator.pop(context);
                   startArea = '전북';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -266,6 +281,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('부산'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '부산 지역');
+                  Navigator.pop(context);
                   startArea = '부산';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -277,6 +293,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('경남'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '경남 지역');
+                  Navigator.pop(context);
                   startArea = '경남';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -288,6 +305,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('대구'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '대구 지역');
+                  Navigator.pop(context);
                   startArea = '대구';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
@@ -299,6 +317,7 @@ class _MyAppState extends State<startArea> {
                 title: Text('경북'),
                 onTap: (){
                   Fluttertoast.showToast(msg: '경북 지역');
+                  Navigator.pop(context);
                   startArea = '경북';
                   Future.delayed(const Duration(milliseconds: 500), () {
                     refresh();
