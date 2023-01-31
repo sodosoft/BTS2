@@ -144,19 +144,23 @@ class _MyAppState extends State<steeltArea> {
             ListTile(
             title: Text('전체'),
             onTap: (){
-            Fluttertoast.showToast(msg: '전체 제강사');
-            Navigator.pop(context);
-            refresh();
+                Fluttertoast.showToast(msg: '전체 제강사');
+                Navigator.pop(context);
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  refresh();
+                });
               },
             ),
             ListTile(
             title: Text('동국제강(인천)'),
             onTap: (){
             Fluttertoast.showToast(msg: '동국제강(인천)');
-              Navigator.pop(context);
-              endArea = '동국';
-              endArea2 = '중봉대로 15';
-              refresh();
+                  Navigator.pop(context);
+                  endArea = '동국';
+                  endArea2 = '중봉대로 15';
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                  refresh();
+                });
               },
             ),
             ListTile(
@@ -166,7 +170,9 @@ class _MyAppState extends State<steeltArea> {
               Navigator.pop(context);
               endArea = '현대';
               endArea2 = '중봉대로 63';
-              refresh();
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  refresh();
+                });
               },
             ),
             ListTile(
@@ -176,7 +182,9 @@ class _MyAppState extends State<steeltArea> {
               Navigator.pop(context);
               endArea = '세아';
               endArea2 = '외할로 522';
-              refresh();
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  refresh();
+                });
               },
             ),
             ListTile(
@@ -186,7 +194,9 @@ class _MyAppState extends State<steeltArea> {
               Navigator.pop(context);
               endArea = '환영';
               endArea2 = '보덕포로 587';
-              refresh();
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  refresh();
+                });
               },
             ),
             ListTile(
@@ -197,7 +207,9 @@ class _MyAppState extends State<steeltArea> {
               endArea = '한국';
               //공단동길 98
               endArea2 = '공단동길 98';
-              refresh();
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  refresh();
+                });
               },
             ),
             ListTile(
@@ -208,7 +220,9 @@ class _MyAppState extends State<steeltArea> {
               endArea = '대한';
               endArea2 = '평택항로268번길';
               endArea3 = '녹산산업북로 333';
-              refresh();
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  refresh();
+                });
               },
             ),
             ListTile(
@@ -218,7 +232,9 @@ class _MyAppState extends State<steeltArea> {
               Navigator.pop(context);
               endArea = 'POSCO';
               endArea2 = '동해안로 6213번길';
-              refresh();
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  refresh();
+                });
               },
             ),
             ListTile(
@@ -228,7 +244,9 @@ class _MyAppState extends State<steeltArea> {
               Navigator.pop(context);
               endArea = 'YK';
               endArea2 = '을숙도대로 760';
-              refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
             ],

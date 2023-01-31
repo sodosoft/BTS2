@@ -144,7 +144,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '전체 지역');
                   Navigator.pop(context);
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -154,7 +156,9 @@ class _MyAppState extends State<endArea> {
                   Fluttertoast.showToast(msg: '서울 지역');
                   Navigator.pop(context);
                   endArea = '서울';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -164,7 +168,9 @@ class _MyAppState extends State<endArea> {
                   Fluttertoast.showToast(msg: '인천 지역');
                   Navigator.pop(context);
                   endArea = '인천';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -173,7 +179,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '경기 지역');
                   endArea = '경기';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -182,7 +190,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '강원 지역');
                   endArea = '강원';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -191,7 +201,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '대전 지역');
                   endArea = '대전';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -200,7 +212,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '충남 지역');
                   endArea = '충남';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -209,7 +223,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '충북 지역');
                   endArea = '충북';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -218,7 +234,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '광주 지역');
                   endArea = '광주';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -227,7 +245,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '전남 지역');
                   endArea = '전남';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -236,7 +256,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '전북 지역');
                   endArea = '전북';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -245,7 +267,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '부산 지역');
                   endArea = '부산';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -254,7 +278,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '경남 지역');
                   endArea = '경남';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -263,7 +289,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '대구 지역');
                   endArea = '대구';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
               ListTile(
@@ -272,7 +300,9 @@ class _MyAppState extends State<endArea> {
                 onTap: (){
                   Fluttertoast.showToast(msg: '경북 지역');
                   endArea = '경북';
-                  refresh();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    refresh();
+                  });
                 },
               ),
             ],
