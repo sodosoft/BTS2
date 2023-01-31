@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bangtong/function/UpdateData.dart';
 import 'package:flutter/material.dart'; //flutter의 package를 가져오는 코드 반드시 필요
 import 'package:direct_sms/direct_sms.dart';
@@ -24,17 +22,9 @@ class DetailPageDriver extends StatefulWidget {
 class _MyAppState extends State<DetailPageDriver> {
   final OrderData postData;
   _MyAppState(@required this.postData);
-  Timer? _timer;
+
   var directSms = DirectSms();
   List<String> people = [];
-
-  void _start() {
-    _timer = Timer.periodic(Duration(minutes: 10), (timer) {
-      setState(() {
-        offDialog(LoginPage.cancelCount.toString());
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,14 +78,14 @@ class _MyAppState extends State<DetailPageDriver> {
                     );
                     // orderYN Y로 업데이트
                      UpdateData.orederYNChange(postData.orderIndex, 'Y');
-                    // // 타이머 10분
-                     _start();
+
                     showDialog(
                       barrierColor: Colors.black26,
+                      barrierDismissible: false, // 바깥 영역 터치시 닫을지 여부
                       context: context,
                       builder: (context) {
                         return CustomAlertDialog(
-                          title: '지난 시간 :  $_timer',
+                          title: '오더 잡기',
                           description: '오더 번호: ' + postData.orderIndex + '\n' +
                               '상차지: ' + postData.startArea.toString() + '\n' +
                               '하차지: ' + postData.endArea.toString() + '\n' +
@@ -120,49 +110,6 @@ class _MyAppState extends State<DetailPageDriver> {
       ),
       //body: Text(postData.content),
     );
-  }
-
-  Future<bool> offDialog(String cancelcount) async {
-    return await showDialog(
-        context: context,
-        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            //Dialog Main Title
-            title: Column(
-              children: <Widget>[
-                new Text("시간 초과",
-                  style: TextStyle(color: Colors.red),),
-              ],
-            ),
-            //
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '시간이 초과되어서 오더 잡기에' + '\n' +
-                  '실패하셨습니다.'
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              new TextButton(
-                child: new Text("확인"),
-                onPressed: () {
-                  // 캔슬 카운트 상승
-                  UpdateData.orederYNChange(postData.orderIndex, 'N');
-                  UpdateData.calcelCountChange(LoginPage.allID, LoginPage.cancelCount + 1);
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
   }
 
   _sendSms({required String number, required String message}) async {
