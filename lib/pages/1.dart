@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bangtong/api/api.dart';
 import 'package:http/http.dart' as http;
-import 'package:bangtong/login/login.dart';
 import 'package:intl/intl.dart';
 
 import '../../model/orderboard.dart';
 import '../function/displaystring.dart';
+import '../login/loginScreen.dart';
 import 'addScreen.dart';
 import 'editScreen.dart'; //flutter의 package를 가져오는 코드 반드시 필요
 
@@ -26,7 +26,7 @@ class _MyAppState extends State<first> {
   Future<List<OrderData>?> _getPost() async {
     try {
       var respone = await http.post(Uri.parse(API.orderBoard), body: {
-        'orderID': LoginPage.allID,
+        'orderID': LoginScreen.allID,
       });
 
       if (respone.statusCode == 200) {
@@ -81,10 +81,10 @@ class _MyAppState extends State<first> {
   void initState() {
     super.initState();
 
-    if (LoginPage.paymentDay == null) {
+    if (LoginScreen.paymentDay == null) {
     } else {
       var dtToday = DateTime.now();
-      DateTime dtPayDay = DateTime.parse(LoginPage.paymentDay);
+      DateTime dtPayDay = DateTime.parse(LoginScreen.paymentDay);
       DateTime dtNextPayDay = dtPayDay.add(Duration(days: 30));
       strNextDday = DateFormat("yyyy년 MM월 dd일").format(dtNextPayDay).toString();
 

@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../function/loginUpdate.dart';
+import '../login/loginScreen.dart';
 import '../model/user_test.dart';
 import '../pages/policy.dart';
 import '../pages/w1.dart';
@@ -35,12 +36,12 @@ class _SignupPageState extends State<Setting> {
 
   @override
   void initState() {
-    IDController.text = LoginPage.allID + ' & ' + LoginPage.allName;
-    passwordController.text = LoginPage.allPW;
-    userTelController.text = LoginPage.allTel;
-    userCompanyNameController.text = LoginPage.allComName;
-    userCompanyNoController.text = LoginPage.allComNo;
-    userCarNoController.text = LoginPage.allCarNo;
+    IDController.text = LoginScreen.allID + ' & ' + LoginScreen.allName;
+    passwordController.text = LoginScreen.allPW;
+    userTelController.text = LoginScreen.allTel;
+    userCompanyNameController.text = LoginScreen.allComName;
+    userCompanyNoController.text = LoginScreen.allComNo;
+    userCarNoController.text = LoginScreen.allCarNo;
 
     super.initState();
   }
@@ -152,7 +153,7 @@ class _SignupPageState extends State<Setting> {
                         ElevatedButton(
                             onPressed: () {
                               if (UpdateData.passwordChange(
-                                  LoginPage.allID, passwordController.text))
+                                  LoginScreen.allID, passwordController.text))
                               {
                                 Fluttertoast.showToast(msg: '변경 성공');
                               } else {
@@ -204,7 +205,7 @@ class _SignupPageState extends State<Setting> {
                       ElevatedButton(
                         onPressed: () {
                           if (UpdateData.TelChange(
-                              LoginPage.allID, userTelController.text))
+                              LoginScreen.allID, userTelController.text))
                           {
                             Fluttertoast.showToast(msg: '변경 성공');
                           } else {
@@ -256,7 +257,7 @@ class _SignupPageState extends State<Setting> {
                       ElevatedButton(
                         onPressed: () {
                           if (UpdateData.companyChange(
-                              LoginPage.allID, userCompanyNameController.text))
+                              LoginScreen.allID, userCompanyNameController.text))
                           {
                             Fluttertoast.showToast(msg: '변경 성공');
                           } else {
@@ -287,7 +288,7 @@ class _SignupPageState extends State<Setting> {
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
                           child: TextFormField(
-                            enabled: LoginPage.allGrade != 'S' ,
+                            enabled: LoginScreen.allGrade != 'S' ,
                             controller: userCompanyNoController,
                             style: TextStyle(
                                 fontSize: 14,
@@ -308,9 +309,9 @@ class _SignupPageState extends State<Setting> {
                       child:
                       ElevatedButton(
                         onPressed: () {
-                          if(LoginPage.allGrade != 'S') {
+                          if(LoginScreen.allGrade != 'S') {
                             if (UpdateData.comNoChange(
-                                LoginPage.allID,
+                                LoginScreen.allID,
                                 userCompanyNoController.text)) {
                               Fluttertoast.showToast(msg: '변경 성공');
                             } else {
@@ -346,7 +347,7 @@ class _SignupPageState extends State<Setting> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 5, 0, 2),
                         child: TextFormField(
-                          enabled: LoginPage.allGrade == 'D',
+                          enabled: LoginScreen.allGrade == 'D',
                           controller: userCarNoController,
                           style: TextStyle(
                               fontSize: 14,
@@ -367,9 +368,9 @@ class _SignupPageState extends State<Setting> {
                     child:
                     ElevatedButton(
                       onPressed: () {
-                        if(LoginPage.allGrade == 'D') {
+                        if(LoginScreen.allGrade == 'D') {
                           if (UpdateData.carNoChange(
-                              LoginPage.allID, userCarNoController.text))
+                              LoginScreen.allID, userCarNoController.text))
                           {
                             Timer.periodic(Duration(minutes: 3), (timer) {
                               setState(() {
@@ -442,11 +443,11 @@ class _SignupPageState extends State<Setting> {
               new TextButton(
                 child: new Text("확인"),
                 onPressed: () {
-                  LoginUpdate.LoginflagChange(LoginPage.allID, 'N');
+                  LoginUpdate.LoginflagChange(LoginScreen.allID, 'N');
                   Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
               ),

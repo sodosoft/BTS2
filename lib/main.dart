@@ -1,3 +1,4 @@
+import 'package:bangtong/login/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'login/login.dart';
@@ -49,6 +50,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LoginPage();
+    //return LoginPage();
+    return LoginScreen();
   }
 }

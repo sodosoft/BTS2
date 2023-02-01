@@ -1,4 +1,5 @@
 import 'package:bangtong/function/UpdateData.dart';
+import 'package:bangtong/login/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:intl/intl.dart';
@@ -144,7 +145,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                 UpdateData.orederYNChange(widget.orderIndex, 'N');
                 // // 캔슬 횟수 추가(캔슬 횟수 하루에 3번 제한)
 
-                offDialog(LoginPage.cancelCount + 1);
+                offDialog(LoginScreen.cancelCount + 1);
 
                 _resetTimer();
                 _stopTimer();
@@ -206,7 +207,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                 onPressed: () {
                   // 캔슬 카운트 상승
 
-                  UpdateData.calcelCountChange(LoginPage.allID, cancelcount);
+                  UpdateData.calcelCountChange(LoginScreen.allID, cancelcount);
 
                   Future.delayed(const Duration(milliseconds: 500), () {
                           Navigator.pop(context);

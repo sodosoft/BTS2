@@ -8,7 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../function/custom_alert_dialog.dart';
 import '../function/displaystring.dart';
-import '../login/login.dart';
+import '../login/loginScreen.dart';
 import '../model/orderboard.dart';
 
 class DetailPageDriver extends StatefulWidget {
@@ -62,7 +62,7 @@ class _MyAppState extends State<DetailPageDriver> {
                 child: Text('오더 잡기'),
                 onPressed:()
                 {
-                  if(LoginPage.cancelCount > 3)
+                  if(LoginScreen.cancelCount > 3)
                   {
                     Fluttertoast.showToast(msg: '취소 제한 횟수 3회를 초과하셨습니다.' + '\n' + '익일 자정 이후 초기화 됩니다.');
                     return;
@@ -72,7 +72,7 @@ class _MyAppState extends State<DetailPageDriver> {
                     // 화주한테 차번호 SMS 보내기
                     _sendSms(
                       message: '오더 번호: ' + postData.orderIndex + '\n\n' +
-                          '차량 번호: ' + LoginPage.allCarNo + '\n' +
+                          '차량 번호: ' + LoginScreen.allCarNo + '\n' +
                           '바로 전화 드릴테니 배차 등록 부탁드립니다.',
                       number: postData.orderTel,
                     );

@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bangtong/api/api.dart';
 import 'package:http/http.dart' as http;
-import 'package:bangtong/login/login.dart';
 import 'package:intl/intl.dart';
 
 import '../../model/orderboard.dart';
 import '../function/UpdateData.dart';
 import '../function/displaystring.dart';
+import '../login/loginScreen.dart';
 import 'addScreen.dart';
 import 'editScreen.dart'; //flutter의 package를 가져오는 코드 반드시 필요
 
@@ -32,7 +32,7 @@ class _MyAppState extends State<orderING> {
   _getPost() async {
     try {
         var respone = await http.post(Uri.parse(API.orderBoard_orderYN), body: {
-          'orderID': LoginPage.allID,
+          'orderID': LoginScreen.allID,
         });
 
       if (respone.statusCode == 200) {

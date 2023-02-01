@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bangtong/login/loginScreen.dart';
 import 'package:bangtong/pages/driver_first.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -53,7 +54,7 @@ class _MainScreen extends State<MainScreenDriver> {
       elevation: 1,
       title: FittedBox(
         fit: BoxFit.fitWidth,
-        child: Text(LoginPage.allName + "님,안녕하세요!"),
+        child: Text(LoginScreen.allName + "님,안녕하세요!"),
       ),
       actions: [
         IconButton(
@@ -156,11 +157,11 @@ class _MainScreen extends State<MainScreenDriver> {
               new TextButton(
                 child: new Text("확인"),
                 onPressed: () {
-                  LoginUpdate.LoginflagChange(LoginPage.allID, 'N');
+                  LoginUpdate.LoginflagChange(LoginScreen.allID, 'N');
                   Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
               ),

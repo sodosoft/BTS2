@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:bangtong/login/login.dart';
 import 'package:bangtong/model/orderboard.dart'; //flutter의 package를 가져오는 코드 반드시 필요
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../../api/api.dart';
 import '../function/displaystring.dart';
+import '../login/loginScreen.dart';
 
 class third extends StatefulWidget {
   const third({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _MyAppState extends State<third> {
   Future<List<OrderData>?> _getPost() async {
     try {
       var respone = await http.post(Uri.parse(API.order_HISTORY), body: {
-        'orderID': LoginPage.allID,
+        'orderID': LoginScreen.allID,
       });
 
       if (respone.statusCode == 200) {

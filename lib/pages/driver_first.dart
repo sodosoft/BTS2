@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bangtong/login/loginScreen.dart';
 import 'package:bangtong/pages/addOrder.dart';
 import 'package:bangtong/pages/end.dart';
 import 'package:bangtong/pages/start.dart';
@@ -30,7 +31,7 @@ class _MyAppState extends State<Driver_first> {
   Future<List<OrderData>?> _getPost() async {
     try {
       var respone = await http.post(Uri.parse(API.orderBoard), body: {
-        'orderID': LoginPage.allID,
+        'orderID': LoginScreen.allID,
       });
 
       if(respone.statusCode== 200)
@@ -70,12 +71,12 @@ class _MyAppState extends State<Driver_first> {
   void initState() {
     super.initState();
 
-    if(LoginPage.paymentDay == null)
+    if(LoginScreen.paymentDay == null)
     {}
     else
     {
       var dtToday = DateTime.now();
-      DateTime dtPayDay = DateTime.parse(LoginPage.paymentDay);
+      DateTime dtPayDay = DateTime.parse(LoginScreen.paymentDay);
       DateTime dtNextPayDay = dtPayDay.add(Duration(days:30));
       strNextDday = DateFormat("yyyy년 MM월 dd일").format(dtNextPayDay).toString();
 

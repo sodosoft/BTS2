@@ -15,8 +15,8 @@ import 'package:bangtong/pages/main_screen_driver.dart';
 
 import '../api/api.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginPage_test extends StatefulWidget {
+  const LoginPage_test({Key? key}) : super(key: key);
   static late String allCarNo;
   static late String allID;
   static late String allPW;
@@ -30,10 +30,10 @@ class LoginPage extends StatefulWidget {
   static late String paymentDay;
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginPage_test> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage_test> {
   var formKey = GlobalKey<FormState>();
   var idController = TextEditingController();
   var passwordController = TextEditingController();
@@ -69,19 +69,19 @@ class _LoginPageState extends State<LoginPage> {
 
            Fluttertoast.showToast(msg: '로그인 성공!');
 
-           LoginPage.allID = userID;
-           LoginPage.allPW = userPW;
-           LoginPage.allName = userName;
-           LoginPage.allTel = userTel;
-           LoginPage.paymentDay = paymentDay;
-           LoginPage.cancelCount = cancelCount;
-
-           String userGrade = resLogin['userGrade'].toString();
-
-           LoginPage.allGrade = userGrade;
-           LoginPage.allComName = resLogin['userCompany'].toString();
-           LoginPage.allComNo = resLogin['userComNo'].toString();
-           LoginPage.allCarNo = resLogin['userCarNo'].toString();
+           // LoginPage.allID = userID;
+           // LoginPage.allPW = userPW;
+           // LoginPage.allName = userName;
+           // LoginPage.allTel = userTel;
+           // LoginPage.paymentDay = paymentDay;
+           // LoginPage.cancelCount = cancelCount;
+           //
+            String userGrade = resLogin['userGrade'].toString();
+           //
+           // LoginPage.allGrade = userGrade;
+           // LoginPage.allComName = resLogin['userCompany'].toString();
+           // LoginPage.allComNo = resLogin['userComNo'].toString();
+           // LoginPage.allCarNo = resLogin['userCarNo'].toString();
 
            if(paymentYN == 'Y')
            {

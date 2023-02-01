@@ -7,9 +7,10 @@ import 'package:bangtong/pages/board.dart';
 import 'package:bangtong/pages/history.dart';
 import 'package:bangtong/pages/4.dart';
 
-import '../../login/login.dart';
 import '../function/loginUpdate.dart';
 import 'dart:async';
+
+import '../login/loginScreen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -70,7 +71,7 @@ class _MainScreen extends State<MainScreen> {
       elevation: 1,
       title: FittedBox(
         fit: BoxFit.fitWidth,
-        child: Text(LoginPage.allName + " 님,안녕하세요!"),
+        child: Text(LoginScreen.allName + " 님,안녕하세요!"),
       ),
       actions: [
         IconButton(
@@ -181,11 +182,11 @@ class _MainScreen extends State<MainScreen> {
               new TextButton(
                 child: new Text("확인"),
                 onPressed: () {
-                  LoginUpdate.LoginflagChange(LoginPage.allID, 'N');
+                  LoginUpdate.LoginflagChange(LoginScreen.allID, 'N');
                   Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
               ),
