@@ -111,11 +111,39 @@ class _MyAppState extends State<loginFlag> {
                   child: Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: Colors.red,
                         borderRadius: BorderRadius.circular(12)),
                     child: Center(
                       child: Text(
                         '중복해제',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onTap: ()  {
+                Navigator.pop(context);
+              },
+              child: Container(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                      child: Text(
+                        '취소',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
