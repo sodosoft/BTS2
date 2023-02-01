@@ -4,7 +4,14 @@ import '../widgets/round-button.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class CountdownPage extends StatefulWidget {
-  const CountdownPage({Key? key}) : super(key: key);
+  const CountdownPage({
+    Key? key,
+    required this.description,
+    required this.orderIndex,
+    required this.orderTel,
+  }) : super(key: key);
+
+  final String description, orderIndex, orderTel;
 
   @override
   _CountdownPageState createState() => _CountdownPageState();
