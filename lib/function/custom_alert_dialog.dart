@@ -27,8 +27,8 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
 
   int _seconds = 0;
   int _10Minutes = 9;
-  int _6000Minutes = 6000;
   int _remainSecond = 60;
+  int _10MinutesSecond = 600;
   String countTime = '';
   String remainTime = '';
   final f = new DateFormat('mm:ss');
@@ -41,15 +41,9 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _seconds++;
-        _remainSecond--;
+        _10MinutesSecond--;
 
-        if(_remainSecond == 0)
-        {
-          _10Minutes--;
-          _remainSecond = 60;
-        }
-
-        if(_seconds > 600)
+        if(_10MinutesSecond < 0)
         {
           offDialog2();
           _stopTimer();
@@ -70,6 +64,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
   void _resetTimer() {
     setState(() {
       _seconds = 0;
+      _10MinutesSecond = 600;
     });
   }
 
@@ -95,7 +90,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           SizedBox(height: 15),
-          Text('남은 시간 : $_remainSecond 초',
+          Text('남은 시간 : $_10MinutesSecond 초',
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
