@@ -26,7 +26,9 @@ class CustomAlertDialog extends StatefulWidget {
 class _CustomAlertDialogState extends State<CustomAlertDialog> {
 
   int _seconds = 0;
-  int _remain = 600;
+  int _10Minutes = 9;
+  int _6000Minutes = 6000;
+  int _remainSecond = 60;
   String countTime = '';
   String remainTime = '';
   final f = new DateFormat('mm:ss');
@@ -39,7 +41,13 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _seconds++;
-        _remain--;
+        _remainSecond--;
+
+        if(_remainSecond == 0)
+        {
+          _10Minutes--;
+          _remainSecond = 60;
+        }
 
         if(_seconds > 600)
         {
@@ -85,9 +93,9 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           SizedBox(height: 15),
-          Text('남은 시간 : $_remain 초',
+          Text('남은 시간 : $_remainSecond 초',
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
@@ -139,7 +147,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                 bottomRight: Radius.circular(15.0),
               ),
               highlightColor: Colors.grey[200],
-              onTap: () {
+              onTap: () async {
                 // 취소
                 // // orderYN N으로 업데이트
                 UpdateData.orederYNChange(widget.orderIndex, 'N');

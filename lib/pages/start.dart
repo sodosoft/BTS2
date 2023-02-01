@@ -356,7 +356,7 @@ class _MyAppState extends State<startArea> {
                                   boardList[index].cost +
                                   "원"),
                               isThreeLine: true,
-                              onTap: () {
+                              onTap: () async {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
