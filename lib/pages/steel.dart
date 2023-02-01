@@ -295,6 +295,7 @@ class _MyAppState extends State<steeltArea> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         DetailPageDriver(boardList[index])));
+                            refresh();
                           },
                         ),
                       );

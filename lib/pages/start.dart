@@ -362,6 +362,7 @@ class _MyAppState extends State<startArea> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             DetailPageDriver(boardList[index])));
+                                refresh();
                               },
                             ),
                           );
