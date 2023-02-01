@@ -312,6 +312,11 @@ class _LoginPageState extends State<LoginScreen> {
                        if(idController.text != '' && passwordController.text != '') {
                          userLogin();
                        }
+                       else if(idController.text == '' && passwordController.text == '')
+                       {
+                         Fluttertoast.showToast(msg: '아이디와 비밀 번호를 입력해주세요!');
+                         return;
+                       }
                        else if(idController.text == '')
                        {
                          Fluttertoast.showToast(msg: '아이디를 입력해주세요!');
