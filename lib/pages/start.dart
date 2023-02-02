@@ -20,18 +20,17 @@ class startArea extends StatefulWidget {
 }
 
 class _MyAppState extends State<startArea> {
-
   List<OrderData> boardList = [];
   String startArea = '';
   String url = '';
 
   _requset() async {
-
-    if(startArea == '') {
-      url = API.DriverOrder_all; //"http://am1009n.dothome.co.kr/DriverOrder_all.php";
-    }
-    else {
-      url = API.StartArea; //"; //http://am1009n.dothome.co.kr/DriverOrder_StartArea.php"
+    if (startArea == '') {
+      url = API
+          .DriverOrder_all; //"http://am1009n.dothome.co.kr/DriverOrder_all.php";
+    } else {
+      url = API
+          .StartArea; //"; //http://am1009n.dothome.co.kr/DriverOrder_StartArea.php"
     }
 
     var response = await http.post(Uri.parse(url), body: {
@@ -44,7 +43,7 @@ class _MyAppState extends State<startArea> {
       String responseBody = utf8.decode(response.bodyBytes);
       List<dynamic> json = jsonDecode(responseBody);
 
-      if(json.length > 0) {
+      if (json.length > 0) {
         for (var item in json.reversed) {
           OrderData boardData = OrderData(
               item['orderID'],
@@ -69,9 +68,7 @@ class _MyAppState extends State<startArea> {
               item['userCarNo']);
           boardList.add(boardData);
         }
-      }
-      else
-      {
+      } else {
         Fluttertoast.showToast(msg: '조회된 데이터가 없습니다.');
         return null;
       }
@@ -89,7 +86,6 @@ class _MyAppState extends State<startArea> {
 
   Future refresh() async {
     try {
-
       setState(() {
         if (!boardList.isEmpty) {
           boardList.clear();
@@ -97,13 +93,10 @@ class _MyAppState extends State<startArea> {
       });
 
       _requset();
-
+    } catch (e) {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
     }
-     catch (e)
-     {
-        print(e.toString());
-        Fluttertoast.showToast(msg: e.toString());
-     }
   }
 
   @override
@@ -115,24 +108,25 @@ class _MyAppState extends State<startArea> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            '상차지 기준 배차 오더',
-            style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-          elevation: 0.0,
-          actions: <Widget>[
-            IconButton(onPressed: (){
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.close))
-          ],
+      appBar: AppBar(
+        title: Text(
+          '상차지 기준 배차 오더',
+          style: TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        elevation: 0.0,
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.close))
+        ],
       ),
       drawer: Container(
-          // width: 50,
-          // height: double.infinity,
+        // width: 50,
+        // height: double.infinity,
         child: Drawer(
           child: ListView(
             children: <Widget>[
@@ -147,7 +141,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('전체'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '전체 지역');
                   Navigator.pop(context);
                   Future.delayed(const Duration(milliseconds: 500), () {
@@ -158,7 +152,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('서울'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '서울 지역');
                   Navigator.pop(context);
                   startArea = '서울';
@@ -170,7 +164,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('인천'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '인천 지역');
                   Navigator.pop(context);
                   startArea = '인천';
@@ -182,7 +176,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('경기'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '경기 지역');
                   Navigator.pop(context);
                   startArea = '경기';
@@ -194,7 +188,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('강원'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '강원 지역');
                   Navigator.pop(context);
                   startArea = '강원';
@@ -206,7 +200,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('대전'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '대전 지역');
                   Navigator.pop(context);
                   startArea = '대전';
@@ -218,7 +212,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('충남'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '충남 지역');
                   Navigator.pop(context);
                   startArea = '충남';
@@ -230,7 +224,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('충북'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '충북 지역');
                   Navigator.pop(context);
                   startArea = '충북';
@@ -242,7 +236,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('광주'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '광주 지역');
                   Navigator.pop(context);
                   startArea = '광주';
@@ -254,7 +248,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('전남'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '전남 지역');
                   Navigator.pop(context);
                   startArea = '전남';
@@ -266,7 +260,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('전북'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '전북 지역');
                   Navigator.pop(context);
                   startArea = '전북';
@@ -278,7 +272,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('부산'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '부산 지역');
                   Navigator.pop(context);
                   startArea = '부산';
@@ -290,7 +284,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('경남'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '경남 지역');
                   Navigator.pop(context);
                   startArea = '경남';
@@ -302,7 +296,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('대구'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '대구 지역');
                   Navigator.pop(context);
                   startArea = '대구';
@@ -314,7 +308,7 @@ class _MyAppState extends State<startArea> {
               ListTile(
                 dense: true,
                 title: Text('경북'),
-                onTap: (){
+                onTap: () {
                   Fluttertoast.showToast(msg: '경북 지역');
                   Navigator.pop(context);
                   startArea = '경북';
@@ -331,49 +325,45 @@ class _MyAppState extends State<startArea> {
         children: [
           Expanded(
             child: RefreshIndicator(
-              onRefresh: refresh,
-              child: ListView.builder(
-                        itemCount: boardList.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                              title: Text(DisplayString.displayArea(
-                              boardList[index].startArea) +
-                                  " >> " +
-                                  DisplayString.displayArea(
-                                      boardList[index].endArea)),
-                              subtitle: Text('상차일시: ' +
-                                  DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
-                                      DateTime.parse(
-                                  boardList[index].startDateTime)) +
-                                  '\n' +
-                                  '하차일시: ' +
-                                  DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
-                                      DateTime.parse(
-                                  boardList[index].endDateTime)) +
-                                  '\n' +
-                                  '운반비: ￦' +
-                                  boardList[index].cost +
-                                  "원"),
-                              isThreeLine: true,
-                              onTap: () async {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            DetailPageDriver(boardList[index])));
-                                refresh();
-                              },
-                            ),
-                          );
-                        })
-              ),
-            ),
+                onRefresh: refresh,
+                child: ListView.builder(
+                    itemCount: boardList.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(DisplayString.displayArea(
+                                  boardList[index].startArea) +
+                              " >> " +
+                              DisplayString.displayArea(
+                                  boardList[index].endArea)),
+                          subtitle: Text('상차일시: ' +
+                              DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
+                                  DateTime.parse(
+                                      boardList[index].startDateTime)) +
+                              '\n' +
+                              '하차일시: ' +
+                              DateFormat("yyyy년 MM월 dd일 HH시 mm분").format(
+                                  DateTime.parse(
+                                      boardList[index].endDateTime)) +
+                              '\n' +
+                              '운반비: ￦' +
+                              boardList[index].cost +
+                              "원"),
+                          isThreeLine: true,
+                          onTap: () async {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailPageDriver(boardList[index])));
+                            //refresh();
+                          },
+                        ),
+                      );
+                    })),
+          ),
         ],
       ),
     );
   }
 }
-
-
-

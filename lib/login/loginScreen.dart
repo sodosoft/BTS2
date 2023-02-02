@@ -49,26 +49,22 @@ class _LoginPageState extends State<LoginScreen> {
       if (res.statusCode == 200) {
         var resLogin = jsonDecode(res.body);
         if (resLogin['success'] == true) {
-
           // User userInfo = User.fromJson(resLogin['userName']);
           // await RememberUser.saveRememberUserInfo(userInfo);
-          if(resLogin['loginFlag'].toString() == 'Y')
-          {
+          if (resLogin['loginFlag'].toString() == 'Y') {
             Fluttertoast.showToast(msg: '중복 접속입니다. 중복 해제 부탁 드립니다!');
-          }
-         else
-         {
-           String userName = resLogin['userName'].toString();
-           String userPW = resLogin['userPassword'].toString();
-           String userID = resLogin['userID'].toString();
-           String userTel = resLogin['userTel'].toString();
-           String paymentYN = resLogin['payment'].toString();
-           String paymentDay = resLogin['paymentDay'].toString();
-           int cancelCount = resLogin['cancelCount'];
+          } else {
+            String userName = resLogin['userName'].toString();
+            String userPW = resLogin['userPassword'].toString();
+            String userID = resLogin['userID'].toString();
+            String userTel = resLogin['userTel'].toString();
+            String paymentYN = resLogin['payment'].toString();
+            String paymentDay = resLogin['paymentDay'].toString();
+            int cancelCount = resLogin['cancelCount'];
 
-           LoginUpdate.LoginflagChange(userID, 'Y');
+            LoginUpdate.LoginflagChange(userID, 'Y');
 
-           Fluttertoast.showToast(msg: '로그인 성공!');
+            Fluttertoast.showToast(msg: '로그인 성공!');
 
             LoginScreen.allID = userID;
             LoginScreen.allPW = userPW;
@@ -77,36 +73,35 @@ class _LoginPageState extends State<LoginScreen> {
             LoginScreen.paymentDay = paymentDay;
             LoginScreen.cancelCount = cancelCount;
 
-           String userGrade = resLogin['userGrade'].toString();
+            String userGrade = resLogin['userGrade'].toString();
 
-           LoginScreen.allGrade = userGrade;
-           LoginScreen.allComName = resLogin['userCompany'].toString();
-           LoginScreen.allComNo = resLogin['userComNo'].toString();
-           LoginScreen.allCarNo = resLogin['userCarNo'].toString();
+            LoginScreen.allGrade = userGrade;
+            LoginScreen.allComName = resLogin['userCompany'].toString();
+            LoginScreen.allComNo = resLogin['userComNo'].toString();
+            LoginScreen.allCarNo = resLogin['userCarNo'].toString();
 
-           if(paymentYN == 'Y')
-           {
-             if (userGrade == 'D' ) {
-               // 차주 전용 화면
-               Navigator.push(context,
-                   MaterialPageRoute(builder: (context) => MainScreenDriver()));
-             } else {
-               Navigator.push(context,
-                   MaterialPageRoute(builder: (context) => MainScreen()));
-             }
+            if (paymentYN == 'Y') {
+              if (userGrade == 'D') {
+                // 차주 전용 화면
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MainScreenDriver()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MainScreen()));
+              }
 
-             setState(() {
-               idController.clear();
-               passwordController.clear();
-             });
-           }
-           else          //미결제
-           {
-             Fluttertoast.showToast(msg: '결제 부탁 드립니다!');
-             //데모 화면
-           }
-         }
-
+              setState(() {
+                idController.clear();
+                passwordController.clear();
+              });
+            } else //미결제
+            {
+              Fluttertoast.showToast(msg: '결제 부탁 드립니다!');
+              //데모 화면
+            }
+          }
         } else {
           Fluttertoast.showToast(msg: '아이디와 비밀 번호를 확인해주세요!');
         }
@@ -131,34 +126,47 @@ class _LoginPageState extends State<LoginScreen> {
               height: 300,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/images/green.jpg'), fit: BoxFit.fill),
+                    image: AssetImage('assets/images/green2.jpg'),
+                    fit: BoxFit.fill),
               ),
               child: Container(
-                padding: EdgeInsets.only(top: 90, left: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        text: '방통 배차 시스템',
-                        style: TextStyle(
-                            letterSpacing: 1.0,
-                            fontSize: 25,
-                            color: Colors.white),
+                  padding: EdgeInsets.only(top: 90, left: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              text: '방통 배차 시스템',
+                              style: TextStyle(
+                                  letterSpacing: 1.0,
+                                  fontSize: 25,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          Text(
+                            'ⓒCopyright 2023, SODOsoft',
+                            style: TextStyle(
+                              letterSpacing: 1.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    Text('ⓒcopyright 2023, SODOsoft',
-                      style: TextStyle(
-                        letterSpacing: 1.0,
-                        color: Colors.white,
+                      SizedBox(
+                        width: 90.0,
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                      Image(
+                        image: AssetImage('assets/images/truck.gif'),
+                        width: 80.0,
+                        height: 80.0,
+                      ),
+                    ],
+                  )),
             ),
           ),
           //배경
@@ -185,90 +193,89 @@ class _LoginPageState extends State<LoginScreen> {
               ),
               child: Column(
                 children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-
-                          });
-                        },
-                        child: Column(
-                          children: [
-                            Text(
-                              '로그인',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Palette.textColor1),
-                            ),
-                          ],
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {});
+                    },
+                    child: Column(
+                      children: [
+                        Text(
+                          '로그인',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Palette.textColor1),
                         ),
-                      ),
-                    Container(
-                      margin: EdgeInsets.only(top: 20),
-                      child: Form(
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: idController,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(
-                                    Icons.account_circle,
-                                    color: Palette.iconColor,
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: Form(
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: idController,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.account_circle,
+                                  color: Palette.iconColor,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35.0),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Palette.textColor1),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(35.0),
-                                    ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35.0),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Palette.textColor1),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(35.0),
-                                    ),
+                                ),
+                                hintText: '아이디',
+                                hintStyle: TextStyle(
+                                    fontSize: 14, color: Palette.textColor1),
+                                contentPadding: EdgeInsets.all(10)),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          TextFormField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: Palette.iconColor,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35.0),
                                   ),
-                                  hintText: '아이디',
-                                  hintStyle: TextStyle(
-                                      fontSize: 14, color: Palette.textColor1),
-                                  contentPadding: EdgeInsets.all(10)),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            TextFormField(controller: passwordController,
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  prefixIcon: Icon(
-                                    Icons.lock,
-                                    color: Palette.iconColor,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Palette.textColor1),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(35.0),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Palette.textColor1),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(35.0),
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Palette.textColor1),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(35.0),
-                                    ),
-                                  ),
-                                  hintText: '비밀 번호',
-                                  hintStyle: TextStyle(
-                                      fontSize: 14, color: Palette.textColor1),
-                                  contentPadding: EdgeInsets.all(10)),
-                            )
-                          ],
-                        ),
+                                ),
+                                hintText: '비밀 번호',
+                                hintStyle: TextStyle(
+                                    fontSize: 14, color: Palette.textColor1),
+                                contentPadding: EdgeInsets.all(10)),
+                          )
+                        ],
                       ),
                     ),
+                  ),
                 ],
               ),
             ),
@@ -288,48 +295,44 @@ class _LoginPageState extends State<LoginScreen> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(50)),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Colors.greenAccent, Colors.green],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight),
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_forward),
-                      color: Colors.white,
-                      tooltip: '로그인',
-                      onPressed: () async {
-                       if(idController.text != '' && passwordController.text != '') {
-                         userLogin();
-                       }
-                       else if(idController.text == '' && passwordController.text == '')
-                       {
-                         Fluttertoast.showToast(msg: '아이디와 비밀 번호를 입력해주세요!');
-                         return;
-                       }
-                       else if(idController.text == '')
-                       {
-                         Fluttertoast.showToast(msg: '아이디를 입력해주세요!');
-                         return;
-                       }
-                       else if(passwordController.text == '')
-                       {
-                         Fluttertoast.showToast(msg: '비밀 번호를 입력해주세요!');
-                         return;
-                       }
-                      },
-                    ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.greenAccent, Colors.green],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
                   ),
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    color: Colors.white,
+                    tooltip: '로그인',
+                    onPressed: () async {
+                      if (idController.text != '' &&
+                          passwordController.text != '') {
+                        userLogin();
+                      } else if (idController.text == '' &&
+                          passwordController.text == '') {
+                        Fluttertoast.showToast(msg: '아이디와 비밀 번호를 입력해주세요!');
+                        return;
+                      } else if (idController.text == '') {
+                        Fluttertoast.showToast(msg: '아이디를 입력해주세요!');
+                        return;
+                      } else if (passwordController.text == '') {
+                        Fluttertoast.showToast(msg: '비밀 번호를 입력해주세요!');
+                        return;
+                      }
+                    },
+                  ),
+                ),
               ),
             ),
           ),
@@ -365,10 +368,8 @@ class _LoginPageState extends State<LoginScreen> {
                   children: [
                     Text('중복 접속 중이신가요?'),
                     GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => loginFlag())),
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => loginFlag())),
                       child: Text(
                         ' 중복해제!',
                         style: TextStyle(
